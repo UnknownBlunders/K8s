@@ -7,4 +7,4 @@
  - cert-manager
  - argocd
 ## in each directory run
-```kubectl kustomize . --enable-helm | kubectl apply -f -```
+```kustomize build --enable-alpha-plugins --enable-helm | kubectl apply -f -``

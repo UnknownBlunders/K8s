@@ -1,0 +1,1 @@
+shoutout [this guy](https://vikaspogu.dev/blog/argo-operator-ksops-age/)
