@@ -1,0 +1,125 @@
+clusterName: prod-cluster
+
+talosVersion: v1.5.1
+kubernetesVersion: 1.28.1
+endpoint: "https://cluster.blunders.me:6443"
+
+cniConfig:
+  name: none
+
+additionalApiServerCertSans:
+- 192.168.6.10
+
+additionalMachineCertSans:
+- 192.168.6.10
+- cluster.blunders.me
+
+nodes:
+- hostname: kcp01.blunders.me
+  disableSearchDomain: true
+  ipAddress: 192.168.6.11
+  controlPlane: true
+  installDisk: /dev/sda
+  nameservers:
+  - 192.168.6.1
+  networkInterfaces:
+  - interface: enp1s0
+    dhcp: false
+    addresses:
+    - 192.168.6.11/23
+    routes:
+    - network: 0.0.0.0/0
+      gateway: 192.168.6.1
+    mtu: 1500
+    vip:
+      ip: 192.168.6.10
+- hostname: kcp02.blunders.me
+  disableSearchDomain: true
+  ipAddress: 192.168.6.12
+  controlPlane: true
+  installDisk: /dev/sda
+  nameservers:
+  - 192.168.6.1
+  networkInterfaces:
+  - interface: enp1s0
+    dhcp: false
+    addresses:
+    - 192.168.6.12/23
+    routes:
+    - network: 0.0.0.0/0
+      gateway: 192.168.6.1
+    mtu: 1500
+    vip:
+      ip: 192.168.6.10
+- hostname: kcp03.blunders.me
+  disableSearchDomain: true
+  ipAddress: 192.168.6.13
+  controlPlane: true
+  installDisk: /dev/sda
+  nameservers:
+  - 192.168.6.1
+  networkInterfaces:
+  - interface: enp1s0
+    dhcp: false
+    addresses:
+    - 192.168.6.13/23
+    routes:
+    - network: 0.0.0.0/0
+      gateway: 192.168.6.1
+    mtu: 1500
+    vip:
+      ip: 192.168.6.10
+- hostname: kw01.blunders.me
+  disableSearchDomain: true
+  ipAddress: 192.168.6.14
+  controlPlane: false
+  installDisk: /dev/sda
+  nameservers:
+  - 192.168.6.1
+  networkInterfaces:
+  - interface: enx76e23022ef14
+    dhcp: false
+    addresses:
+    - 192.168.6.14/23
+    routes:
+    - network: 0.0.0.0/0
+      gateway: 192.168.6.1
+    mtu: 1500
+- hostname: kw02.blunders.me
+  disableSearchDomain: true
+  ipAddress: 192.168.6.15
+  controlPlane: false
+  installDisk: /dev/sda
+  nameservers:
+  - 192.168.6.1
+  networkInterfaces:
+  - interface: enxbe86eab75fd5
+    dhcp: false
+    addresses:
+    - 192.168.6.15/23
+    routes:
+    - network: 0.0.0.0/0
+      gateway: 192.168.6.1
+    mtu: 1500
+
+controlPlane:
+  patches:
+  - |-
+    machine:
+      kubelet:
+        extraArgs:
+          rotate-server-certificates: "true"
+        extraConfig:
+          maxPods: 150
+        nodeIP:
+          validSubnets:
+              - 192.168.6.0/24
+      network:
+        extraHostEntries:
+          - ip: 192.168.6.10
+            aliases:
+              - cluster.blunders.me
+      time:
+        disabled: false
+        servers:
+          - pool.ntp.org
