@@ -7,8 +7,9 @@ helmCharts:
   releaseName: cert-manager
   namespace: kube-system
   repo: https://charts.jetstack.io
-  version: "v1.12.3"
+  version: "v1.12.0"
   valuesInline:
+    installCRDs: false
     extraArgs:
     - --dns01-recursive-nameservers=1.1.1.1:53,9.9.9.9:53
     - --dns01-recursive-nameservers-only
@@ -17,6 +18,11 @@ helmCharts:
       nameservers:
       - "1.1.1.1"
       - "9.9.9.9"
+
+resources:
+- https://github.com/cert-manager/cert-manager/releases/download/v1.12.3/cert-manager.crds.yaml
+- prod-cert-issuer.yaml
+- staging-cert-issuer.yaml
 
 generators:
 - ksops-secret-gen.yaml

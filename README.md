@@ -9,4 +9,4 @@
 - helm - [link]()
 - kustomize - [link](https://kustomize.io/)
 - talhelper - [link](https://github.com/budimanjojo/talhelper/tree/master)
-- KSOPS - [link](https://github.com/viaduct-ai/kustomize-sops)
+- KSOPS - [link](https://github.com/viaduct-ai/kustomize-sops) - also shoutout [this guy](https://blog.oddbit.com/post/2021-03-09-getting-started-with-ksops/)

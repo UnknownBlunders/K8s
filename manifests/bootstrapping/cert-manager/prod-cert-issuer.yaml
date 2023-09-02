@@ -5,6 +5,9 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
+    email: ethannor@gmail.com
+    privateKeySecretRef:
+      name: prod-cert-key-secret
     solvers:
     - dns01:
         cloudflare:
