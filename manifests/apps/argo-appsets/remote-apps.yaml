@@ -16,9 +16,9 @@ spec:
     spec:
       project: default
       source:
-        repoURL: {{repoPath}}
+        repoURL: '{{repoPath}}'
         targetRevision: main
-        path: {{appPath}}
+        path: '{{appPath}}'
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{namespace}}'
