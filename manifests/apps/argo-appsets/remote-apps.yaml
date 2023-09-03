@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: remote-apps
+spec:
+  generators:
+  - list:
+      elements:
+      - appName: blunder-blog
+        namespace: blunders-blog
+        appPath: manifests
+        repoPath: https://github.com/unknownblunders/website.git
+  template:
+    metadata:
+      name: '{{appName}}'
+    spec:
+      project: default
+      source:
+        repoURL: {{repoPath}}
+        targetRevision: main
+        path: {{appPath}}
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{namespace}}'
+      syncPolicy:
+        automated:
+          prune: true
+        syncOptions:
+        - CreateNamespace=true
