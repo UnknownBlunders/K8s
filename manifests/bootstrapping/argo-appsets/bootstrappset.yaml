@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: bootstrapping
+spec:
+  generators:
+  - list:
+      elements:
+      - appName: cilium
+        namespace: kube-system
+      - appName: metallb
+        namespace: metallb-system
+      - appName: cert-manager
+        namespace: kube-system
+      - appName: ingress-nginx
+        namespace: ingress-nginx
+      - appName: argocd
+        namespace: argocd
+  template:
+    metadata:
+      name: '{{appName}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/unknownblunders/K8s.git
+        targetRevision: main
+        path: manifests/bootstrapping-onprem/{{appName}}
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{namespace}}'
+      syncPolicy:
+        automated:
+          prune: false
+        syncOptions:
+        - CreateNamespace=true
