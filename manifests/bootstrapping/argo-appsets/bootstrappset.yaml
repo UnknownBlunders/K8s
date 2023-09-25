@@ -24,7 +24,7 @@ spec:
       source:
         repoURL: https://github.com/unknownblunders/K8s.git
         targetRevision: main
-        path: manifests/bootstrapping-onprem/{{appName}}
+        path: manifests/bootstrapping/{{appName}}
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{namespace}}'
