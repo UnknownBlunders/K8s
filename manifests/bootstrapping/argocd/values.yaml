@@ -39,7 +39,7 @@ repo:
       name: custom-tools
       subPath: ksops
     - mountPath: /.config/sops/age/keys.txt
-      name: sops-age
+      name: age-key
       subPath: keys.txt
 
 server:
