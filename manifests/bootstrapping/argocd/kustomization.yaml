@@ -4,7 +4,7 @@ namespace: argocd
 
 resources:
 - ns.yaml
-- ./secret
+- ./secret # generates the secret
 
 helmCharts:
 - name: argo-cd
