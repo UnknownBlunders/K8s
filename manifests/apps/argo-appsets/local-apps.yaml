@@ -8,6 +8,8 @@ spec:
       elements:
       - appName: jellyfin
         namespace: jellyfin
+      - appName: audiobookshelf
+        namespace: abs
   template:
     metadata:
       name: '{{appName}}'
