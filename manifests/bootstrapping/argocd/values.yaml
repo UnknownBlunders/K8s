@@ -24,7 +24,7 @@ repo:
         secretName: sops-age
   initContainers:
     - name: install-ksops
-      image: viaductoss/ksops:v4.2.3
+      image: viaductoss/ksops:v4.2.4
       command: ["/bin/sh", "-c"]
       args:
         - 'echo "Installing KSOPS..."; cp ksops /custom-tools/; cp $GOPATH/bin/kustomize /custom-tools/; echo "Done.";'
