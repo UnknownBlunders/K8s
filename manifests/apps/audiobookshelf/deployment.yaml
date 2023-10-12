@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: abs-deployment
+  labels:
+    app: abs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: abs
+  template:
+    metadata:
+      labels:
+        app: abs
+    spec:
+      containers:
+      - name: abs
+        image: ghcr.io/advplyr/audiobookshelf:2.4.4
+        securityContext:
+          runAsUser: 1002
+          runAsGroup: 1002
+        env:
+        - name: PORT
+          value: "13378"
+        ports:
+        - containerPort: 13378
+        resources:
+          requests:
+            memory: "5000Mi"
+          limits:
+            memory: "5000Mi"
+        volumeMounts:
+        - name: abs-media-pvc
+          mountPath: /audiobooks
+          subPath: audiobooks
+        - name: abs-media-pvc
+          mountPath: /podcasts
+          subPath: podcasts
+        - name: abs-config-pvc
+          mountPath: /config
+          subPath: config
+        - name: abs-config-pvc
+          mountPath: /metadata
+          subPath: metadata
+      volumes:
+        - name: abs-config-pvc
+          persistentVolumeClaim:
+            claimName: abs-config-pvc
+        - name: abs-media-pvc
+          persistentVolumeClaim:
+            claimName: abs-media-pvc
