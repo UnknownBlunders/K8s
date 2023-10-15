@@ -3,8 +3,7 @@ kind: Kustomization
 namespace: jellyfin
 
 resources:
-- ns.yaml
-- ./storage
-- deployment.yaml
-- service.yaml
-- ingress.yaml
+- pv-config.yaml
+- pvc-config.yaml
+- pv-media.yaml
+- pvc-media.yaml
