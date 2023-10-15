@@ -20,9 +20,9 @@ spec:
         securityContext:
           runAsUser: 1003
           runAsGroup: 1003
-        # env:
-        # - name: JELLYFIN_PublishedServerUrl
-        #   value: "https://jellyfin.blunders.me"
+        env:
+        - name: JELLYFIN_PublishedServerUrl
+          value: "https://jellyfin.blunders.me"
         ports:
         - containerPort: 8096
         resources:
