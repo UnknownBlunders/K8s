@@ -10,7 +10,7 @@ spec:
   tls:
   - hosts:
     - jellyfin.blunders.dev
-    secretName: jellyfin-secret-tls
+    secretName: jellyfin-secret-tls-pub
   rules:
   - host: jellyfin.blunders.dev
     http:
