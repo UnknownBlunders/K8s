@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: abs
   annotations:
-    cert-manager.io/cluster-issuer: "staging-cert-issuer"
+    cert-manager.io/cluster-issuer: "prod-cert-issuer"
 
 spec:
   ingressClassName: nginx
