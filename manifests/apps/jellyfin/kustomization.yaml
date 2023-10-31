@@ -9,3 +9,8 @@ resources:
 - service.yaml
 - ingress.yaml
 # - ingress-pub.yaml
+
+images:
+  - name: jellyfin-container-image
+    newName: jellyfin/jellyfin
+    newTag: 10.8.11
