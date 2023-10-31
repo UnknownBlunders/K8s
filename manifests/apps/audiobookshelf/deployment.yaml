@@ -17,7 +17,7 @@ spec:
       containers:
       - name: abs
       # renovate: datasource=github-releases depName=advplyr/audiobookshelf
-        image: ghcr.io/advplyr/audiobookshelf:2.4.4
+        image: abs-container-image
         securityContext:
           runAsUser: 1002
           runAsGroup: 1002
