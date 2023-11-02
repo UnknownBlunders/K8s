@@ -13,21 +13,21 @@ configs:
 repo:
   env:
     - name: XDG_CONFIG_HOME
-      value: /.config
+      value: '/.config'
     - name: SOPS_AGE_KEY_FILE
-      value: /.config/sops/age/keys.txt
+      value: '/.config/sops/age/keys.txt'
   volumes:
     - name: custom-tools
       emptyDir: {}
-    - name: sops-age
+    - name: age-key
       secret:
-        secretName: sops-age
+        secretName: age-key
   initContainers:
     - name: install-ksops
       image: viaductoss/ksops:v4.2.5
       command: ["/bin/sh", "-c"]
       args:
-        - 'echo "Installing KSOPS..."; cp ksops /custom-tools/; cp $GOPATH/bin/kustomize /custom-tools/; echo "Done.";'
+        - 'echo "Installing KSOPS..."; mv ksops /custom-tools/; mv kustomize /custom-tools/; echo "Done.";'
       volumeMounts:
         - mountPath: /custom-tools
           name: custom-tools
@@ -44,7 +44,7 @@ repo:
 
 server:
   config:
-    kustomize.buildOptions: "--enable-alpha-plugins --enable-exec --enable-helm"
+    kustomize.buildOptions: "--enable-alpha-plugins --enable-exec"
     application.instanceLabelKey: argocd.argoproj.io/instance
     url: https://argocd.blunders.me
   ingress:
