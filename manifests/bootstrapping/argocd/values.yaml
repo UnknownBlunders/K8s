@@ -10,12 +10,12 @@ configs:
     extra:
       accounts.ethan.password: $2a$10$jy6gx.UO6hl8yJqjK8iabukQR8Nyo7k.xfG.d.tkcCPgDg6ALJ/AO
 
-repo:
+repoServer:
   env:
     - name: XDG_CONFIG_HOME
       value: '/.config'
     - name: SOPS_AGE_KEY_FILE
-      value: '/.config/sops/age/keys.txt'
+      value: '/.config/sops/age/key.txt'
   volumes:
     - name: custom-tools
       emptyDir: {}
@@ -38,9 +38,9 @@ repo:
     - mountPath: /.config/kustomize/plugin/viaduct.ai/v1/ksops/ksops
       name: custom-tools
       subPath: ksops
-    - mountPath: /.config/sops/age/keys.txt
+    - mountPath: /.config/sops/age
       name: age-key
-      subPath: keys.txt
+      readOnly: true
 
 server:
   config:
