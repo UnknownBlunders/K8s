@@ -13,4 +13,4 @@ resources:
 images:
   - name: jellyfin-container-image
     newName: jellyfin/jellyfin
-    newTag: 10.8.11
+    newTag: 10.8.12
