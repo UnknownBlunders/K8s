@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: abs-pub
+  annotations:
+    cert-manager.io/cluster-issuer: "prod-cert-issuer"
+
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - bookshelf.blunders.dev
+    secretName: abs-secret-tls-pub
+  rules:
+  - host: bookshelf.blunders.dev
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: abs-service
+            port:
+              number: 80
