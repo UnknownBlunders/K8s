@@ -10,5 +10,5 @@
 
 ## Then add apps
 In bootstrapping/argo-appsets run:
-```kubectl apply -k .```
+```kubectl apply -f application.yaml```
 And do the same in apps/argo-appsets.
