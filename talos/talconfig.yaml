@@ -104,8 +104,12 @@ nodes:
 
 controlPlane:
   patches:
-  - |-
+  - &allPatches |-
     machine:
+      features:
+        kubePrism:
+          enabled: true
+          port: 7445
       kubelet:
         extraArgs:
           rotate-server-certificates: "true"
@@ -123,3 +127,10 @@ controlPlane:
         disabled: false
         servers:
           - pool.ntp.org
+    cluster:
+      proxy:
+          disabled: true
+
+worker:
+  patches:
+  - *allPatches 

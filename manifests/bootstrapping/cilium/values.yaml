@@ -1,34 +1,69 @@
-k8sServiceHost: 192.168.6.10
-k8sServicePort: 6443
+    ipam:
+      mode: kubernetes
+    securityContext:
+      capabilities:
+        ciliumAgent: [CHOWN, KILL, NET_ADMIN, NET_RAW, IPC_LOCK, SYS_ADMIN, SYS_RESOURCE, DAC_OVERRIDE, FOWNER, SETGID, SETUID]
+        cleanCiliumState: [NET_ADMIN, SYS_ADMIN, SYS_RESOURCE]
+    cgroup:
+      autoMount:
+        enabled: false
+      hostRoot: /sys/fs/cgroup
 
-debug:
-  enabled: false
-rbac:
-  create: true
-cluster:
-  name: default
-name: cilium
-rollOutCiliumPods: true
-image:
-  repository: quay.io/cilium/cilium
-  pullPolicy: IfNotPresent
-  useDigest: true
+    k8sServiceHost: localhost
+    k8sServicePort: 7445
+    kubeProxyReplacement: true
 
-# Necessary for Kubernetes v1.24+
-securityContext:
-  privileged: true
-  capabilities:
-    ciliumAgent: "{CHOWN,KILL,NET_ADMIN,NET_RAW,IPC_LOCK,SYS_ADMIN,SYS_RESOURCE,DAC_OVERRIDE,FOWNER,SETGID,SETUID}"
-    cleanCiliumState: "{NET_ADMIN,SYS_ADMIN,SYS_RESOURCE}"
-  cgroup:
-    hostRoot: "/sys/fs/cgroup"
-    autoMount:
+    hubble:
+      enabled: true
+      metrics:
+        enabled:
+          - dns:query
+          - drop
+          - tcp
+          - flow
+          - port-distribution
+          - icmp
+          - http
+        serviceMonitor:
+          enabled: true
+        dashboards:
+          enabled: true
+          annotations:
+            grafana_folder: Cilium
+      relay:
+        enabled: true
+        rollOutPods: true
+        prometheus:
+          serviceMonitor:
+            enabled: true
+      ui:
+        enabled: true
+        rollOutPods: true
+        ingress:
+          enabled: true
+          className: nginx
+          hosts:
+            - &host hubble.blunders.me
+          tls:
+            - hosts:
+                - *host
 
-ipam:
-  mode: kubernetes
-
-kubeProxyReplacement: strict
-kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
-
-hubble:
-  enabled: false
+    operator:
+      rollOutPods: true
+      prometheus:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+      dashboards:
+        enabled: true
+        annotations:
+          grafana_folder: Cilium
+    prometheus:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        trustCRDsExist: true
+    dashboards:
+      enabled: true
+      annotations:
+        grafana_folder: Cilium
