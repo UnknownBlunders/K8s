@@ -16,6 +16,8 @@ spec:
         namespace: ingress-nginx
       - appName: argocd
         namespace: argocd
+      - appName: kubelet-csr-approver
+        namespace: kube-system
   template:
     metadata:
       name: '{{appName}}'
