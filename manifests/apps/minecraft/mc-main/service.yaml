@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mc-main-service
+  annotations:
+    mc-router.itzg.me/externalServerName: main.kmc.blunders.me,main.mc.blunders.me,mc.thisdick.org,thisdick.org,minecraft.thisdick.org
+spec:
+  ports:
+  - protocol: TCP
+    port: 25565
+    targetPort: 25565

@@ -6,3 +6,4 @@ resources:
 - ns.yaml
 - mc-router
 - mc-sinicropi
+- mc-main
