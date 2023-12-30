@@ -5,7 +5,7 @@ namespace: minecraft
 helmCharts:
 - name: minecraft
   releaseName: minecraft
-  namespace: minecraft
+  namespace: mc-sinicropi
   repo: https://itzg.github.io/minecraft-server-charts/
   version: "4.14.0"
   valuesFile: values.yaml

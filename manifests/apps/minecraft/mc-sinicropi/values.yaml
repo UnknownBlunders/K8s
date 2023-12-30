@@ -55,4 +55,5 @@ minecraftServer:
   # If you would like to override the server configuration each time the container starts up, you can set this to true
   # see https://github.com/itzg/docker-minecraft-server#server-configuration
   overrideServerProperties: true
-  serviceAnnotations: {"mc-router.itzg.me/externalServerName": "sinicropi.kmc.blunders.me,sinicropi.mc.blunders.me,sinicropi.mc.thisdick.org,minecraft.taylorstech.dev"}
+  serviceAnnotations: 
+    mc-router.itzg.me/externalServerName: "sinicropi.kmc.blunders.me,sinicropi.mc.blunders.me,sinicropi.mc.thisdick.org,minecraft.taylorstech.dev"
