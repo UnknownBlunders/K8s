@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: minecraft
 
 helmCharts:
-- name: mc-sinicropi
+- name: minecraft
   releaseName: minecraft
   namespace: minecraft
   repo: https://itzg.github.io/minecraft-server-charts/
