@@ -10,6 +10,8 @@ spec:
         namespace: jellyfin
       - appName: audiobookshelf
         namespace: abs
+      - appName: minecraft
+        namespace: minecraft
   template:
     metadata:
       name: '{{appName}}'

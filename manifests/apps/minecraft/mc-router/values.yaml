@@ -1,0 +1,6 @@
+services:
+  minecraft:
+    type: LoadBalancer
+    port: 25565
+    annotations:
+      metallb.universe.tf/loadBalancerIPs: 192.168.7.2
