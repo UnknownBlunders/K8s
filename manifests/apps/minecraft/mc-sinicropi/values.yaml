@@ -61,8 +61,8 @@ serviceAnnotations:
   mc-router.itzg.me/externalServerName: sinicropi.kmc.blunders.me,sinicropi.mc.blunders.me,sinicropi.mc.thisdick.org,minecraft.taylorstech.dev
 
 podLabels: 
-  app: mc-sinicropi
+  world: mc-sinicropi
 deploymentLabels: 
-  app: mc-sinicropi
+  world: mc-sinicropi
 serviceLabels: 
-  app: mc-sinicropi
+  world: mc-sinicropi
