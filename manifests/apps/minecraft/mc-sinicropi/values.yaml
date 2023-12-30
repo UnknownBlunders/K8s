@@ -56,4 +56,4 @@ minecraftServer:
   # see https://github.com/itzg/docker-minecraft-server#server-configuration
   overrideServerProperties: true
   serviceAnnotations: 
-    mc-router.itzg.me/externalServerName: "sinicropi.kmc.blunders.me,sinicropi.mc.blunders.me,sinicropi.mc.thisdick.org,minecraft.taylorstech.dev"
+    mc-router.itzg.me/externalServerName: sinicropi.kmc.blunders.me
