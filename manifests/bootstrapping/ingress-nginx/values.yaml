@@ -95,6 +95,7 @@ controller:
 
   config:
     force-ssl-redirect: true
+    # use-geoip2: true
 
 revisionHistoryLimit: 10
 defaultBackend:
