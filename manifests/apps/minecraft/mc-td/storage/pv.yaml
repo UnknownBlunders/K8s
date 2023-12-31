@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mc-td-pv
+  labels:
+    pv-name: mc-td
+spec:
+  capacity:
+    storage: 25Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs
+  mountOptions:
+    - hard
+    - nfsvers=4.2
+  nfs:
+    path: /mc-td
+    server: nfs.blunders.me
