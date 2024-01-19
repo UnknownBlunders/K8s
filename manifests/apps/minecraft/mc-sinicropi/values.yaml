@@ -28,7 +28,7 @@ minecraftServer:
   type: "PAPER"
   difficulty: normal
   # allowed players' names comma separated, leave blank to allow any players
-  whitelist: Bjs575,RegardedHarmful,murderousMabel
+  whitelist: Bjs575,RegardedHarmful,murderousMabel,riot218543
   # comma separated admin players' names
   ops: Bjs575,RegardedHarmful,murderousMabel
   # always set game mode when a player connects
