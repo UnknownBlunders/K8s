@@ -1,7 +1,7 @@
 clusterName: prod-cluster
 
-talosVersion: v1.6.1
-kubernetesVersion: 1.29.0
+talosVersion: v1.6.4
+kubernetesVersion: 1.29.1
 endpoint: "https://cluster.blunders.me:6443"
 
 cniConfig:
