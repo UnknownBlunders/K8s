@@ -7,7 +7,7 @@ helmCharts:
   releaseName: cert-manager
   namespace: kube-system
   repo: https://charts.jetstack.io
-  version: "v1.13.3"
+  version: "v1.14.1"
   valuesInline:
     installCRDs: false
     extraArgs:
@@ -20,7 +20,7 @@ helmCharts:
       - "9.9.9.9"
 
 resources:
-- https://github.com/cert-manager/cert-manager/releases/download/v1.13.2/cert-manager.crds.yaml
+- https://github.com/cert-manager/cert-manager/releases/download/v1.14.1/cert-manager.crds.yaml
 - prod-cert-issuer.yaml
 - staging-cert-issuer.yaml
 
