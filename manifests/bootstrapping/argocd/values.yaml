@@ -2,6 +2,9 @@ configs:
   cm:
     accounts.ethan: login
     accounts.ethan.enabled: true
+    kustomize.buildOptions: "--enable-alpha-plugins --enable-exec"
+    application.instanceLabelKey: argocd.argoproj.io/instance
+    url: https://argocd.blunders.me
   rbac:
     policy.default: role:readonly
   params:
@@ -43,17 +46,12 @@ repoServer:
       readOnly: true
 
 server:
-  config:
-    kustomize.buildOptions: "--enable-alpha-plugins --enable-exec"
-    application.instanceLabelKey: argocd.argoproj.io/instance
-    url: https://argocd.blunders.me
   ingress:
     enabled: true
     ingressClassName: nginx
     annotations: {cert-manager.io/cluster-issuer: "prod-cert-issuer"}
-    hosts:
-    - argocd.blunders.me
-    tls:
+    hostname: argocd.blunders.me
+    extraTls:
     - secretName: argocd-cert
       hosts:
       - argocd.blunders.me
