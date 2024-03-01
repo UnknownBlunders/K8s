@@ -12,6 +12,8 @@ spec:
         namespace: abs
       - appName: minecraft
         namespace: minecraft
+      - appName: home-assistant
+        namespace: ha
   template:
     metadata:
       name: '{{appName}}'
