@@ -11,5 +11,5 @@ resources:
 
 images:
   - name: ha-container-image
-    newName: ghcr.io/home-assistant/home-assistant
+    newName: home-assistant/home-assistant
     newTag: "2024.2"
