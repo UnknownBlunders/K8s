@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ha-deployment
+  labels:
+    app: ha
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ha
+  template:
+    metadata:
+      labels:
+        app: ha
+    spec:
+      containers:
+      - name: ha
+        image: ha-container-image
+        securityContext:
+          runAsUser: 1006
+          runAsGroup: 1006
+        env:
+        - name: TZ
+          value: "America/Denver"
+        ports:
+        - containerPort: 8123
+        resources:
+          requests:
+            memory: "3000Mi"
+          limits:
+            memory: "3000Mi"
+        volumeMounts:
+        - name: ha-pvc
+          mountPath: /config
+      volumes:
+        - name: ha-pvc
+          persistentVolumeClaim:
+            claimName: ha-pvc
