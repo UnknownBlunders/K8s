@@ -1,7 +1,9 @@
 clusterName: prod-cluster
 
-talosVersion: v1.6.6
-kubernetesVersion: 1.29.2
+# renovate: datasource=github-releases depName=siderolabs/talos
+talosVersion: "v1.6.6"
+# renovate: datasource=github-releases depName=siderolabs/kubelet
+kubernetesVersion: "v1.29.2"
 endpoint: "https://cluster.blunders.me:6443"
 
 cniConfig:

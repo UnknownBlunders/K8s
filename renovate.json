@@ -1,6 +1,13 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:base"
+  "extends": ["config:base"],
+  "regexManagers": [
+    {
+      "fileMatch": ["talconfig.ya??ml$"],
+      "matchStrings": [
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\n*[^\/]+:\/\/[^\/]+\/[^\/]+\/[^\/]+\/(?<currentValue>[^\/]+)\/"
+      ],
+      "datasourceTemplate": "github-releases"
+    }
   ]
 }
