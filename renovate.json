@@ -4,6 +4,9 @@
   "regexManagers": [
     {
       "fileMatch": ["talconfig.ya??ml$"],
+      "matchStrings": [
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\n^[a-zA-Z0-9_.-]*: (?<currentValue>.*)"
+      ],
       "datasourceTemplate": "github-releases"
     }
   ]
