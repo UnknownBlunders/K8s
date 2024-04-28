@@ -14,4 +14,4 @@ spec:
     - nfsvers=4.2
   nfs:
     path: /ha-config
-    server: nfs.blunders.me
+    server: 192.168.5.3
