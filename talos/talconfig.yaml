@@ -1,7 +1,7 @@
 clusterName: prod-cluster
 
 # renovate: datasource=github-releases depName=siderolabs/talos
-talosVersion: "v1.7.0"
+talosVersion: "v1.7.1"
 # renovate: datasource=github-releases depName=siderolabs/kubelet
 kubernetesVersion: "v1.30.0"
 endpoint: "https://cluster.blunders.me:6443"
@@ -21,7 +21,7 @@ nodes:
   disableSearchDomain: true
   ipAddress: 192.168.6.11
   controlPlane: true
-  installDisk: /dev/sda
+  installDisk: /dev/sdb
   nameservers:
   - 192.168.6.1
   networkInterfaces:
@@ -39,7 +39,7 @@ nodes:
   disableSearchDomain: true
   ipAddress: 192.168.6.12
   controlPlane: true
-  installDisk: /dev/sda
+  installDisk: /dev/sdb
   nameservers:
   - 192.168.6.1
   networkInterfaces:
@@ -57,7 +57,7 @@ nodes:
   disableSearchDomain: true
   ipAddress: 192.168.6.13
   controlPlane: true
-  installDisk: /dev/sda
+  installDisk: /dev/sdb
   nameservers:
   - 192.168.6.1
   networkInterfaces:
@@ -75,11 +75,11 @@ nodes:
   disableSearchDomain: true
   ipAddress: 192.168.6.14
   controlPlane: false
-  installDisk: /dev/sda
+  installDisk: /dev/sdb
   nameservers:
   - 192.168.6.1
   networkInterfaces:
-  - interface: enx76e23022ef14
+  - interface: eno1
     dhcp: false
     addresses:
     - 192.168.6.14/23
@@ -91,11 +91,11 @@ nodes:
   disableSearchDomain: true
   ipAddress: 192.168.6.15
   controlPlane: false
-  installDisk: /dev/sda
+  installDisk: /dev/sdb
   nameservers:
   - 192.168.6.1
   networkInterfaces:
-  - interface: enxbe86eab75fd5
+  - interface: eno1
     dhcp: false
     addresses:
     - 192.168.6.15/23
@@ -105,6 +105,12 @@ nodes:
     mtu: 1500
 
 controlPlane:
+  schematic:
+    customization:
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/intel-ucode
+          - siderolabs/i915-ucode
   patches:
   - &allPatches |-
     machine:
@@ -112,6 +118,8 @@ controlPlane:
         kubePrism:
           enabled: true
           port: 7445
+        hostDNS:
+          enabled: false
       kubelet:
         extraArgs:
           rotate-server-certificates: "true"
@@ -128,11 +136,17 @@ controlPlane:
       time:
         disabled: false
         servers:
-          - pool.ntp.org
+          - time.cloudflare.com
     cluster:
       proxy:
           disabled: true
 
 worker:
+  schematic:
+    customization:
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/intel-ucode
+          - siderolabs/i915-ucode
   patches:
   - *allPatches 
