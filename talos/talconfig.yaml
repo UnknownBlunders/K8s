@@ -1,7 +1,7 @@
 clusterName: prod-cluster
 
 # renovate: datasource=github-releases depName=siderolabs/talos
-talosVersion: "v1.7.1"
+talosVersion: "v1.7.2"
 # renovate: datasource=github-releases depName=siderolabs/kubelet
 kubernetesVersion: "v1.30.0"
 endpoint: "https://cluster.blunders.me:6443"
@@ -110,7 +110,6 @@ controlPlane:
       systemExtensions:
         officialExtensions:
           - siderolabs/intel-ucode
-          - siderolabs/i915-ucode
   patches:
   - &allPatches |-
     machine:
@@ -146,7 +145,7 @@ worker:
     customization:
       systemExtensions:
         officialExtensions:
-          - siderolabs/intel-ucode
           - siderolabs/i915-ucode
+          - siderolabs/intel-ucode
   patches:
   - *allPatches 
