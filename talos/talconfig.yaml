@@ -21,7 +21,8 @@ nodes:
   disableSearchDomain: true
   ipAddress: 192.168.6.11
   controlPlane: true
-  installDisk: /dev/sdb
+  installDiskSelector:
+    size: '> 200GB'
   nameservers:
   - 192.168.6.1
   networkInterfaces:
@@ -39,7 +40,8 @@ nodes:
   disableSearchDomain: true
   ipAddress: 192.168.6.12
   controlPlane: true
-  installDisk: /dev/sdb
+  installDiskSelector:
+    size: '> 200GB'
   nameservers:
   - 192.168.6.1
   networkInterfaces:
@@ -57,7 +59,8 @@ nodes:
   disableSearchDomain: true
   ipAddress: 192.168.6.13
   controlPlane: true
-  installDisk: /dev/sdb
+  installDiskSelector:
+    size: '> 200GB'
   nameservers:
   - 192.168.6.1
   networkInterfaces:
@@ -75,7 +78,8 @@ nodes:
   disableSearchDomain: true
   ipAddress: 192.168.6.14
   controlPlane: false
-  installDisk: /dev/sdb
+  installDiskSelector:
+    size: '> 200GB'
   nameservers:
   - 192.168.6.1
   networkInterfaces:
@@ -91,7 +95,8 @@ nodes:
   disableSearchDomain: true
   ipAddress: 192.168.6.15
   controlPlane: false
-  installDisk: /dev/sdb
+  installDiskSelector:
+    size: '> 200GB'
   nameservers:
   - 192.168.6.1
   networkInterfaces:
