@@ -1,7 +1,7 @@
 clusterName: prod-cluster
 
 # renovate: datasource=github-releases depName=siderolabs/talos
-talosVersion: "v1.7.4"
+talosVersion: "v1.7.5"
 # renovate: datasource=github-releases depName=siderolabs/kubelet
 kubernetesVersion: "v1.30.1"
 endpoint: "https://cluster.blunders.me:6443"
