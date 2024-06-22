@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: immich-pg-deployment
+  labels:
+    app: immich-pg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: immich-pg
+  template:
+    metadata:
+      labels:
+        app: immich-pg
+    spec:
+      containers:
+      - name: immich-pg
+        image: immich-pg-container-image
+        securityContext:
+          runAsUser: 1008
+          runAsGroup: 1008
+        ports:
+        - containerPort: 5432
+        resources:
+          requests:
+            memory: "3000Mi"
+          limits:
+            memory: "3000Mi"
+        volumeMounts:
+        - name: immich-pg-pvc
+          mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: immich-pg-pvc
+          persistentVolumeClaim:
+            claimName: immich-pg-pvc

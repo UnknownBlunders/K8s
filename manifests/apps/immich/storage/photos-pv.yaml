@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: immich-photos-pv
+spec:
+  capacity:
+    storage: 500Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs
+  mountOptions:
+    - nfsvers=4.2
+  nfs:
+    path: /immich-photos
+    server: nfs.blunders.me
