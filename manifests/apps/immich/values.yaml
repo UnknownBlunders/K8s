@@ -59,7 +59,7 @@ server:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: nginx
-        cert-manager.io/cluster-issuer: "staging-cert-issuer"
+        cert-manager.io/cluster-issuer: "prod-cert-issuer"
         nginx.ingress.kubernetes.io/proxy-body-size: "0"
       hosts:
         - host: photos.blunders.me
