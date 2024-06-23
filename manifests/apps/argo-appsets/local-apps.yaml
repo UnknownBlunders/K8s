@@ -14,6 +14,8 @@ spec:
         namespace: minecraft
       - appName: home-assistant
         namespace: ha
+      - appName: immich
+        namespace: immich
   template:
     metadata:
       name: '{{appName}}'
