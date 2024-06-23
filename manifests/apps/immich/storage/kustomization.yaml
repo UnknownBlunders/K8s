@@ -9,3 +9,5 @@ resources:
 - pg-pvc.yaml
 - ml-pv.yaml
 - ml-pvc.yaml
+- redis-pv.yaml
+- redis-pvc.yaml

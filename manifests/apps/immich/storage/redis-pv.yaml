@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: immich-pg-pv
+  name: immich-redis-pv
 spec:
   capacity:
     storage: 50Gi
@@ -10,7 +10,8 @@ spec:
     - ReadWriteOnce
   storageClassName: nfs
   mountOptions:
+    - hard
     - nfsvers=4.2
   nfs:
-    path: /immich-pg
+    path: /immich-redis
     server: nfs.blunders.me

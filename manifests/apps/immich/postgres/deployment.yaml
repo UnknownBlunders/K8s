@@ -27,6 +27,22 @@ spec:
             memory: "3000Mi"
           limits:
             memory: "3000Mi"
+        env:
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: immich-pg-secret
+              key: POSTGRES_DB
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: immich-pg-secret
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: immich-pg-secret
+              key: POSTGRES_PASSWORD
         volumeMounts:
         - name: immich-pg-pvc
           mountPath: /var/lib/postgresql/data

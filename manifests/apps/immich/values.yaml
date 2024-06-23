@@ -1,84 +1,92 @@
-    postgres:
-      enabled: false
+postgres:
+  enabled: false
 
-    redis:
+redis:
+  enabled: true
+  architecture: standalone
+  auth:
+    enabled: false
+  master:
+    persistence:
       enabled: true
+      existingClaim: immich-redis-pvc
+    containerSecurityContext:
+      runAsUser: 1009
+      runAsGroup: 1009
 
-    immich:
-      metrics:
-        enabled: true
-      persistence:
-        library:
-          existingClaim: immich-photos-pvc
 
- 
-      DB_HOSTNAME:
-        valueFrom:
-          secretKeyRef:
-            name: database-immich-user
-            key: HOST
-      DB_USERNAME:
-        valueFrom:
-          secretKeyRef:
-            name: database-immich-user
-            key: LOGIN
-      DB_PASSWORD:
-        valueFrom:
-          secretKeyRef:
-            name: database-immich-user
-            key: PASSWORD
-      DB_DATABASE_NAME:
-        valueFrom:
-          secretKeyRef:
-            name: database-immich-user
-            key: DATABASE_NAME
-      TZ: America/Denver
+immich:
+  metrics:
+    enabled: false
+  persistence:
+    library:
+      existingClaim: immich-photos-pvc
 
-    image:
-      # renovate: datasource=github-releases depName=immich-app/immich
-      tag: "v1.106.4"
+env:
+  DB_HOSTNAME: immich-pg-service
+  DB_USERNAME:
+    valueFrom:
+      secretKeyRef:
+        name: immich-pg-secret
+        key: POSTGRES_USER
+  DB_PASSWORD:
+    valueFrom:
+      secretKeyRef:
+        name: immich-pg-secret
+        key: POSTGRES_PASSWORD
+  DB_DATABASE_NAME:
+    valueFrom:
+      secretKeyRef:
+        name: immich-pg-secret
+        key: POSTGRES_DB
+  TZ: America/Denver
+  LOG_LEVEL: verbose
+  
+image:
+  # renovate: datasource=github-releases depName=immich-app/immich
+  tag: "v1.106.4"
 
-    server:
-      resources:
-        requests:
-          cpu: 1500m
-          memory: 2048M
-      securityContext:
-          runAsUser: 1007
-          runAsGroup: 1007
-      ingress:
-        main:
-          enabled: true
-          annotations:
-            kubernetes.io/ingress.class: nginx
-            cert-manager.io/cluster-issuer: "staging-cert-issuer"
-            nginx.ingress.kubernetes.io/proxy-body-size: "0"
-          hosts:
-            - host: photos.blunders.me
-              paths:
-                - path: /
-                  pathType: Prefix
-          tls:
-            - hosts:
-                - photos.blunders.me
-              secretName: immich-web-tls
+server:
+  resources:
+    requests:
+      cpu: 1500m
+      memory: 2048M
+  securityContext:
+      runAsUser: 1007
+      runAsGroup: 1007
+  ingress:
+    main:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        cert-manager.io/cluster-issuer: "staging-cert-issuer"
+        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+      hosts:
+        - host: photos.blunders.me
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - hosts:
+            - photos.blunders.me
+          secretName: immich-web-tls
 
-    machine-learning:
-      resources:
-        requests:
-          cpu: 500m
-          memory: 4096M
-      securityContext:
-          runAsUser: 1007
-          runAsGroup: 1007
-      persistence:
-        cache:
-          type: pvc
-          existingClaim: immich-ml-pvc
-      probes:
-        liveness:
-          spec:
-            initialDelaySeconds: 120
-        readiness:
-          spec:
-            initialDelaySeconds: 120
+machine-learning:
+  resources:
+    requests:
+      cpu: 500m
+      memory: 4096M
+  securityContext:
+      runAsUser: 1007
+      runAsGroup: 1007
+  persistence:
+    cache:
+      type: pvc
+      existingClaim: immich-ml-pvc
+  probes:
+    liveness:
+      spec:
+        initialDelaySeconds: 120
+    readiness:
+      spec:
+        initialDelaySeconds: 120
