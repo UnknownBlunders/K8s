@@ -115,7 +115,7 @@ controlPlane:
       systemExtensions:
         officialExtensions:
           - siderolabs/intel-ucode
-  patches:
+  patches: # See issue for sysctl: https://github.com/siderolabs/talos/issues/8952#issuecomment-2200582804
   - &allPatches |-
     machine:
       features:
@@ -124,6 +124,8 @@ controlPlane:
           port: 7445
         hostDNS:
           enabled: false
+      sysctls:
+        kernel.kexec_load_disabled: "1"
       kubelet:
         extraArgs:
           rotate-server-certificates: "true"
