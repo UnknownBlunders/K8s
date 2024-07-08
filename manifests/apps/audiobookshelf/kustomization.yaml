@@ -8,7 +8,7 @@ resources:
 - deployment.yaml
 - service.yaml
 - ingress.yaml
-- ingress-pub.yaml
+#- ingress-pub.yaml
 
 images:
   - name: abs-container-image
