@@ -9,7 +9,7 @@ controller:
     name: nginx-external
     enabled: true
     default: false
-    controllerValue: "k8s.io/ingress-nginx"
+    controllerValue: "k8s.io/ingress-external"
   ingressClass: nginx-external
   publishService:
     enabled: false # TODO: Maybe turn this on later??
