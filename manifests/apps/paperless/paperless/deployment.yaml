@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paperless-server-deployment
+  labels:
+    app: paperless-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: paperless-server
+  template:
+    metadata:
+      labels:
+        app: paperless-server
+    spec:
+      containers:
+      - name: paperless-server
+        image: paperless-server-container-image
+        securityContext:
+          runAsUser: 1000 # hardcoded `paperless` user
+          runAsGroup: 1000
+        env:
+        - name: PAPERLESS_REDIS
+          value: redis://paperless-redis-service:6379
+        - name: PAPERLESS_DBHOST
+          value: paperless-pg-service
+        - name: PAPERLESS_TIKA_ENABLED
+          value: "1"
+        - name: PAPERLESS_TIKA_GOTENBERG_ENDPOINT
+          value: http://paperless-gotenberg-service:3000
+        - name: PAPERLESS_TIKA_ENDPOINT
+          value: http://paperless-tika-service:9998
+        - name: PAPERLESS_TRUSTED_PROXIES
+          value: 10.244.0.0/16
+        - name: PAPERLESS_URL
+          value: https://paperless.blunders.me
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            memory: "3000Mi"
+          limits:
+            memory: "3000Mi"
+            cpu: 1
+        volumeMounts:
+        - name: paperless-server-pvc
+          mountPath: /usr/src/paperless/consume
+          subPath: consume
+        - name: paperless-server-pvc
+          mountPath: /usr/src/paperless/data
+          subPath: data
+        - name: paperless-server-pvc
+          mountPath: /usr/src/paperless/export
+          subPath: export
+        - name: paperless-server-pvc
+          mountPath: /usr/src/paperless/media
+          subPath: media
+      volumes:
+        - name: paperless-server-pvc
+          persistentVolumeClaim:
+            claimName: paperless-server-pvc

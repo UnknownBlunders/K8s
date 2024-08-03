@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: paperless
+
+resources:
+- pv.yaml
+- pvc.yaml
+- deployment.yaml
+- service.yaml
+- ingress.yaml
+
+images:
+  - name: paperless-server-container-image
+    newName: ghcr.io/paperless-ngx/paperless-ngx
+    newTag: "2.11.2"

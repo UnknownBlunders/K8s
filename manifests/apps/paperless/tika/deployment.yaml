@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tika-deployment
+  labels:
+    app: paperless-tika
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: paperless-tika
+  template:
+    metadata:
+      labels:
+        app: paperless-tika
+    spec:
+      containers:
+      - name: tika
+        image: tika-container-image
+        securityContext:
+          privileged: false
+          runAsUser: 35002
+          runAsGroup: 35002
+        env:
+        - name: TZ
+          value: "America/Denver"
+        ports:
+        - containerPort: 9998
+        resources:
+          requests:
+            memory: "2000Mi"
+          limits:
+            memory: "2000Mi"
+            cpu: "2"

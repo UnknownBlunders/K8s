@@ -16,6 +16,8 @@ spec:
         namespace: ha
       - appName: immich
         namespace: immich
+      - appName: paperless
+        namespace: paperless
   template:
     metadata:
       name: '{{appName}}'

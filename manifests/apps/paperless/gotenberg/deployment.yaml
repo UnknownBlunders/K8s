@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gotenberg-deployment
+  labels:
+    app: paperless-gotenberg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: paperless-gotenberg
+  template:
+    metadata:
+      labels:
+        app: paperless-gotenberg
+    spec:
+      containers:
+      - name: gotenberg
+        image: gotenberg-container-image
+        command: ["gotenberg"]
+        args: ["--chromium-disable-javascript=true", "--chromium-allow-list=file:///tmp/.*"]
+        securityContext:
+          privileged: false
+          runAsUser: 1001
+          runAsGroup: 1001
+        env:
+        - name: TZ
+          value: "America/Denver"
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            memory: "512Mi"
+          limits:
+            memory: "512Mi"
+            cpu: "0.5"

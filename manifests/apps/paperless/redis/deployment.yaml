@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paperless-redis-deployment
+  labels:
+    app: paperless-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: paperless-redis
+  template:
+    metadata:
+      labels:
+        app: paperless-redis
+    spec:
+      containers:
+      - name: paperless-redis
+        image: paperless-redis-container-image
+        securityContext:
+          runAsUser: 1012
+          runAsGroup: 1012
+          privileged: false
+        ports:
+        - containerPort: 6379
+        resources:
+          requests:
+            memory: "3000Mi"
+          limits:
+            memory: "3000Mi"
+            cpu: 1
+        volumeMounts:
+        - name: paperless-redis-pvc
+          mountPath: /data
+      volumes:
+        - name: paperless-redis-pvc
+          persistentVolumeClaim:
+            claimName: paperless-redis-pvc

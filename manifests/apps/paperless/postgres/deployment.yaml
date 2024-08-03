@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paperless-pg-deployment
+  labels:
+    app: paperless-pg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: paperless-pg
+  template:
+    metadata:
+      labels:
+        app: paperless-pg
+    spec:
+      containers:
+      - name: paperless-pg
+        image: paperless-pg-container-image
+        securityContext:
+          runAsUser: 1011
+          runAsGroup: 1011
+        ports:
+        - containerPort: 5432
+        resources:
+          requests:
+            memory: "3000Mi"
+          limits:
+            memory: "3000Mi"
+            cpu: 1
+        env:
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: paperless-pg-secret
+              key: POSTGRES_DB
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: paperless-pg-secret
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: paperless-pg-secret
+              key: POSTGRES_PASSWORD
+        volumeMounts:
+        - name: paperless-pg-pvc
+          mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: paperless-pg-pvc
+          persistentVolumeClaim:
+            claimName: paperless-pg-pvc
