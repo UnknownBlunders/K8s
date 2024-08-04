@@ -22,6 +22,8 @@ spec:
         namespace: kube-system
       - appName: node-feature-discovery
         namespace: kube-system
+      - appName: intel-device-plugin
+        namespace: kube-system
   template:
     metadata:
       name: '{{appName}}'
