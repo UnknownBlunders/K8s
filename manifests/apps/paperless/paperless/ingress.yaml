@@ -4,6 +4,7 @@ metadata:
   name: paperless
   annotations:
     cert-manager.io/cluster-issuer: "prod-cert-issuer"
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
 
 spec:
   ingressClassName: nginx
