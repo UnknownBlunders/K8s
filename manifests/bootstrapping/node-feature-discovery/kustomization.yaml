@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: kube-system
+
+helmCharts:
+- name: node-feature-discovery
+  releaseName: node-feature-discovery
+  namespace: kube-system
+  repo: https://kubernetes-sigs.github.io/node-feature-discovery/charts
+  version: 0.16.3
+  includeCRDs: true
+  valuesInline:
+    worker:
+      config:
+        core:
+          sources: ["pci", "system", "usb", "cpu"]
+
+resources:
+- intel-gpu-rule.yaml
