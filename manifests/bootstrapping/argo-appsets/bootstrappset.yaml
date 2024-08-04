@@ -20,6 +20,8 @@ spec:
         namespace: argocd
       - appName: kubelet-csr-approver
         namespace: kube-system
+      - appName: node-feature-discovery
+        namespace: kube-system
   template:
     metadata:
       name: '{{appName}}'
