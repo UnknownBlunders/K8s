@@ -7,7 +7,7 @@ helmCharts:
   releaseName: node-feature-discovery
   namespace: kube-system
   repo: https://kubernetes-sigs.github.io/node-feature-discovery/charts
-  version: 0.16.3
+  version: 0.16.4
   includeCRDs: true
   valuesInline:
     worker:
