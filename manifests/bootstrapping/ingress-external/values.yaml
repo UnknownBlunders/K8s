@@ -62,6 +62,7 @@ controller:
       http: http
       https: https
     type: LoadBalancer
+    externalTrafficPolicy: Local
     external:
       enabled: true
     internal:
