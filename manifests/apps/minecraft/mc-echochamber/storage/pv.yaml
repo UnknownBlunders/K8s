@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mc-echochamber-pv
+  labels:
+    pv-name: mc-echochamber
+spec:
+  capacity:
+    storage: 25Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs
+  mountOptions:
+    - hard
+    - nfsvers=4.2
+  nfs:
+    path: /mc-ec
+    server: nfs.blunders.me
