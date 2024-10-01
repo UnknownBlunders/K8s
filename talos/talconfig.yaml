@@ -114,7 +114,9 @@ controlPlane:
     customization:
       systemExtensions:
         officialExtensions:
+          - siderolabs/i915-ucode
           - siderolabs/intel-ucode
+          - siderolabs/mei
   patches: # See issue for sysctl: https://github.com/siderolabs/talos/issues/8952#issuecomment-2200582804
   - &allPatches |-
     machine:
@@ -154,5 +156,6 @@ worker:
         officialExtensions:
           - siderolabs/i915-ucode
           - siderolabs/intel-ucode
+          - siderolabs/mei
   patches:
   - *allPatches 
