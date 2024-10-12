@@ -8,9 +8,6 @@ spec:
   ports:
   - port: 7777
     targetPort: 7777
-    protocol: TCP
-  - port: 7777
-    targetPort: 7777
-    protocol: UDP
+    name: game-port-tcp-and-udp
   selector:
     app: satisfactory
