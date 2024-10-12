@@ -26,7 +26,7 @@ spec:
         - name: PUID
           value: "1014"
         - name: ROOTLESS
-          value: "true"
+          value: "false"
         - name: MAXPLAYERS
           value: "8"
         ports:
