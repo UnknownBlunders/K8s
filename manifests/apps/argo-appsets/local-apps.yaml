@@ -18,6 +18,8 @@ spec:
         namespace: immich
       - appName: paperless
         namespace: paperless
+      - appName: satisfactory
+        namespace: satisfactory
   template:
     metadata:
       name: '{{appName}}'

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: satisfactory-deployment
+  labels:
+    app: satisfactory
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: satisfactory
+  template:
+    metadata:
+      labels:
+        app: satisfactory
+    spec:
+      containers:
+      - name: satisfactory
+        image: satisfactory-container-image
+        securityContext:
+          runAsUser: 1014
+          runAsGroup: 1014
+        env:
+        - name: PGID
+          value: "1014"
+        - name: PUID
+          value: "1014"
+        - name: ROOTLESS
+          value: "true"
+        - name: MAXPLAYERS
+          value: "8"
+        ports:
+        - containerPort: 7777
+        resources:
+          requests:
+            memory: "4000Mi"
+            cpu: "100m"
+          limits:
+            memory: "8000Mi"
+            cpu: "2000m"
+        volumeMounts:
+        - name: satisfactory-pvc
+          mountPath: /config
+      volumes:
+        - name: satisfactory-pvc
+          persistentVolumeClaim:
+            claimName: satisfactory-pvc

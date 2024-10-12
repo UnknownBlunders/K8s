@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: satisfactory-pv
+  labels:
+    pv-name: satisfactory
+spec:
+  capacity:
+    storage: 25Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs
+  mountOptions:
+    - hard
+    - nfsvers=4.2
+  nfs:
+    path: /satisfactory
+    server: nfs.blunders.me
