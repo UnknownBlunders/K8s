@@ -5,9 +5,15 @@ metadata:
   annotations:
     metallb.universe.tf/loadBalancerIPs: 192.168.7.4
 spec:
+  type: LoadBalancer
   ports:
   - port: 7777
     targetPort: 7777
-    name: game-port-tcp-and-udp
+    name: game-port-tcp
+    protocol: TCP
+  - port: 7777
+    targetPort: 7777
+    name: game-port-udp
+    protocol: UDP
   selector:
     app: satisfactory
