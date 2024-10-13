@@ -11,4 +11,4 @@ resources:
 images:
   - name: satisfactory-container-image
     newName: ghcr.io/unknownblunders/satisfactory
-    newTag: "2024-10-13"
+    newTag: "2024.10.13"
