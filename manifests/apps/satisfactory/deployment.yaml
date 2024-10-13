@@ -17,13 +17,16 @@ spec:
       containers:
       - name: satisfactory
         image: satisfactory-container-image
+        securityContext:
+          runAsUser: 1014
+          runAsGroup: 1014
         env:
         - name: PGID
           value: "1014"
         - name: PUID
           value: "1014"
         - name: ROOTLESS
-          value: "false"
+          value: "true"
         - name: MAXPLAYERS
           value: "8"
         ports:
