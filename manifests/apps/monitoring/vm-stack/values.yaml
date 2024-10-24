@@ -42,7 +42,7 @@ vmsingle:
   ingress:
     enabled: true
     annotations:
-      cert-manager.io/cluster-issuer: "staging-cert-issuer"
+      cert-manager.io/cluster-issuer: "prod-cert-issuer"
     labels: {}
     path: ""
     pathType: Prefix
@@ -84,10 +84,10 @@ kubelet:
   vmScrapes:
     # -- Enable scraping /metrics/cadvisor from kubelet's service
     cadvisor:
-      enabled: false
+      enabled: true
     # -- Enable scraping /metrics/probes from kubelet's service
     probes:
-      enabled: false
+      enabled: true
 # Component scraping the kube api server
 kubeApiServer:
   # -- Enable Kube Api Server metrics scraping

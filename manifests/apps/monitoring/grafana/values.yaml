@@ -62,7 +62,7 @@ grafana.ini:
 ingress:
   enabled: true
   annotations:
-    cert-manager.io/cluster-issuer: "staging-cert-issuer"
+    cert-manager.io/cluster-issuer: "prod-cert-issuer"
   ingressClassName: nginx
   hosts: 
     - grafana.blunders.me
