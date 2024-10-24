@@ -1,0 +1,126 @@
+
+# -- If this chart is used in "Argocd" with "releaseName" field then
+# VMServiceScrapes couldn't select the proper services.
+# For correct working need set value 'argocdReleaseOverride=$ARGOCD_APP_NAME'
+argocdReleaseOverride: ""
+
+
+serviceAccount:
+  create: true
+
+victoria-metrics-operator:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+  crd:
+    create: true
+
+defaultDashboards:
+  enabled: false
+
+# Configures vmsingle params
+vmsingle:
+  enabled: true
+  # -- Full spec for VMSingle CRD. Allowed values describe [here](https://docs.victoriametrics.com/operator/api#vmsinglespec)
+  spec:
+    port: "8429"
+    # -- Data retention period. Possible units character: h(ours), d(ays), w(eeks), y(ears), if no unit character specified - month. The minimum retention period is 24h. See these [docs](https://docs.victoriametrics.com/single-server-victoriametrics/#retention)
+    retentionPeriod: "1"
+    replicaCount: 1
+    extraArgs: {}
+    securityContext:
+      runAsUser: 1015
+      runAsGroup: 1015
+    storage:
+      storageClassName: nfs
+      volumeName: metrics-pv
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 20Gi
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: "staging-cert-issuer"
+    labels: {}
+    path: ""
+    pathType: Prefix
+    ingressClassName: nginx
+    hosts:
+     - metrics.blunders.me
+    tls:
+     - secretName: vm-cert
+       hosts:
+         - metrics.blunders.me
+
+vmalert:
+  enabled: true
+  ingress:
+    enabled: false
+
+
+vmagent:
+  # -- Create VMAgent CR
+  enabled: true
+  ingress:
+    enabled: false
+
+# I manually deploy grafana
+grafana:
+  enabled: false
+
+
+# -- prometheus-node-exporter dependency chart configuration. For possible values check [here](https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus-node-exporter/values.yaml)
+prometheus-node-exporter:
+  enabled: true
+# -- kube-state-metrics dependency chart configuration. For possible values check [here](https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-state-metrics/values.yaml)
+kube-state-metrics:
+  enabled: true
+
+# -- Component scraping the kubelets
+kubelet:
+  enabled: true
+  vmScrapes:
+    # -- Enable scraping /metrics/cadvisor from kubelet's service
+    cadvisor:
+      enabled: false
+    # -- Enable scraping /metrics/probes from kubelet's service
+    probes:
+      enabled: false
+# Component scraping the kube api server
+kubeApiServer:
+  # -- Enable Kube Api Server metrics scraping
+  enabled: true
+
+# Component scraping the kube controller manager
+kubeControllerManager:
+  # -- Enable kube controller manager metrics scraping
+  enabled: true
+
+# Component scraping coreDns. Use either this or kubeDns
+coreDns:
+  # -- Enabled CoreDNS metrics scraping
+  enabled: true
+
+# Component scraping etcd
+kubeEtcd:
+  # -- Enabled KubeETCD metrics scraping
+  enabled: true
+
+# Component scraping kube scheduler
+kubeScheduler:
+  # -- Enable KubeScheduler metrics scraping
+  enabled: true
+
+# Component scraping kube proxy
+kubeProxy:
+  enabled: false
+
+# --  Install VM operator CRDs
+crds:
+  enabled: true
+
+# -- Install prometheus operator CRDs
+prometheus-operator-crds:
+  enabled: true

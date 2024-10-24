@@ -1,0 +1,78 @@
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: victoriametrics
+        type: prometheus
+        orgId: 1
+        url: http://vmsingle-vm-stack-victoria-metrics-k8s-stack.monitoring.svc.cluster.local:8429
+        access: proxy
+        isDefault: true
+        updateIntervalSeconds: 10
+        editable: true
+
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+    - name: 'default'
+      orgId: 1
+      folder: ''
+      type: file
+      disableDeletion: true
+      editable: true
+      options:
+        path: /var/lib/grafana/dashboards/default
+
+dashboards:
+  default:
+    victoriametrics:
+      gnetId: 10229
+      revision: 22
+      datasource: victoriametrics
+    vmagent:
+      gnetId: 12683
+      revision: 7
+      datasource: victoriametrics
+    kubernetes:
+      gnetId: 14205
+      revision: 1
+      datasource: victoriametrics
+
+admin:
+  existingSecret: "grafana-admin-user-secret"
+  userKey: admin-user
+  passwordKey: admin-password
+
+grafana.ini:
+  server:
+    root_url: https://grafana.blunders.me
+  auth.anonymous:
+    enabled: true
+    org_id: 1
+    org_name: Main Org.
+    org_role: Viewer 
+  news:
+    news_feed_enabled: false
+  analytics:
+    check_for_updates: false
+    check_for_plugin_updates: false
+    reporting_enabled: false
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: "staging-cert-issuer"
+  ingressClassName: nginx
+  hosts: 
+    - grafana.blunders.me
+  tls:
+    - secretName: grafana-cert
+      hosts:
+        - grafana.blunders.me
+
+persistence:
+  enabled: false
+
+serviceMonitor:
+  enabled: true
