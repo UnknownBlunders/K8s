@@ -26,17 +26,30 @@ dashboardProviders:
 
 dashboards:
   default:
+  # https://grafana.com/grafana/dashboards/10229-victoriametrics-single-node/
     victoriametrics:
       gnetId: 10229
-      revision: 22
+      revision: 36
       datasource: victoriametrics
+    # https://grafana.com/grafana/dashboards/12683-victoriametrics-vmagent/
     vmagent:
       gnetId: 12683
-      revision: 7
+      revision: 20
       datasource: victoriametrics
-    kubernetes:
-      gnetId: 14205
+    # # https://grafana.com/grafana/dashboards/14205-kubernetes-cluster-monitoring-via-prometheus/
+    # kubernetes:
+    #   gnetId: 14205
+    #   revision: 1
+    #   datasource: victoriametrics
+    # https://grafana.com/grafana/dashboards/21742-object-s-health-kube-state-metrics-v2/
+    kube-metrics:
+      gnetId: 21742
       revision: 1
+      datasource: victoriametrics
+    # https://grafana.com/grafana/dashboards/1860-node-exporter-full/
+    node-exporter:
+      gnetId: 1860
+      revision: 37
       datasource: victoriametrics
 
 admin:
