@@ -51,6 +51,39 @@ dashboards:
       gnetId: 1860
       revision: 37
       datasource: victoriametrics
+    
+    # all of the following are from: https://github.com/dotdc/grafana-dashboards-kubernetes
+    # https://grafana.com/grafana/dashboards/15761-kubernetes-system-api-server/
+    dotdc-k8s-api-server:
+      gnetId: 15761
+      revision: 18
+      datasource: victoriametrics
+    # https://grafana.com/grafana/dashboards/15762-kubernetes-system-coredns/
+    dotdc-k8s-coredns:
+      gnetId: 15762
+      revision: 18
+      datasource: victoriametrics
+    # https://grafana.com/grafana/dashboards/15757-kubernetes-views-global/
+    dotdc-k8s-global:
+      gnetId: 15757
+      revision: 42
+      datasource: victoriametrics
+    # https://grafana.com/grafana/dashboards/15758-kubernetes-views-namespaces/
+    dotdc-k8s-namespaces:
+      gnetId: 15758
+      revision: 39
+      datasource: victoriametrics
+    # https://grafana.com/grafana/dashboards/15759-kubernetes-views-nodes/
+    dotdc-k8s-nodes:
+      gnetId: 15759
+      revision: 32
+      datasource: victoriametrics
+    # https://grafana.com/grafana/dashboards/15760-kubernetes-views-pods/
+    dotdc-k8s-pods:
+      gnetId: 15760
+      revision: 32
+      datasource: victoriametrics
+    
 
 admin:
   existingSecret: "grafana-admin-user-secret"
