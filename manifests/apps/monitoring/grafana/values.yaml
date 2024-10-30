@@ -36,16 +36,6 @@ dashboards:
       gnetId: 12683
       revision: 20
       datasource: victoriametrics
-    # # https://grafana.com/grafana/dashboards/14205-kubernetes-cluster-monitoring-via-prometheus/
-    # kubernetes:
-    #   gnetId: 14205
-    #   revision: 1
-    #   datasource: victoriametrics
-    # https://grafana.com/grafana/dashboards/21742-object-s-health-kube-state-metrics-v2/
-    kube-metrics:
-      gnetId: 21742
-      revision: 1
-      datasource: victoriametrics
     # https://grafana.com/grafana/dashboards/1860-node-exporter-full/
     node-exporter:
       gnetId: 1860
