@@ -27,9 +27,9 @@ spec:
         - containerPort: 8123
         resources:
           requests:
-            memory: "3000Mi"
+            memory: "800Mi"
           limits:
-            memory: "3000Mi"
+            memory: "380Mi"
         volumeMounts:
         - name: ha-pvc
           mountPath: /config
