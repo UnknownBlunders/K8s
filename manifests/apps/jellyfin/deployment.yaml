@@ -30,7 +30,7 @@ spec:
             memory: "300Mi"
             cpu: "100m"
           limits:
-            memory: "1800Mi"
+            memory: "2700Mi"
             gpu.intel.com/i915: "1"
             cpu: "3000m"
         volumeMounts:
