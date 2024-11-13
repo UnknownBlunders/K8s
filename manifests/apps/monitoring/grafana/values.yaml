@@ -41,6 +41,12 @@ dashboards:
       gnetId: 1860
       revision: 37
       datasource: victoriametrics
+    # https://grafana.com/grafana/dashboards/20204-smart-hdd/
+    smart:
+      gnetId: 20204
+      revision: 1
+      datasource:
+        - { name: DS_PROMETHEUS, value: victoriametrics }
     
     # all of the following are from: https://github.com/dotdc/grafana-dashboards-kubernetes
     # https://grafana.com/grafana/dashboards/15761-kubernetes-system-api-server/
