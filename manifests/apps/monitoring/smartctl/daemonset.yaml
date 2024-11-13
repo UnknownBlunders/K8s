@@ -34,3 +34,7 @@ spec:
         - name: dev
           readOnly: true
           mountPath: /dev
+        volumes:
+        - name: dev
+          hostPath:
+            path: /dev
