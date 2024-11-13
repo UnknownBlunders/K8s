@@ -1,0 +1,17 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  labels:
+    app.kubernetes.io/name: prometheus-smartctl-exporter
+  name: smartctl-exporter-scrpae
+  namespace: monitoring
+spec:
+  endpoints:
+  - metricRelabelConfigs:
+    - port: http
+      interval: 60s
+      scrapeTimeout: 30s
+  jobLabel: jobLabel
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-smartctl-exporter 
