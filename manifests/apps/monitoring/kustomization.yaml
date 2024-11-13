@@ -6,4 +6,4 @@ resources:
 - ns.yaml
 - vm-stack
 - grafana
-- smartctl-exporter
+- smartctl
