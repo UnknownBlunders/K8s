@@ -1,0 +1,7 @@
+config:
+  devices:
+    - /dev/sda
+serviceMonitor:
+  enabled: true
+prometheusRules:
+  enabled: false
