@@ -30,7 +30,7 @@ spec:
           requests:
             memory: "40Mi"
           limits:
-            memory: "100Mi"
+            memory: "250Mi"
         volumeMounts:
         - name: abs-media-pvc
           mountPath: /audiobooks
