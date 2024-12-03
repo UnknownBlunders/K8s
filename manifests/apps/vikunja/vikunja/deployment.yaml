@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vikunja-deployment
+  labels:
+    app: vikunja
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vikunja
+  template:
+    metadata:
+      labels:
+        app: vikunja
+    spec:
+      containers:
+      - name: vikunja
+        image: vikunja-container-image
+        securityContext:
+          runAsUser: 1017
+          runAsGroup: 1017
+        ports:
+        - containerPort: 3456
+        resources:
+          requests:
+            memory: "1000Mi"
+            cpu: "500m"
+          limits:
+            memory: "1000Mi"
+            cpu: "500m"
+        env:
+        - name: VIKUNJA_DATABASE_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: vikunja-pg-secret
+              key: POSTGRES_DB
+        - name: VIKUNJA_DATABASE_USER
+          valueFrom:
+            secretKeyRef:
+              name: vikunja-pg-secret
+              key: POSTGRES_USER
+        - name: VIKUNJA_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: vikunja-pg-secret
+              key: POSTGRES_PASSWORD
+        - name: VIKUNJA_SERVICE_JWTSECRET
+          valueFrom:
+            secretKeyRef:
+              name: vikunja-jwt-secret
+              key: JWT
+        - name: VIKUNJA_SERVICE_PUBLICURL
+          value: https://todo.blunders.me
+        - name: VIKUNJA_DATABASE_TYPE
+          value: postgres
+        - name: VIKUNJA_DATABASE_HOST
+          value: vikunja-pg-service
+        - name: VIKUNJA_DEFAULTSETTINGS_AVATAR_PROVIDER
+          value: "initials"
+        - name: VIKUNJA_REDIS_ENABLED
+          value: '1'
+        - name: VIKUNJA_REDIS_HOST
+          value: 'vikunja-redis-service:6379'
+        - name: VIKUNJA_CACHE_ENABLED
+          value: '1'
+        - name: VIKUNJA_CACHE_TYPE
+          value: redis
+        - name: VIKUNJA_SERVICE_TIMEZONE
+          value: America/Denver
+        volumeMounts:
+        - name: vikunja-pg-pvc
+          mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: vikunja-pg-pvc
+          persistentVolumeClaim:
+            claimName: vikunja-pg-pvc

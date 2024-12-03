@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vikunja-pg-deployment
+  labels:
+    app: vikunja-pg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vikunja-pg
+  template:
+    metadata:
+      labels:
+        app: vikunja-pg
+    spec:
+      containers:
+      - name: vikunja-pg
+        image: vikunja-pg-container-image
+        securityContext:
+          runAsUser: 1016
+          runAsGroup: 1016
+        ports:
+        - containerPort: 5432
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "10m"
+          limits:
+            memory: "500Mi"
+            cpu: "100m"
+        env:
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: vikunja-pg-secret
+              key: POSTGRES_DB
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: vikunja-pg-secret
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: vikunja-pg-secret
+              key: POSTGRES_PASSWORD
+        volumeMounts:
+        - name: vikunja-pg-pvc
+          mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: vikunja-pg-pvc
+          persistentVolumeClaim:
+            claimName: vikunja-pg-pvc

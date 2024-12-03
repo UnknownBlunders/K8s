@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vikunja-redis-deployment
+  labels:
+    app: vikunja-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vikunja-redis
+  template:
+    metadata:
+      labels:
+        app: vikunja-redis
+    spec:
+      containers:
+      - name: vikunja-redis
+        image: vikunja-redis-container-image
+        securityContext:
+          privileged: false
+        ports:
+        - containerPort: 6379
+        resources:
+          requests:
+            memory: "30Mi"
+            cpu: "10m"
+          limits:
+            memory: "300Mi"
+            cpu: "100m"

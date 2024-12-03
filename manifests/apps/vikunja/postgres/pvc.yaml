@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: vikunja-pg-pvc
+spec:
+  storageClassName: nfs
+  volumeName: vikunja-pg-pv
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi

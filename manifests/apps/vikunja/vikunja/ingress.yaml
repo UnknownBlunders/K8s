@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vikunja
+  annotations:
+    cert-manager.io/cluster-issuer: "prod-cert-issuer"
+
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - todo.blunders.me
+    secretName: vikunja-secret-tls
+  rules:
+  - host: todo.blunders.me
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: vikunja-service
+            port:
+              number: 80
