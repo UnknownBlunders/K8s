@@ -20,6 +20,8 @@ spec:
         namespace: paperless
       - appName: satisfactory
         namespace: satisfactory
+      - appName: vikunja
+        namespace: vikunja
   template:
     metadata:
       name: '{{appName}}'
