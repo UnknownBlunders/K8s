@@ -12,4 +12,4 @@ resources:
 images:
   - name: ha-container-image
     newName: ghcr.io/home-assistant/home-assistant
-    newTag: "2024.12.1"
+    newTag: "2024.12.2"
