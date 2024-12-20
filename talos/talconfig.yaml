@@ -1,7 +1,7 @@
 clusterName: prod-cluster
 
 # renovate: datasource=github-releases depName=siderolabs/talos
-talosVersion: "v1.8.3"
+talosVersion: "v1.9.0"
 # renovate: datasource=github-releases depName=siderolabs/kubelet
 kubernetesVersion: "v1.31.3"
 endpoint: "https://cluster.blunders.me:6443"
@@ -114,7 +114,7 @@ controlPlane:
     customization:
       systemExtensions:
         officialExtensions:
-          - siderolabs/i915-ucode
+          - siderolabs/i915
           - siderolabs/intel-ucode
           - siderolabs/mei
   patches: # See issue for sysctl: https://github.com/siderolabs/talos/issues/8952#issuecomment-2200582804
@@ -154,7 +154,7 @@ worker:
     customization:
       systemExtensions:
         officialExtensions:
-          - siderolabs/i915-ucode
+          - siderolabs/i915
           - siderolabs/intel-ucode
           - siderolabs/mei
   patches:
