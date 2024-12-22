@@ -15,4 +15,4 @@ resources:
 images:
   - name: vikunja-container-image
     newName: docker.io/vikunja/vikunja
-    newTag: "0.24.5"
+    newTag: "0.24.6"
