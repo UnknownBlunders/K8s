@@ -10,5 +10,5 @@ helmCharts:
   version: "8.8.2"
   valuesFile: values.yaml
 
-generators:
-- ksops-secrets-gen.yaml
+resources:
+- admin-user-es.yaml
