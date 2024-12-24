@@ -20,9 +20,7 @@ helmCharts:
       - "9.9.9.9"
 
 resources:
+- cloudflare-dns-es.yaml
 - https://github.com/cert-manager/cert-manager/releases/download/v1.15.0/cert-manager.crds.yaml
 - prod-cert-issuer.yaml
 - staging-cert-issuer.yaml
-
-generators:
-- ksops-secret-gen.yaml
