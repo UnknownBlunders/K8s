@@ -1,0 +1,22 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: vikunja-jwt-external-secret
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: op-prod
+  target: 
+    name: vikunja-jwt-secret
+    creationPolicy: Owner
+    template:
+      type: Opaque
+      engineVersion: v2
+      data:
+        JWT: '{{ .jwt }}'
+  data:
+  - secretKey: jwt
+    remoteRef:
+      key: vikunja-jwt
+      property: password
