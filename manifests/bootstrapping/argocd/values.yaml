@@ -13,38 +13,6 @@ configs:
     extra:
       accounts.ethan.password: $2a$10$jy6gx.UO6hl8yJqjK8iabukQR8Nyo7k.xfG.d.tkcCPgDg6ALJ/AO
 
-repoServer:
-  env:
-    - name: XDG_CONFIG_HOME
-      value: '/.config'
-    - name: SOPS_AGE_KEY_FILE
-      value: '/.config/sops/age/key.txt'
-  volumes:
-    - name: custom-tools
-      emptyDir: {}
-    - name: age-key
-      secret:
-        secretName: age-key
-  initContainers:
-    - name: install-ksops
-      image: viaductoss/ksops:v4.3.2
-      command: ["/bin/sh", "-c"]
-      args:
-        - 'echo "Installing KSOPS..."; mv ksops /custom-tools/; mv kustomize /custom-tools/; echo "Done.";'
-      volumeMounts:
-        - mountPath: /custom-tools
-          name: custom-tools
-  volumeMounts:
-    - mountPath: /usr/local/bin/kustomize
-      name: custom-tools
-      subPath: kustomize
-    - mountPath: /.config/kustomize/plugin/viaduct.ai/v1/ksops/ksops
-      name: custom-tools
-      subPath: ksops
-    - mountPath: /.config/sops/age
-      name: age-key
-      readOnly: true
-
 server:
   ingress:
     enabled: true
