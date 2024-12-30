@@ -10,5 +10,6 @@ helmCharts:
   namespace: kube-system
   valuesInline:
     providerRegex: ^k(cp|w)\d\d?$
-    providerIpPrefixes: '192.168.6.0/24'
+    providerIpPrefixes: 
+    - '192.168.6.0/24'
     bypassDnsResolution: 'true'
