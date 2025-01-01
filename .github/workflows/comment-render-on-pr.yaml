@@ -62,7 +62,7 @@ jobs:
           echo "</details>" >> diff-out.txt
 
       - name: add comment to PR
-        uses: mshick/add-pr-comment@2.8.2
+        uses: mshick/add-pr-comment@v2.8.2
         with:
           repo-token: ${{ secrets.COMMIT_PAT }}
           message-failure: Diff was not successful
