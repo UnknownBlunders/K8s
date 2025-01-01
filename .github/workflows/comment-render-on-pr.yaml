@@ -47,13 +47,13 @@ jobs:
 
             echo "rendering ${ HEAD_KUSTOMIZATION }"
             mkdir -p ${ RENDERED_HEAD }
-            kustomize build --enable-exec --enable-alpha-plugins "${HEAD_KUSTOMIZATION}" >> ${RENDERED_HEAD)/manifest.yaml
+            kustomize build --enable-exec --enable-alpha-plugins "${HEAD_KUSTOMIZATION}" >> ${RENDERED_HEAD}/manifest.yaml
 
             echo "rendering ${ BASE_KUSTOMIZATION }"
             mkdir -p ${ RENDERED_BASE }
-            kustomize build --enable-exec --enable-alpha-plugins "${BASE_KUSTOMIZATION}" >> ${RENDERED_BASE)/manifest.yaml
+            kustomize build --enable-exec --enable-alpha-plugins "${BASE_KUSTOMIZATION}" >> ${RENDERED_BASE}/manifest.yaml
 
-            git diff --no-index ${RENDERED_HEAD)/manifest.yaml ${RENDERED_BASE)/manifest.yaml >> diff-out.txt
+            git diff --no-index ${RENDERED_HEAD}/manifest.yaml ${RENDERED_BASE}/manifest.yaml >> diff-out.txt
           done
 
       - name: close output file
