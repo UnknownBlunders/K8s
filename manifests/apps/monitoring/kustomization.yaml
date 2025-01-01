@@ -7,3 +7,4 @@ resources:
 - vm-stack
 - grafana
 - smartctl
+- victoria-logs

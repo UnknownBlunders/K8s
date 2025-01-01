@@ -1,0 +1,27 @@
+server:
+  persistentVolume:
+    enabled: true
+    existingClaim: "logs-pvc"
+
+  podSecurityContext:
+    enabled: true
+    fsGroup: 2000
+    runAsNonRoot: true
+    runAsUser: 1018
+  
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: "staging-cert-issuer"
+    ingressClassName: nginx
+    hosts:
+      - name: logs.blunders.me
+        path:
+          - /
+        port: http
+    tls:
+      - secretName: vlogs-cert
+        hosts:
+        - logs.blunders.me
+
+  
