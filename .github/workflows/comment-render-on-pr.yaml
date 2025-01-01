@@ -55,7 +55,7 @@ jobs:
             mkdir -p ${RENDERED_BASE}
             kustomize build --enable-exec --enable-alpha-plugins "${BASE_KUSTOMIZATION}" >> ${RENDERED_BASE}/manifest.yaml
 
-            git diff --no-index ${RENDERED_HEAD}/manifest.yaml ${RENDERED_BASE}/manifest.yaml >> ../diff-out.txt
+            diff ${RENDERED_BASE}/manifest.yaml ${RENDERED_HEAD}/manifest.yaml >> ../diff-out.txt
 
             cat ../diff-out.txt
           done
