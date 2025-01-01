@@ -1,4 +1,4 @@
-name: render kustomization to rendered-manifests folder
+name: render kustomization and comment diff on PR
 
 on:
   pull_request:
