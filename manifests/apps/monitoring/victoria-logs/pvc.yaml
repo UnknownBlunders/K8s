@@ -3,6 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: logs-pvc
 spec:
+  storageClassName: nfs
   accessModes:
     - ReadWriteOnce
   resources:
