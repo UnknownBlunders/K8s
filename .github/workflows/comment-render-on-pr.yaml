@@ -16,14 +16,14 @@ jobs:
         with:
           token: ${{ secrets.COMMIT_PAT }}
           ref: ${{ github.head_ref }}
-          path: ${ GITHUB_WORKSPACE }/head
+          path: head
 
       - name: Checkout base repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.COMMIT_PAT }}
           ref: ${{ github.base_ref }}
-          path: ${ GITHUB_WORKSPACE }/base
+          path: base
 
       - name: setup output file
         run: |
@@ -40,11 +40,11 @@ jobs:
         run: |
           for KUSTOMIZATION_PATH in $( gh pr view 425 --json files -q '.files[].path' | cut -d/ -f 1-3 ) # get first three directories of changed files
           do
-            HEAD_KUSTOMIZATION=${ GITHUB_WORKSPACE }/head/${KUSTOMIZATION_PATH}
-            RENDERED_HEAD=${ GITHUB_WORKSPACE }/rendered/head/${KUSTOMIZATION_PATH}
+            HEAD_KUSTOMIZATION=${KUSTOMIZATION_PATH}
+            RENDERED_HEAD=../rendered/head/${KUSTOMIZATION_PATH}
 
-            BASE_KUSTOMIZATION=${ GITHUB_WORKSPACE }/base/${KUSTOMIZATION_PATH}
-            RENDERED_BASE=${ GITHUB_WORKSPACE }/rendered/base/${KUSTOMIZATION_PATH}
+            BASE_KUSTOMIZATION=../base/${KUSTOMIZATION_PATH}
+            RENDERED_BASE=../rendered/base/${KUSTOMIZATION_PATH}
 
             echo "rendering ${ HEAD_KUSTOMIZATION }"
             mkdir -p ${ RENDERED_HEAD }
@@ -54,7 +54,7 @@ jobs:
             mkdir -p ${ RENDERED_BASE }
             kustomize build --enable-exec --enable-alpha-plugins "${BASE_KUSTOMIZATION}" >> ${RENDERED_BASE}/manifest.yaml
 
-            git diff --no-index ${RENDERED_HEAD}/manifest.yaml ${RENDERED_BASE}/manifest.yaml >> ${ GITHUB_WORKSPACE }/diff-out.txt
+            git diff --no-index ${RENDERED_HEAD}/manifest.yaml ${RENDERED_BASE}/manifest.yaml >> ../diff-out.txt
           done
 
       - name: close output file
