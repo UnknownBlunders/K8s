@@ -34,6 +34,7 @@ jobs:
           echo "\`\`\`diff" >> diff-out.txt
 
       - name: render kustomizations
+        working-directory: head
         env: 
           GH_TOKEN: ${{ secrets.COMMIT_PAT }}
         run: |
@@ -53,7 +54,7 @@ jobs:
             mkdir -p ${ RENDERED_BASE }
             kustomize build --enable-exec --enable-alpha-plugins "${BASE_KUSTOMIZATION}" >> ${RENDERED_BASE}/manifest.yaml
 
-            git diff --no-index ${RENDERED_HEAD}/manifest.yaml ${RENDERED_BASE}/manifest.yaml >> diff-out.txt
+            git diff --no-index ${RENDERED_HEAD}/manifest.yaml ${RENDERED_BASE}/manifest.yaml >> ${ GITHUB_WORKSPACE }/diff-out.txt
           done
 
       - name: close output file
