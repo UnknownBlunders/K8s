@@ -1,10 +1,9 @@
 name: render kustomization to rendered-manifests folder
 
 on:
-  workflow_dispatch:
-  push:
+  pull_request:
     branches:
-      - 'main'
+      - main
 
 jobs:
   build-and-push-image:
@@ -12,38 +11,59 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout repository
+      - name: Checkout head repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.COMMIT_PAT }}
-      
-      - name: clear rendered-manifests directory
-        working-directory: rendered-manifests
+          ref: ${{ github.head_ref }}
+          path: ${ GITHUB_WORKSPACE }/head
+
+      - name: Checkout base repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.COMMIT_PAT }}
+          ref: ${{ github.base_ref }}
+          path: ${ GITHUB_WORKSPACE }/base
+
+      - name: setup output file
         run: |
-          rm -r ./*
-      
+          echo "Here are the rendered changes made in this PR:" >> diff-out.txt
+          echo "<details>" >> diff-out.txt
+          echo "<summary> Kustomization build Diff </summary>" >> diff-out.txt
+          echo " " >> diff-out.txt
+          echo "\`\`\`diff" >> diff-out.txt
+
       - name: render kustomizations
-        working-directory: manifests
+        env: 
+          GH_TOKEN: ${{ secrets.COMMIT_PAT }}
         run: |
-          for KUSTOMIZATION in $( find -maxdepth 3 -type f -name kustomization.yaml )
+          for KUSTOMIZATION_PATH in $( gh pr view 425 --json files -q '.files[].path' | cut -d/ -f 1-3 ) # get first three directories of changed files
           do
-            echo "rendering ${KUSTOMIZATION}"
-            KUSTOMIZATION_PATH=$(dirname ${KUSTOMIZATION})
-            mkdir -p ../rendered-manifests/${KUSTOMIZATION_PATH}
-            kustomize build --enable-exec --enable-alpha-plugins "${KUSTOMIZATION_PATH}" >> ../rendered-manifests/${KUSTOMIZATION_PATH}/manifest.yaml
+            HEAD_KUSTOMIZATION=${ GITHUB_WORKSPACE }/head/${KUSTOMIZATION_PATH}
+            RENDERED_HEAD=${ GITHUB_WORKSPACE }/rendered/head/${KUSTOMIZATION_PATH}
+
+            BASE_KUSTOMIZATION=${ GITHUB_WORKSPACE }/base/${KUSTOMIZATION_PATH}
+            RENDERED_BASE=${ GITHUB_WORKSPACE }/rendered/base/${KUSTOMIZATION_PATH}
+
+            echo "rendering ${ HEAD_KUSTOMIZATION }"
+            mkdir -p ${ RENDERED_HEAD }
+            kustomize build --enable-exec --enable-alpha-plugins "${HEAD_KUSTOMIZATION}" >> ${RENDERED_HEAD)/manifest.yaml
+
+            echo "rendering ${ BASE_KUSTOMIZATION }"
+            mkdir -p ${ RENDERED_BASE }
+            kustomize build --enable-exec --enable-alpha-plugins "${BASE_KUSTOMIZATION}" >> ${RENDERED_BASE)/manifest.yaml
+
+            git diff --no-index ${RENDERED_HEAD)/manifest.yaml ${RENDERED_BASE)/manifest.yaml >> diff-out.txt
           done
 
-      - name: commit changes to render
-        working-directory: rendered-manifests
+      - name: close output file
         run: |
-          if [[ -n $(git status --porcelain . ) ]]; then
+          echo "\`\`\`" >> diff-out.txt
+          echo "</details>" >> diff-out.txt
 
-            git config user.name github-actions
-            git config user.email github-actions@github.com
-
-            git add .
-            git commit -m "[skip ci] render manifests" -m "Generated from https://github.com/UnknownBlunders/K8s/commit/${{ github.sha }}."
-            git pull --rebase
-            git push
-
-          fi
+      - name: add comment to PR
+        uses: mshick/add-pr-comment@2.8.2
+        with:
+          repo-token: ${{ secrets.COMMIT_PAT }}
+          message-failure: Diff was not successful
+          message-path: diff-out.txt
