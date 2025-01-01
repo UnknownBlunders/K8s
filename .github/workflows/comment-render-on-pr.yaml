@@ -55,7 +55,7 @@ jobs:
             mkdir -p ${RENDERED_BASE}
             kustomize build --enable-exec --enable-alpha-plugins "${BASE_KUSTOMIZATION}" >> ${RENDERED_BASE}/manifest.yaml
 
-            git diff --no-index ./manifests/bootstrapping/argo-appsets/application.yaml ./manifests/bootstrapping/argo-appsets/bootstrappset.yaml
+            git diff --no-index ${RENDERED_BASE}/manifest.yaml ${RENDERED_HEAD}/manifest.yaml >> ../diff-out.txt || true
 
             cat ../diff-out.txt
           done
