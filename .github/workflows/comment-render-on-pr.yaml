@@ -32,6 +32,7 @@ jobs:
           echo "<summary> Kustomization build Diff </summary>" >> diff-out.txt
           echo " " >> diff-out.txt
           echo "\`\`\`diff" >> diff-out.txt
+          cat diff-out.txt
 
       - name: render kustomizations
         working-directory: head
@@ -40,6 +41,9 @@ jobs:
         run: |
           for KUSTOMIZATION_PATH in $( gh pr view 425 --json files -q '.files[].path' | cut -d/ -f 1-3 ) # get first three directories of changed files
           do
+            echo "current diff-out:"
+            cat diff-out.txt
+
             HEAD_KUSTOMIZATION=${KUSTOMIZATION_PATH}
             RENDERED_HEAD=../rendered/head/${KUSTOMIZATION_PATH}
 
@@ -50,11 +54,17 @@ jobs:
             mkdir -p ${RENDERED_HEAD}
             kustomize build --enable-exec --enable-alpha-plugins "${HEAD_KUSTOMIZATION}" >> ${RENDERED_HEAD}/manifest.yaml
 
+            cat ${RENDERED_HEAD}/manifest.yaml
+
             echo "rendering ${BASE_KUSTOMIZATION}"
             mkdir -p ${RENDERED_BASE}
             kustomize build --enable-exec --enable-alpha-plugins "${BASE_KUSTOMIZATION}" >> ${RENDERED_BASE}/manifest.yaml
 
+            ${RENDERED_BASE}/manifest.yaml
+
             git diff --no-index ${RENDERED_HEAD}/manifest.yaml ${RENDERED_BASE}/manifest.yaml >> ../diff-out.txt
+
+            cat ../diff-out.txt
           done
 
       - name: close output file
