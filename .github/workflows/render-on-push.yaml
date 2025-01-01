@@ -42,7 +42,7 @@ jobs:
             git config user.email github-actions@github.com
 
             git add .
-            git commit -m "render manifests" -m "Generated from https://github.com/UnknownBlunders/K8s/commit/${{ github.sha }}."
+            git commit -m "[skip ci] render manifests" -m "Generated from https://github.com/UnknownBlunders/K8s/commit/${{ github.sha }}."
             git pull --rebase
             git push
 
