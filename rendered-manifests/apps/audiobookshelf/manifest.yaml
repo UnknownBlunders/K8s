@@ -1,0 +1,370 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    name: abs
+  name: abs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: abs-service
+  namespace: abs
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 13378
+  selector:
+    app: abs
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: abs-config-pv
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  mountOptions:
+  - hard
+  - nfsvers=4.2
+  nfs:
+    path: /abs-config
+    server: nfs.blunders.me
+  storageClassName: nfs
+  volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: abs-media-pv
+spec:
+  accessModes:
+  - ReadOnlyMany
+  capacity:
+    storage: 500Gi
+  mountOptions:
+  - hard
+  - nfsvers=4.2
+  nfs:
+    path: /abs
+    server: nfs.blunders.me
+  storageClassName: nfs
+  volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: abs-config-pvc
+  namespace: abs
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: nfs
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: abs-media-pvc
+  namespace: abs
+spec:
+  accessModes:
+  - ReadOnlyMany
+  resources:
+    requests:
+      storage: 500Gi
+  storageClassName: nfs
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: abs
+  name: abs-deployment
+  namespace: abs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: abs
+  template:
+    metadata:
+      labels:
+        app: abs
+    spec:
+      containers:
+      - env:
+        - name: PORT
+          value: "13378"
+        image: ghcr.io/advplyr/audiobookshelf:2.17.6
+        name: abs
+        ports:
+        - containerPort: 13378
+        resources:
+          limits:
+            memory: 250Mi
+          requests:
+            memory: 40Mi
+        securityContext:
+          runAsGroup: 1002
+          runAsUser: 1002
+        volumeMounts:
+        - mountPath: /audiobooks
+          name: abs-media-pvc
+          subPath: audiobooks
+        - mountPath: /podcasts
+          name: abs-media-pvc
+          subPath: podcasts
+        - mountPath: /config
+          name: abs-config-pvc
+          subPath: config
+        - mountPath: /metadata
+          name: abs-config-pvc
+          subPath: metadata
+      volumes:
+      - name: abs-config-pvc
+        persistentVolumeClaim:
+          claimName: abs-config-pvc
+      - name: abs-media-pvc
+        persistentVolumeClaim:
+          claimName: abs-media-pvc
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: prod-cert-issuer
+  name: abs
+  namespace: abs
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: bookshelf.blunders.me
+    http:
+      paths:
+      - backend:
+          service:
+            name: abs-service
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - bookshelf.blunders.me
+    secretName: abs-secret-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: prod-cert-issuer
+  name: abs-pub
+  namespace: abs
+spec:
+  ingressClassName: nginx-external
+  rules:
+  - host: bookshelf.blunders.dev
+    http:
+      paths:
+      - backend:
+          service:
+            name: abs-service
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - bookshelf.blunders.dev
+    secretName: abs-secret-tls-pub
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    name: abs
+  name: abs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: abs-service
+  namespace: abs
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 13378
+  selector:
+    app: abs
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: abs-config-pv
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  mountOptions:
+  - hard
+  - nfsvers=4.2
+  nfs:
+    path: /abs-config
+    server: nfs.blunders.me
+  storageClassName: nfs
+  volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: abs-media-pv
+spec:
+  accessModes:
+  - ReadOnlyMany
+  capacity:
+    storage: 500Gi
+  mountOptions:
+  - hard
+  - nfsvers=4.2
+  nfs:
+    path: /abs
+    server: nfs.blunders.me
+  storageClassName: nfs
+  volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: abs-config-pvc
+  namespace: abs
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: nfs
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: abs-media-pvc
+  namespace: abs
+spec:
+  accessModes:
+  - ReadOnlyMany
+  resources:
+    requests:
+      storage: 500Gi
+  storageClassName: nfs
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: abs
+  name: abs-deployment
+  namespace: abs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: abs
+  template:
+    metadata:
+      labels:
+        app: abs
+    spec:
+      containers:
+      - env:
+        - name: PORT
+          value: "13378"
+        image: ghcr.io/advplyr/audiobookshelf:2.17.6
+        name: abs
+        ports:
+        - containerPort: 13378
+        resources:
+          limits:
+            memory: 250Mi
+          requests:
+            memory: 40Mi
+        securityContext:
+          runAsGroup: 1002
+          runAsUser: 1002
+        volumeMounts:
+        - mountPath: /audiobooks
+          name: abs-media-pvc
+          subPath: audiobooks
+        - mountPath: /podcasts
+          name: abs-media-pvc
+          subPath: podcasts
+        - mountPath: /config
+          name: abs-config-pvc
+          subPath: config
+        - mountPath: /metadata
+          name: abs-config-pvc
+          subPath: metadata
+      volumes:
+      - name: abs-config-pvc
+        persistentVolumeClaim:
+          claimName: abs-config-pvc
+      - name: abs-media-pvc
+        persistentVolumeClaim:
+          claimName: abs-media-pvc
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: prod-cert-issuer
+  name: abs
+  namespace: abs
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: bookshelf.blunders.me
+    http:
+      paths:
+      - backend:
+          service:
+            name: abs-service
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - bookshelf.blunders.me
+    secretName: abs-secret-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: prod-cert-issuer
+  name: abs-pub
+  namespace: abs
+spec:
+  ingressClassName: nginx-external
+  rules:
+  - host: bookshelf.blunders.dev
+    http:
+      paths:
+      - backend:
+          service:
+            name: abs-service
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - bookshelf.blunders.dev
+    secretName: abs-secret-tls-pub

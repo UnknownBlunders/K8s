@@ -1,0 +1,49 @@
+name: render kustomization to rendered-manifests folder
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.COMMIT_PAT }}
+      
+      - name: clear rendered-manifests directory
+        working-directory: rendered-manifests
+        run: |
+          rm -r ./*
+      
+      - name: render kustomizations
+        working-directory: manifests
+        run: |
+          for KUSTOMIZATION in $( find -maxdepth 3 -type f -name kustomization.yaml )
+          do
+            echo "rendering ${KUSTOMIZATION}"
+            KUSTOMIZATION_PATH=$(dirname ${KUSTOMIZATION})
+            mkdir -p ../rendered-manifests/${KUSTOMIZATION_PATH}
+            kustomize build --enable-exec --enable-alpha-plugins "${KUSTOMIZATION_PATH}" >> ../rendered-manifests/${KUSTOMIZATION_PATH}/manifest.yaml
+          done
+
+      - name: commit changes to render
+        working-directory: rendered-manifests
+        run: |
+          if [[ -n $(git status --porcelain . ) ]]; then
+
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+
+            git add .
+            git commit -m "render manifests" -m "Generated from https://github.com/UnknownBlunders/K8s/commit/${{ github.sha }}."
+            git pull --rebase
+            git push
+
+          fi

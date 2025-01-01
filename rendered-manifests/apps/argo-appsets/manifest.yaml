@@ -1,0 +1,194 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring
+  namespace: argocd
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: manifests/apps/monitoring
+    repoURL: https://github.com/unknownblunders/K8s.git
+    targetRevision: main
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: local-apps
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - appName: jellyfin
+        namespace: jellyfin
+      - appName: audiobookshelf
+        namespace: abs
+      - appName: minecraft
+        namespace: minecraft
+      - appName: home-assistant
+        namespace: ha
+      - appName: immich
+        namespace: immich
+      - appName: paperless
+        namespace: paperless
+      - appName: satisfactory
+        namespace: satisfactory
+      - appName: vikunja
+        namespace: vikunja
+  template:
+    metadata:
+      name: '{{appName}}'
+    spec:
+      destination:
+        namespace: '{{namespace}}'
+        server: https://kubernetes.default.svc
+      project: default
+      source:
+        path: manifests/apps/{{appName}}
+        repoURL: https://github.com/unknownblunders/K8s.git
+        targetRevision: main
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: remote-apps
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - appName: blunder-blog
+        appPath: manifests
+        namespace: blunders-blog
+        repoPath: https://github.com/unknownblunders/website.git
+  template:
+    metadata:
+      name: '{{appName}}'
+    spec:
+      destination:
+        namespace: '{{namespace}}'
+        server: https://kubernetes.default.svc
+      project: default
+      source:
+        path: '{{appPath}}'
+        repoURL: '{{repoPath}}'
+        targetRevision: main
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring
+  namespace: argocd
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: manifests/apps/monitoring
+    repoURL: https://github.com/unknownblunders/K8s.git
+    targetRevision: main
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: local-apps
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - appName: jellyfin
+        namespace: jellyfin
+      - appName: audiobookshelf
+        namespace: abs
+      - appName: minecraft
+        namespace: minecraft
+      - appName: home-assistant
+        namespace: ha
+      - appName: immich
+        namespace: immich
+      - appName: paperless
+        namespace: paperless
+      - appName: satisfactory
+        namespace: satisfactory
+      - appName: vikunja
+        namespace: vikunja
+  template:
+    metadata:
+      name: '{{appName}}'
+    spec:
+      destination:
+        namespace: '{{namespace}}'
+        server: https://kubernetes.default.svc
+      project: default
+      source:
+        path: manifests/apps/{{appName}}
+        repoURL: https://github.com/unknownblunders/K8s.git
+        targetRevision: main
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: remote-apps
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - appName: blunder-blog
+        appPath: manifests
+        namespace: blunders-blog
+        repoPath: https://github.com/unknownblunders/website.git
+  template:
+    metadata:
+      name: '{{appName}}'
+    spec:
+      destination:
+        namespace: '{{namespace}}'
+        server: https://kubernetes.default.svc
+      project: default
+      source:
+        path: '{{appPath}}'
+        repoURL: '{{repoPath}}'
+        targetRevision: main
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true

@@ -1,0 +1,94 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: bootstrapping
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - appName: cilium
+        namespace: kube-system
+      - appName: metallb
+        namespace: metallb-system
+      - appName: cert-manager
+        namespace: kube-system
+      - appName: ingress-nginx
+        namespace: ingress-nginx
+      - appName: ingress-external
+        namespace: ingress-external
+      - appName: argocd
+        namespace: argocd
+      - appName: kubelet-csr-approver
+        namespace: kube-system
+      - appName: node-feature-discovery
+        namespace: kube-system
+      - appName: intel-device-plugin
+        namespace: kube-system
+      - appName: external-secrets
+        namespace: external-secrets
+  template:
+    metadata:
+      name: '{{appName}}'
+    spec:
+      destination:
+        namespace: '{{namespace}}'
+        server: https://kubernetes.default.svc
+      project: default
+      source:
+        path: manifests/bootstrapping/{{appName}}
+        repoURL: https://github.com/unknownblunders/K8s.git
+        targetRevision: main
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: bootstrapping
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - appName: cilium
+        namespace: kube-system
+      - appName: metallb
+        namespace: metallb-system
+      - appName: cert-manager
+        namespace: kube-system
+      - appName: ingress-nginx
+        namespace: ingress-nginx
+      - appName: ingress-external
+        namespace: ingress-external
+      - appName: argocd
+        namespace: argocd
+      - appName: kubelet-csr-approver
+        namespace: kube-system
+      - appName: node-feature-discovery
+        namespace: kube-system
+      - appName: intel-device-plugin
+        namespace: kube-system
+      - appName: external-secrets
+        namespace: external-secrets
+  template:
+    metadata:
+      name: '{{appName}}'
+    spec:
+      destination:
+        namespace: '{{namespace}}'
+        server: https://kubernetes.default.svc
+      project: default
+      source:
+        path: manifests/bootstrapping/{{appName}}
+        repoURL: https://github.com/unknownblunders/K8s.git
+        targetRevision: main
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
