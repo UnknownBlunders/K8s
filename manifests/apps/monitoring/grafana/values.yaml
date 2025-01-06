@@ -62,7 +62,8 @@ dashboards:
     victoria-logs-simple:
       gnetId: 21550
       revision: 1
-      datasource: victorialogs
+      datasource: 
+        - { name: DS_LOGS, value: victorialogs }
     
     # all of the following are from: https://github.com/dotdc/grafana-dashboards-kubernetes
     # https://grafana.com/grafana/dashboards/15761-kubernetes-system-api-server/
