@@ -52,12 +52,6 @@ dashboards:
       gnetId: 1860
       revision: 37
       datasource: victoriametrics
-    # https://grafana.com/grafana/dashboards/20204-smart-hdd/
-    smart:
-      gnetId: 20204
-      revision: 1
-      datasource:
-        - { name: DS_PROMETHEUS, value: victoriametrics }
     # https://grafana.com/grafana/dashboards/22604-smartctl-exporter-dashboard/
     smartctl-exporter:
       gnetId: 22604
