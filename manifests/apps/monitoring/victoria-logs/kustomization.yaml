@@ -13,3 +13,4 @@ helmCharts:
 resources:
 - pv.yaml
 - pvc.yaml
+- metrics-scrape.yaml
