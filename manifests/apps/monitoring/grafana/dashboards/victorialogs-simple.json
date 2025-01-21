@@ -1,0 +1,163 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "grafana",
+            "uid": "-- Grafana --"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "description": "Simple dashboard to watch VictoriaLogs\r\n",
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 7,
+    "links": [],
+    "panels": [
+      {
+        "datasource": {
+          "type": "VictoriaLogs",
+          "uid": "victorialogs"
+        },
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 23,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 1,
+        "options": {
+          "dedupStrategy": "none",
+          "enableLogDetails": true,
+          "prettifyLogMessage": false,
+          "showCommonLabels": false,
+          "showLabels": false,
+          "showTime": true,
+          "sortOrder": "Descending",
+          "wrapLogMessage": false
+        },
+        "pluginVersion": "11.4.0",
+        "targets": [
+          {
+            "datasource": {
+              "type": "VictoriaLogs",
+              "uid": "victorialogs"
+            },
+            "expr": "(kubernetes_namespace: ${namespace.*} AND kubernetes_pod_name: ${workload.*}) OR \"${query.*}\"",
+            "queryType": "range",
+            "refId": "A"
+          }
+        ],
+        "title": "Logs in ${namespace} for ${workload}",
+        "type": "logs"
+      }
+    ],
+    "preload": false,
+    "refresh": "",
+    "schemaVersion": 40,
+    "tags": [],
+    "templating": {
+      "list": [
+        {
+          "current": {},
+          "description": "Datasource for logs",
+          "hide": 2,
+          "label": "Logs Datasource",
+          "name": "DS_LOGS",
+          "skipUrlSync": true,
+          "type": "constant"
+        },
+        {
+          "current": {},
+          "description": "Datasource for metrics",
+          "hide": 2,
+          "label": "Metrics Datasource",
+          "name": "DS_METRICS",
+          "skipUrlSync": true,
+          "type": "constant"
+        },
+        {
+          "current": {
+            "text": "",
+            "value": ""
+          },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "victoriametrics"
+          },
+          "definition": "label_values(kube_namespace_created,namespace)",
+          "includeAll": false,
+          "name": "namespace",
+          "options": [],
+          "query": {
+            "qryType": 1,
+            "query": "label_values(kube_namespace_created,namespace)",
+            "refId": "PrometheusVariableQueryEditor-VariableQuery"
+          },
+          "refresh": 1,
+          "regex": "",
+          "type": "query"
+        },
+        {
+          "current": {
+            "text": "",
+            "value": ""
+          },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "victoriametrics"
+          },
+          "definition": "label_values(namespace_workload_pod:kube_pod_owner:relabel{namespace=\"$namespace\"},workload)",
+          "includeAll": false,
+          "name": "workload",
+          "options": [],
+          "query": {
+            "qryType": 1,
+            "query": "label_values(namespace_workload_pod:kube_pod_owner:relabel{namespace=\"$namespace\"},workload)",
+            "refId": "PrometheusVariableQueryEditor-VariableQuery"
+          },
+          "refresh": 1,
+          "regex": "",
+          "type": "query"
+        },
+        {
+          "current": {
+            "text": "",
+            "value": ""
+          },
+          "name": "query",
+          "options": [
+            {
+              "selected": true,
+              "text": "",
+              "value": ""
+            }
+          ],
+          "query": "",
+          "type": "textbox"
+        }
+      ]
+    },
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "browser",
+    "title": "Simple VictoriaLogs",
+    "uid": "bdpzp3w3jkt8ga",
+    "version": 1,
+    "weekStart": ""
+  }

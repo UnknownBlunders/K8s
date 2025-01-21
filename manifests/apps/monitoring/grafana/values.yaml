@@ -65,8 +65,7 @@ dashboards:
       datasource: victoriametrics
     # https://grafana.com/grafana/dashboards/21550-simple-logs/
     victoria-logs-simple:
-      gnetId: 21550
-      revision: 1
+      url: https://raw.githubusercontent.com/UnknownBlunders/K8s/refs/heads/main/manifests/apps/monitoring/grafana/dashboards/victorialogs-simple.json
       datasource: 
         - { name: DS_LOGS, value: victorialogs }
     
