@@ -58,6 +58,11 @@ dashboards:
       revision: 1
       datasource:
         - { name: DS_PROMETHEUS, value: victoriametrics }
+    # https://grafana.com/grafana/dashboards/22084-victorialogs/
+    victoria-logs-metrics:
+      gnetId: 22084
+      revision: 3
+      datasource: victoriametrics
     # https://grafana.com/grafana/dashboards/21550-simple-logs/
     victoria-logs-simple:
       gnetId: 21550
