@@ -58,6 +58,12 @@ dashboards:
       revision: 1
       datasource:
         - { name: DS_PROMETHEUS, value: victoriametrics }
+    # https://grafana.com/grafana/dashboards/22604-smartctl-exporter-dashboard/
+    smartctl-exporter:
+      gnetId: 22604
+      revision: 2
+      datasource:
+        - { name: DS_PROMETHEUS, value: victoriametrics }
     # https://grafana.com/grafana/dashboards/22084-victorialogs/
     victoria-logs-metrics:
       gnetId: 22084
