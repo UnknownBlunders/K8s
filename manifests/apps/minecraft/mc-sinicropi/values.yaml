@@ -21,6 +21,8 @@ persistence:
     enabled: true
     existingClaim: mc-sinicropi-pvc
 
+replicaCount: 0
+
 minecraftServer:
   eula: "TRUE"
   # may be SNAPSHOT or a specific version number
