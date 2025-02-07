@@ -44,6 +44,4 @@
     operator:
       rollOutPods: true
     dashboards:
-      enabled: true
-      annotations:
-        grafana_folder: Cilium
+      enabled: false
