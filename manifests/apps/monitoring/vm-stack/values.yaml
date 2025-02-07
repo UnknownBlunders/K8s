@@ -28,7 +28,7 @@ vmsingle:
     retentionPeriod: "1"
     replicaCount: 1
     extraArgs: 
-      maxLabelsPerTimeseries: "50"
+      maxLabelsPerTimeseries: "80"
     securityContext:
       runAsUser: 1015
       runAsGroup: 1015
