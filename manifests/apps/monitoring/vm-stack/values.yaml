@@ -27,7 +27,8 @@ vmsingle:
     # -- Data retention period. Possible units character: h(ours), d(ays), w(eeks), y(ears), if no unit character specified - month. The minimum retention period is 24h. See these [docs](https://docs.victoriametrics.com/single-server-victoriametrics/#retention)
     retentionPeriod: "1"
     replicaCount: 1
-    extraArgs: {}
+    extraArgs: 
+      maxLabelsPerTimeseries: "50"
     securityContext:
       runAsUser: 1015
       runAsGroup: 1015
