@@ -9,4 +9,4 @@ resources:
 images:
   - name: gotenberg-container-image
     newName: gotenberg/gotenberg
-    newTag: "8.17.1"
+    newTag: "8.17.3"
