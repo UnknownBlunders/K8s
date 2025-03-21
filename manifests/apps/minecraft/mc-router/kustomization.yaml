@@ -7,5 +7,5 @@ helmCharts:
   releaseName: mc-router
   namespace: minecraft
   repo: https://itzg.github.io/minecraft-server-charts/
-  version: "1.2.4"
+  version: "1.2.5"
   valuesFile: values.yaml
