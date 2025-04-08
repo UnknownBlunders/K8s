@@ -12,4 +12,4 @@ resources:
 images:
   - name: paperless-server-container-image
     newName: ghcr.io/paperless-ngx/paperless-ngx
-    newTag: "2.14.7"
+    newTag: "2.15.0"
