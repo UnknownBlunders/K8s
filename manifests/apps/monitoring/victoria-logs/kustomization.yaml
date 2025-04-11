@@ -7,7 +7,7 @@ helmCharts:
   releaseName: victoria-logs
   namespace: monitoring
   repo: https://victoriametrics.github.io/helm-charts/
-  version: "0.9.4"
+  version: "0.9.5"
   valuesFile: values.yaml
 
 resources:
