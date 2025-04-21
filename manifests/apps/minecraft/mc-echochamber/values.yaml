@@ -21,7 +21,7 @@ persistence:
     enabled: true
     existingClaim: mc-echochamber-pvc
 
-replicaCount: 0
+replicaCount: 1
 
 minecraftServer:
   eula: "TRUE"
