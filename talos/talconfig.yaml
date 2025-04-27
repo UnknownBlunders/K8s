@@ -108,10 +108,32 @@ nodes:
     - network: 0.0.0.0/0
       gateway: 192.168.6.1
     mtu: 1500
-
+- hostname: kw03.blunders.me
+  disableSearchDomain: true
+  ipAddress: 192.168.6.16
+  controlPlane: false
+  installDiskSelector:
+    size: '< 500GB'
+    type: 'nvme'
+  nameservers:
+  - 192.168.6.1
+  networkInterfaces:
+  - interface: enp1s0
+    dhcp: false
+    addresses:
+    - 192.168.6.16/23
+    routes:
+    - network: 0.0.0.0/0
+      gateway: 192.168.6.1
+    mtu: 1500
 controlPlane:
+  machineSpec:
+      secureboot: true
   schematic:
     customization:
+      extraKernelArgs:
+        - -lockdown
+        - lockdown=integrity
       systemExtensions:
         officialExtensions:
           - siderolabs/i915
@@ -150,8 +172,13 @@ controlPlane:
           disabled: true
 
 worker:
+  machineSpec:
+      secureboot: true
   schematic:
     customization:
+      extraKernelArgs:
+        - -lockdown
+        - lockdown=integrity
       systemExtensions:
         officialExtensions:
           - siderolabs/i915
