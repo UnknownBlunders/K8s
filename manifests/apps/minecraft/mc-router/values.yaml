@@ -9,4 +9,5 @@ services:
 
 image:
   # renovate: datasource=github-releases depName=itzg/mc-router
-  tag: v1.28.2
+  tag: "1.28.2"
+  pullPolicy: IfNotPresent
