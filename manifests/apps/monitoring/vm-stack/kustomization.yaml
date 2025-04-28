@@ -7,8 +7,13 @@ helmCharts:
   releaseName: vm-stack
   namespace: monitoring
   repo: https://victoriametrics.github.io/helm-charts/
-  version: "0.38.3"
+  version: "0.44.0"
   valuesFile: values.yaml
+
+- name: prometheus-operator-crds
+  releaseName: prometheus-crds
+  repo: https://prometheus-community.github.io/helm-charts
+  version: "19.1.0"
 
 resources:
 - pv.yaml
