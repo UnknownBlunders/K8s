@@ -1,16 +1,24 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base"],
-  "regexManagers": [
+  "extends": [
+    "config:recommended"
+  ],
+  "customManagers": [
     {
-      "fileMatch": ["talconfig.ya??ml$"],
+      "customType": "regex",
+      "fileMatch": [
+        "talconfig.ya??ml$"
+      ],
       "matchStrings": [
         "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
       ],
       "datasourceTemplate": "github-releases"
     },
     {
-      "fileMatch": ["values.ya??ml$"],
+      "customType": "regex",
+      "fileMatch": [
+        "values.ya??ml$"
+      ],
       "matchStrings": [
         "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
       ],
