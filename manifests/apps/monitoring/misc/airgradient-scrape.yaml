@@ -1,0 +1,10 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMScrapeConfig
+metadata:
+  name: Airgradient
+  namespace: monitoring
+spec:
+  staticConfigs:
+    - targets:
+      - "192.168.4.85" # Ethan office
+      - "192.168.4.86" # Bedroom

@@ -3,10 +3,4 @@ kind: Kustomization
 namespace: monitoring
 
 resources:
-- ns.yaml
-- vm-stack
-- grafana
-- smartctl
-- victoria-logs
-- alloy
-- misc
+- airgradient-scrape.yaml
