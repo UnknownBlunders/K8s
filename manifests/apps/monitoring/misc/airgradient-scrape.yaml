@@ -1,10 +1,26 @@
 apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMScrapeConfig
 metadata:
-  name: airgradient
+  name: ag-bedroom
+  namespace: monitoring
+spec:
+  staticConfigs:
+    - targets:
+      - "192.168.4.86" # Bedroom
+  relabelConfigs:
+  - target_label: "location"
+    replacement: "Bedroom"
+
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMScrapeConfig
+metadata:
+  name: ag-ethan-office
   namespace: monitoring
 spec:
   staticConfigs:
     - targets:
       - "192.168.4.85" # Ethan office
-      - "192.168.4.86" # Bedroom
+  relabelConfigs:
+  - target_label: "location"
+    replacement: "Ethan-Office"
