@@ -63,6 +63,11 @@ dashboards:
       gnetId: 22084
       revision: 3
       datasource: victoriametrics
+    # https://grafana.com/grafana/dashboards/20842-cert-manager-kubernetes/
+    cert-manager:
+      gnetId: 20842
+      revision: 3
+      datasource: victoriametrics
     # https://grafana.com/grafana/dashboards/21550-simple-logs/
     victoria-logs-simple:
       url: https://raw.githubusercontent.com/UnknownBlunders/K8s/refs/heads/main/manifests/apps/monitoring/grafana/dashboards/victorialogs-simple.json
