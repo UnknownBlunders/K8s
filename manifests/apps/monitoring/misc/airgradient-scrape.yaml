@@ -6,7 +6,7 @@ metadata:
 spec:
   staticConfigs:
     - targets:
-      - "192.168.4.102" # Bedroom
+      - "192.168.9.102" # Bedroom
   relabelConfigs:
   - target_label: "location"
     replacement: "Bedroom"
