@@ -74,7 +74,7 @@ dashboards:
       datasource: 
         - { name: DS_LOGS, value: victorialogs }
     airquality:
-      url: https://raw.githubusercontent.com/UnknownBlunders/K8s/refs/heads/main/manifests/apps/monitoring/grafana/dashboards/airqualityson
+      url: https://raw.githubusercontent.com/UnknownBlunders/K8s/refs/heads/main/manifests/apps/monitoring/grafana/dashboards/airquality.json
       datasource: victoriametrics
     
     # all of the following are from: https://github.com/dotdc/grafana-dashboards-kubernetes
