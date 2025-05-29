@@ -43,6 +43,10 @@ spec:
             secretKeyRef:
               name: immich-pg-secret
               key: POSTGRES_PASSWORD
+        - name: POSTGRES_INITDB_ARGS
+          value: '--data-checksums'
+        - name: DB_STORAGE_TYPE
+          value: 'HDD'
         volumeMounts:
         - name: immich-pg-pvc
           mountPath: /var/lib/postgresql/data
