@@ -10,4 +10,4 @@ resources:
 images:
   - name: immich-pg-container-image
     newName: ghcr.io/immich-app/postgres
-    newTag: "14-vectorchord0.3.0-pgvectors0.2.0"
+    newTag: "16-vectorchord0.3.0-pgvectors0.2.0"
