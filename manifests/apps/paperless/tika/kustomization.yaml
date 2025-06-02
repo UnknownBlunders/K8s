@@ -9,4 +9,4 @@ resources:
 images:
   - name: tika-container-image
     newName: docker.io/apache/tika
-    newTag: "3.1.0.0-full"
+    newTag: "3.2.0.0-full"
