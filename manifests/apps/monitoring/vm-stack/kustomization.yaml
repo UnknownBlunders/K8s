@@ -10,6 +10,12 @@ helmCharts:
   version: "0.52.0"
   valuesFile: values.yaml
 
+- name: victoria-metrics-operator-crds
+  releaseName: vm-crds
+  namespace: monitoring
+  repo: https://victoriametrics.github.io/helm-charts/
+  version: "0.2.1"
+
 - name: prometheus-operator-crds
   releaseName: prometheus-crds
   repo: https://prometheus-community.github.io/helm-charts
