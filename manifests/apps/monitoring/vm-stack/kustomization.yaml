@@ -14,7 +14,7 @@ helmCharts:
   releaseName: vm-crds
   namespace: monitoring
   repo: https://victoriametrics.github.io/helm-charts/
-  version: "0.2.1"
+  version: "0.3.0"
 
 - name: prometheus-operator-crds
   releaseName: prometheus-crds
