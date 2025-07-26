@@ -26,7 +26,7 @@ replicaCount: 1
 minecraftServer:
   eula: "TRUE"
   # may be SNAPSHOT or a specific version number
-  version: "1.21.4"
+  version: "1.21.8"
   type: "PAPER"
   difficulty: normal
   # allowed players' names comma separated, leave blank to allow any players
