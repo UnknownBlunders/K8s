@@ -9,7 +9,7 @@ resources:
 images:
   - name: op-api-image
     newName: docker.io/1password/connect-api
-    newTag: "1.7.3"
+    newTag: "1.7.4"
   - name: op-sync-image
     newName: docker.io/1password/connect-sync
     newTag: "1.7.3"
