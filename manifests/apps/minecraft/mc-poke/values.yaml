@@ -5,10 +5,11 @@ image:
 
 resources:
   requests:
-    memory: 7500Mi
+    memory: 10000Mi
     cpu: 500m
   limits:
-    memory: 7500Mi
+    memory: 10000Mi
+    cpu: 4
 
 podSecurityContext:
   runAsUser: 1019
@@ -21,7 +22,7 @@ persistence:
     enabled: true
     existingClaim: mc-poke-pvc
 
-replicaCount: 0
+replicaCount: 1
 
 minecraftServer:
   eula: "TRUE"
