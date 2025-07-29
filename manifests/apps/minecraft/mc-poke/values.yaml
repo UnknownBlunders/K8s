@@ -1,6 +1,6 @@
 image:
   repository: itzg/minecraft-server
-  tag: "2025.6.2"
+  tag: "2025.6.1"
   pullPolicy: IfNotPresent
 
 resources:
@@ -11,28 +11,29 @@ resources:
     memory: 7500Mi
 
 podSecurityContext:
-  runAsUser: 1013
-  runAsGroup: 1013
+  runAsUser: 1019
+  runAsGroup: 1019
   runAsNonRoot: true
 
 persistence:
   storageClass: "-"
   dataDir:
     enabled: true
-    existingClaim: mc-echochamber-pvc
+    existingClaim: mc-poke-pvc
 
-replicaCount: 0
+replicaCount: 1
 
 minecraftServer:
   eula: "TRUE"
   # may be SNAPSHOT or a specific version number
   version: "1.21.8"
-  type: "PAPER"
+  type: "FORGE"
+  forgeVersion: "47.4.0"
   difficulty: normal
   # allowed players' names comma separated, leave blank to allow any players
-  whitelist: Bjs575,RegardedHarmful,murderousMabel,__muffin__8
+  whitelist: Bjs575,RegardedHarmful,murderousMabel,riot218
   # comma separated admin players' names
-  ops: Bjs575,RegardedHarmful,murderousMabel,__muffin__8
+  ops: Bjs575,RegardedHarmful,murderousMabel
   # always set game mode when a player connects
   forcegameMode: true
   # size of the world in blocks radius from spawn point (default is 29999984)
@@ -40,7 +41,7 @@ minecraftServer:
   # default game mode for players creative,adventure,survival or spectator
   gameMode: survival
   # message in the launcher
-  motd: "A Minecraft Server for shared opinions"
+  motd: "Pokemon Minecraft Server"
   # player vs player enabled
   pvp: true
   # REQUIRED this means you get nodePort exposed on all nodes and will get
@@ -60,11 +61,11 @@ minecraftServer:
 
 
 serviceAnnotations: 
-  mc-router.itzg.me/externalServerName: ec.kmc.blunders.me,ec.mc.blunders.me,echochamber.mc.thisdick.org,ec.mc.thisdick.org
+  mc-router.itzg.me/externalServerName: poke.kmc.blunders.me,poke.mc.blunders.me,poke.mc.thisdick.org,pokemon.mc.thisdick.org
 
 podLabels: 
-  world: mc-echochamber
+  world: mc-poke
 deploymentLabels: 
-  world: mc-echochamber
+  world: mc-poke
 serviceLabels: 
-  world: mc-echochamber
+  world: mc-poke

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mc-poke-pv
+  labels:
+    pv-name: mc-poke
+spec:
+  capacity:
+    storage: 25Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs
+  mountOptions:
+    - hard
+    - nfsvers=4.2
+  nfs:
+    path: /mc-poke
+    server: nfs.blunders.me
