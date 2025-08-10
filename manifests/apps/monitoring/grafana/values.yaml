@@ -76,6 +76,9 @@ dashboards:
     airquality:
       url: https://raw.githubusercontent.com/UnknownBlunders/K8s/refs/heads/main/manifests/apps/monitoring/grafana/dashboards/airquality.json
       datasource: victoriametrics
+    resources-by-node:
+      url: https://raw.githubusercontent.com/UnknownBlunders/K8s/refs/heads/main/manifests/apps/monitoring/grafana/dashboards/resources-by-node.json
+      datasource: victoriametrics
     
     # all of the following are from: https://github.com/dotdc/grafana-dashboards-kubernetes
     # https://grafana.com/grafana/dashboards/15761-kubernetes-system-api-server/
