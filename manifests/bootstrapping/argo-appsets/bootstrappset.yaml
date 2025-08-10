@@ -24,8 +24,6 @@ spec:
         namespace: kube-system
       - appName: intel-device-plugin
         namespace: kube-system
-      - appName: external-secrets
-        namespace: external-secrets
   template:
     metadata:
       name: '{{appName}}'

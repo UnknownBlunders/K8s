@@ -4,3 +4,4 @@ namespace: argocd
 
 resources:
 - bootstrappset.yaml
+- external-secrets.yaml
