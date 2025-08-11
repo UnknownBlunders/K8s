@@ -12,14 +12,14 @@ jobs:
       contents: write
     steps:
       - name: Checkout head repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.COMMIT_PAT }}
           ref: ${{ github.head_ref }}
           path: head
 
       - name: Checkout base repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.COMMIT_PAT }}
           ref: ${{ github.base_ref }}
