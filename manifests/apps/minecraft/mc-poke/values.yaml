@@ -22,7 +22,7 @@ persistence:
     enabled: true
     existingClaim: mc-poke-pvc
 
-replicaCount: 0
+replicaCount: 1
 
 minecraftServer:
   eula: "TRUE"
