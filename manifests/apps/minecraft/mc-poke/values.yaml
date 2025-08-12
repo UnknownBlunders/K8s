@@ -70,3 +70,9 @@ deploymentLabels:
   world: mc-poke
 serviceLabels: 
   world: mc-poke
+
+
+livenessProbe:
+  initialDelaySeconds: 120
+readinessProbe:
+  initialDelaySeconds: 120
