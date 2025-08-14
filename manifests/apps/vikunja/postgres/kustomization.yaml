@@ -12,4 +12,4 @@ resources:
 images:
   - name: vikunja-pg-container-image
     newName: docker.io/library/postgres
-    newTag: "16.9"
+    newTag: "16.10"
