@@ -18,9 +18,141 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 6,
+  "id": 9,
   "links": [],
   "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgb(255, 255, 255)",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 0,
+        "y": 0
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "machine_memory_bytes{node=\"$Node\", cluster=\"$cluster\"}",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "RAM Total",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PABDA7AB1AD2A1489"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgb(255, 255, 255)",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 12,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "sum(machine_cpu_cores{node=\"$Node\", cluster=\"$cluster\"})",
+          "interval": "",
+          "legendFormat": "",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "CPU Total",
+      "type": "stat"
+    },
     {
       "datasource": {
         "type": "prometheus",
@@ -87,7 +219,7 @@
         "h": 15,
         "w": 12,
         "x": 0,
-        "y": 0
+        "y": 5
       },
       "id": 1,
       "options": {
@@ -112,7 +244,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "kube_pod_container_resource_limits{node=\"$Node\", resource=\"memory\"} / 1000000",
+          "expr": "kube_pod_container_resource_limits{node=\"$Node\", resource=\"memory\", cluster=\"$cluster\"} / 1000000",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "legendFormat": "{{container}}({{pod}})",
@@ -190,7 +322,7 @@
         "h": 15,
         "w": 12,
         "x": 12,
-        "y": 0
+        "y": 5
       },
       "id": 2,
       "options": {
@@ -215,7 +347,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "kube_pod_container_resource_limits{node=\"$Node\", resource=\"cpu\"}",
+          "expr": "kube_pod_container_resource_limits{node=\"$Node\", resource=\"cpu\", cluster=\"$cluster\"}",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "legendFormat": "{{container}}({{pod}})",
@@ -293,7 +425,7 @@
         "h": 15,
         "w": 12,
         "x": 0,
-        "y": 15
+        "y": 20
       },
       "id": 3,
       "options": {
@@ -318,7 +450,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "kube_pod_container_resource_requests{node=\"$Node\", resource=\"memory\"} / 1000000",
+          "expr": "kube_pod_container_resource_requests{node=\"$Node\", resource=\"memory\", cluster=\"$cluster\"} / 1000000",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "legendFormat": "{{container}}({{pod}})",
@@ -396,7 +528,7 @@
         "h": 15,
         "w": 12,
         "x": 12,
-        "y": 15
+        "y": 20
       },
       "id": 4,
       "options": {
@@ -421,7 +553,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "kube_pod_container_resource_requests{node=\"$Node\", resource=\"cpu\"}",
+          "expr": "kube_pod_container_resource_requests{node=\"$Node\", resource=\"cpu\", cluster=\"$cluster\"}",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "legendFormat": "{{container}}({{pod}})",
@@ -450,6 +582,23 @@
         "query": {
           "qryType": 1,
           "query": "label_values(kube_node_info,node)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "current": {
+          "text": "",
+          "value": ""
+        },
+        "definition": "label_values(kube_node_info,cluster)",
+        "name": "cluster",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(kube_node_info,cluster)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 2,
