@@ -16,7 +16,7 @@ configs:
     policy.csv: |
       p, role:default-deny, *, *, *, deny
 
-      p, role-safe-user, applicationsets, get, */*, allow
+      p, role:safe-user, applicationsets, get, */*, allow
       p, role:safe-user, applications, delete/*, */*, allow
       p, role:safe-user, applications, delete, */*, allow
       p, role:safe-user, applications, sync, */*, allow
