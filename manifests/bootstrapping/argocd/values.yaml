@@ -6,7 +6,26 @@ configs:
     application.instanceLabelKey: argocd.argoproj.io/instance
     url: https://argocd.blunders.me
   rbac:
-    policy.default: role:readonly
+    policy.default: role:default-deny # I'd just prefer you can't do anything unless I allow it
+
+    # The safe-user role is based on the bulitin readonly role.
+    # Just add in the ability to sync (and, more usefully, terminate stuck syncs)
+    # and delete stuff. It's ok to delete stuff because Argo will recreate it.
+    # Since we are depending on argo to recreate it, we need to also explicitly
+    # deny the ability to delete argo, and the root apps
+    policy.csv: |
+      p, role:default-deny, *, *, *, deny
+
+      p, role:safe-user, applications, delete/*, */*, allow
+      p, role:safe-user, applications, delete, */*, allow
+      p, role:safe-user, applications, sync, */*, allow
+      p, role:safe-user, applications, delete, default/argocd, deny
+      p, role:safe-user, applications, delete/*, default/argocd, deny
+      p, role:safe-user, applications, delete, default/app-applicationsets, deny
+      p, role:safe-user, applications, delete, default/bootstrapping-applicationset, deny
+      g, role:safe-user, role:readonly
+
+      g, ethan, role:safe-user
   params:
     server.insecure: "true"
   secret:
