@@ -13,4 +13,4 @@ resources:
 images:
   - name: abs-container-image
     newName: ghcr.io/advplyr/audiobookshelf
-    newTag: 2.28.0
+    newTag: 2.29.0
