@@ -8,7 +8,7 @@ helmCharts:
   releaseName: intel-device-plugins-operator
   namespace: kube-system
   repo: https://intel.github.io/helm-charts
-  version: 0.32.1
+  version: 0.34.0
   includeCRDs: true
 
 # plugin for GPU
