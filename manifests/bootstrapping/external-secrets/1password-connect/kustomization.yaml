@@ -12,4 +12,4 @@ images:
     newTag: "1.7.4"
   - name: op-sync-image
     newName: docker.io/1password/connect-sync
-    newTag: "1.7.4"
+    newTag: "1.8.1"
