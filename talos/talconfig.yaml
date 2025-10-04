@@ -140,6 +140,15 @@ controlPlane:
           - siderolabs/intel-ucode
           - siderolabs/mei
   patches: # See issue for sysctl: https://github.com/siderolabs/talos/issues/8952#issuecomment-2200582804
+  - &controlPlaneOnly |-
+    machine:
+      features:
+        kubernetesTalosAPIAccess:
+          allowedKubernetesNamespaces:
+            - tuppr
+          allowedRoles:
+            - os:admin
+          enabled: true
   - &allPatches |-
     machine:
       features:

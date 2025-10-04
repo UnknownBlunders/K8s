@@ -22,6 +22,8 @@ spec:
         namespace: satisfactory
       - appName: vikunja
         namespace: vikunja
+      - appName: tuppr
+        namespace: tuppr
   template:
     metadata:
       name: '{{appName}}'

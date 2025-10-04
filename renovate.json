@@ -7,7 +7,9 @@
     {
       "customType": "regex",
       "fileMatch": [
-        "talconfig.ya??ml$"
+        "talconfig.ya??ml$",
+        "talosupgrade.ya??ml$",
+        "k8supgrade.ya??ml$"
       ],
       "matchStrings": [
         "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
