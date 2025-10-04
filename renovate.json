@@ -6,10 +6,10 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [
-        "talconfig.ya??ml$",
-        "talosupgrade.ya??ml$",
-        "k8supgrade.ya??ml$"
+      "managerFilePatterns": [
+        "/talconfig.ya??ml$/",
+        "/talosupgrade.ya??ml$/",
+        "/k8supgrade.ya??ml$/"
       ],
       "matchStrings": [
         "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
@@ -18,8 +18,8 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "values.ya??ml$"
+      "managerFilePatterns": [
+        "/values.ya??ml$/"
       ],
       "matchStrings": [
         "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
