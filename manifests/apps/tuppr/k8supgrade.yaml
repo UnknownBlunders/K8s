@@ -2,6 +2,8 @@ apiVersion: tuppr.home-operations.com/v1alpha1
 kind: KubernetesUpgrade
 metadata:
   name: k8supgrade
+  # annotations:
+  #   tuppr.home-operations.com/suspend: "true"
 spec:
   kubernetes:
     # renovate: datasource=github-releases depName=siderolabs/kubelet

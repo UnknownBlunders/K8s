@@ -2,6 +2,8 @@ apiVersion: tuppr.home-operations.com/v1alpha1
 kind: TalosUpgrade
 metadata:
   name: talosupgrade
+  # annotations:
+  #   tuppr.home-operations.com/suspend: "true"
 spec:
   talos:
     # renovate: datasource=github-releases depName=siderolabs/talos
