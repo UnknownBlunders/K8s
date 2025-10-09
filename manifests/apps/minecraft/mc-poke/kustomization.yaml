@@ -7,7 +7,7 @@ helmCharts:
   releaseName: mc-poke
   namespace: minecraft
   repo: https://itzg.github.io/minecraft-server-charts/
-  version: "4.26.4"
+  version: "5.0.0"
   valuesFile: values.yaml
 
 resources:
