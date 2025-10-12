@@ -1,0 +1,11 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMScrapeConfig
+metadata:
+  name: etcd
+  namespace: monitoring
+spec:
+  staticConfigs:
+    - targets:
+      - "kcp01.blunders.me:2381"
+      - "kcp02.blunders.me:2381"
+      - "kcp03.blunders.me:2381"

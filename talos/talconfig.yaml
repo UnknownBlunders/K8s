@@ -149,6 +149,10 @@ controlPlane:
           allowedRoles:
             - os:admin
           enabled: true
+    cluster:
+      etcd:
+        extraArgs:
+          listen-metrics-urls: "http://0.0.0.0:2381"
   - &allPatches |-
     machine:
       features:
@@ -180,6 +184,7 @@ controlPlane:
     cluster:
       proxy:
           disabled: true
+
 
 worker:
   machineSpec:

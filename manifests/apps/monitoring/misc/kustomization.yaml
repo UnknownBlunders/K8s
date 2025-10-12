@@ -4,3 +4,4 @@ namespace: monitoring
 
 resources:
 - airgradient-scrape.yaml
+- etcd.yaml
