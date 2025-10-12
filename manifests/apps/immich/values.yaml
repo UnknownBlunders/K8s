@@ -127,9 +127,9 @@ machine-learning:
           resources:
             requests:
               cpu: 500m
-              memory: 1213M
+              memory: 2513M
             limits:
-              memory: 1213M
+              memory: 2513M
           securityContext:
               runAsUser: 1007
               runAsGroup: 1007
