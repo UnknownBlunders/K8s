@@ -68,6 +68,11 @@ dashboards:
       gnetId: 20842
       revision: 3
       datasource: victoriametrics
+    # https://grafana.com/grafana/dashboards/22236-etcd/
+    etcd-uhthomas:
+      gnetId: 22236
+      revision: 4
+      datasource: victoriametrics
     # https://grafana.com/grafana/dashboards/21550-simple-logs/
     victoria-logs-simple:
       url: https://raw.githubusercontent.com/UnknownBlunders/K8s/refs/heads/main/manifests/apps/monitoring/grafana/dashboards/victorialogs-simple.json
