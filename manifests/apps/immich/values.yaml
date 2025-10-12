@@ -144,3 +144,7 @@ machine-learning:
     cache:
       type: persistentVolumeClaim
       existingClaim: immich-ml-pvc
+    tmp:
+      type: emptyDir
+      sizeLimit: 5Gi
+      accessMode: ReadWriteMany
