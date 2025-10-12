@@ -1,59 +1,90 @@
-postgres:
-  enabled: false
 
-redis:
-  enabled: true
-  architecture: standalone
-  auth:
-    enabled: false
-  master:
-    persistence:
-      enabled: true
-      existingClaim: immich-redis-pvc
-    containerSecurityContext:
-      runAsUser: 1009
-      runAsGroup: 1009
-
+controllers:
+  main:
+    containers:
+      main:
+        env:
+          TZ: America/Chicago
+          LOG_LEVEL: verbose
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          seLinuxOptions: {}
+          seccompProfile:
+            type: RuntimeDefault  
+        image:
+          # renovate: datasource=github-releases depName=immich-app/immich
+          tag: "v2.0.1"
 
 immich:
   metrics:
-    enabled: false
+    enabled: true
   persistence:
     library:
       existingClaim: immich-photos-pvc
 
-env:
-  DB_HOSTNAME: immich-pg-service
-  DB_USERNAME:
-    valueFrom:
-      secretKeyRef:
-        name: immich-pg-secret
-        key: POSTGRES_USER
-  DB_PASSWORD:
-    valueFrom:
-      secretKeyRef:
-        name: immich-pg-secret
-        key: POSTGRES_PASSWORD
-  DB_DATABASE_NAME:
-    valueFrom:
-      secretKeyRef:
-        name: immich-pg-secret
-        key: POSTGRES_DB
-  TZ: America/Denver
-  LOG_LEVEL: verbose
-  
-image:
-  # renovate: datasource=github-releases depName=immich-app/immich
-  tag: "v2.0.1"
+
+valkey:
+  enabled: true
+  controllers:
+    main:
+      containers:
+        main:
+          image:
+            repository: docker.io/valkey/valkey
+            # renovate: datasource=docker depName=valkey/valkey
+            tag: "9.0-alpine"
+            pullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 100m
+              memory: 120Mi
+            limits:
+              memory: 120Mi
+          securityContext:
+              runAsUser: 1009
+              runAsGroup: 1009
+  persistence:
+    data:
+      type: persistentVolumeClaim
+      existingClaim: immich-redis-pvc
+
 
 server:
-  resources:
-    requests:
-      cpu: 1500m
-      memory: 2048M
-  securityContext:
-      runAsUser: 1007
-      runAsGroup: 1007
+  controllers:
+    main:
+      containers:
+        main:
+          env:
+            DB_HOSTNAME: immich-pg-service
+            DB_USERNAME:
+              valueFrom:
+                secretKeyRef:
+                  name: immich-pg-secret
+                  key: POSTGRES_USER
+            DB_PASSWORD:
+              valueFrom:
+                secretKeyRef:
+                  name: immich-pg-secret
+                  key: POSTGRES_PASSWORD
+            DB_DATABASE_NAME:
+              valueFrom:
+                secretKeyRef:
+                  name: immich-pg-secret
+                  key: POSTGRES_DB
+          resources:
+            requests:
+              cpu: 100m
+              memory: 2022M
+            limits:
+              memory: 2022M
+
+          securityContext:
+              runAsUser: 1007
+              runAsGroup: 1007
   ingress:
     main:
       enabled: true
@@ -72,21 +103,44 @@ server:
           secretName: immich-web-tls
 
 machine-learning:
-  resources:
-    requests:
-      cpu: 500m
-      memory: 4096M
-  securityContext:
-      runAsUser: 1007
-      runAsGroup: 1007
+  controllers:
+    main:
+      containers:
+        main:
+          env:
+            DB_HOSTNAME: immich-pg-service
+            DB_USERNAME:
+              valueFrom:
+                secretKeyRef:
+                  name: immich-pg-secret
+                  key: POSTGRES_USER
+            DB_PASSWORD:
+              valueFrom:
+                secretKeyRef:
+                  name: immich-pg-secret
+                  key: POSTGRES_PASSWORD
+            DB_DATABASE_NAME:
+              valueFrom:
+                secretKeyRef:
+                  name: immich-pg-secret
+                  key: POSTGRES_DB
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1213M
+            limits:
+              memory: 1213M
+          securityContext:
+              runAsUser: 1007
+              runAsGroup: 1007
+          probes:
+            liveness:
+              spec:
+                initialDelaySeconds: 120
+            readiness:
+              spec:
+                initialDelaySeconds: 120
   persistence:
     cache:
-      type: pvc
+      type: persistentVolumeClaim
       existingClaim: immich-ml-pvc
-  probes:
-    liveness:
-      spec:
-        initialDelaySeconds: 120
-    readiness:
-      spec:
-        initialDelaySeconds: 120
