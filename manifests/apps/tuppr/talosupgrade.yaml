@@ -17,7 +17,7 @@ spec:
       kind: pod
       name: kube-apiserver-kcp01
       namespace: kube-system
-      expr: status.containerStatuses.ready == true
+      expr: status.conditions[?(@.type == 'Ready')].status == 'True'
     - !!merge <<: *CONTROLPLANE
       name: kube-apiserver-kcp02
     - !!merge <<: *CONTROLPLANE
