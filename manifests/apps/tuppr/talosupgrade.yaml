@@ -7,7 +7,30 @@ metadata:
 spec:
   talos:
     # renovate: datasource=github-releases depName=siderolabs/talos
-    version: "v1.11.2"
+    version: "v1.11.3"
 
   policy:
     rebootMode: powercycle
+  healthChecks:
+    - &CONTROLPLANE
+      apiVersion: v1
+      kind: pod
+      name: kube-apiserver-kcp01
+      namespace: kube-system
+      expr: status.containerStatuses.ready == true
+    - !!merge <<: *CONTROLPLANE
+      name: kube-apiserver-kcp02
+    - !!merge <<: *CONTROLPLANE
+      name: kube-apiserver-kcp03
+    - !!merge <<: *CONTROLPLANE
+      name: kube-controller-manager-kcp01
+    - !!merge <<: *CONTROLPLANE
+      name: kube-controller-manager-kcp02
+    - !!merge <<: *CONTROLPLANE
+      name: kube-controller-manager-kcp03
+    - !!merge <<: *CONTROLPLANE
+      name: kube-scheduler-kcp01
+    - !!merge <<: *CONTROLPLANE
+      name: kube-scheduler-kcp02
+    - !!merge <<: *CONTROLPLANE
+      name: kube-scheduler-kcp03
