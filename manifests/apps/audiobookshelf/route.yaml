@@ -10,7 +10,6 @@ spec:
       kind: Gateway
       name: envoy-internal
       namespace: envoy-gateway
-      sectionName: http
   rules:
     - backendRefs:
       - kind: Service
