@@ -9,7 +9,8 @@ helmCharts:
   repo: oci://docker.io/envoyproxy
   version: "v1.5.4"
   includeCRDs: true
-  #valuesFile: values.yaml
 
 resources:
 - ns.yaml
+- cert.yaml
+- envoy.yaml
