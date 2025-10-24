@@ -13,6 +13,6 @@ spec:
       sectionName: http
   rules:
     - backendRefs:
-      - kind: service
+      - kind: Service
         name: abs-service
         port: 80

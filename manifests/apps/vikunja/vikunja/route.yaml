@@ -13,6 +13,6 @@ spec:
       sectionName: http
   rules:
     - backendRefs:
-      - kind: service
+      - kind: Service
         name: vikunja-service
         port: 80
