@@ -1,0 +1,18 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: vikunja
+spec:
+  hostnames:
+    - todo.blunders.me
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-internal
+      namespace: envoy-gateway
+      sectionName: http
+  rules:
+    - backendRefs:
+      - kind: service
+        name: vikunja-service
+        port: 80

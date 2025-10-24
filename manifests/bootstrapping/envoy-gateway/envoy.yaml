@@ -11,7 +11,7 @@ spec:
     type: Kubernetes
     kubernetes:
       envoyDeployment:
-        replicas: 2
+        replicas: 1
         container:
           image: mirror.gcr.io/envoyproxy/envoy:v1.36.2
           resources:
@@ -69,6 +69,7 @@ spec:
         certificateRefs:
           - kind: Secret
             name: wildcard-blunders-me-tls
+            group: ''
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: BackendTrafficPolicy
@@ -115,6 +116,10 @@ spec:
       requestReceivedTimeout: 0s
   tls:
     minVersion: "1.2"
+    ecdhCurves:
+      - X25519MLKEM768 # fancy post quantum https://developers.cloudflare.com/ssl/post-quantum-cryptography/pqc-support/#x25519mlkem768
+      - X25519
+      - P-256
     alpnProtocols:
       - h2
       - http/1.1
@@ -127,7 +132,9 @@ metadata:
   namespace: envoy-gateway
 spec:
   parentRefs:
-    - name: envoy-internal
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-internal
       namespace: envoy-gateway
       sectionName: http
   rules:
@@ -136,3 +143,7 @@ spec:
           requestRedirect:
             scheme: https
             statusCode: 301
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
