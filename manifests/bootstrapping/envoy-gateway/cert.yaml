@@ -1,0 +1,12 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: wildcard-blunders-me-tls
+spec:
+  secretName: wildcard-blunders-me-tls
+  issuerRef:
+    name: staging-cert-issuer
+    kind: ClusterIssuer
+  commonName: blunders.me
+  dnsNames: ["blunders.me", "*.blunders.me"]
