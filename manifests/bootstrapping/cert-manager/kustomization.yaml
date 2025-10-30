@@ -9,7 +9,8 @@ helmCharts:
   repo: https://charts.jetstack.io
   version: "v1.19.1"
   valuesInline:
-    installCRDs: false
+    crds:
+      enabled: true
     prometheus:
       enabled: true
       servicemonitor:
@@ -25,6 +26,5 @@ helmCharts:
 
 resources:
 - cloudflare-dns-es.yaml
-- https://github.com/cert-manager/cert-manager/releases/download/v1.19.1/cert-manager.crds.yaml
 - prod-cert-issuer.yaml
 - staging-cert-issuer.yaml
