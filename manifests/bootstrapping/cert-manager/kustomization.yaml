@@ -25,6 +25,6 @@ helmCharts:
 
 resources:
 - cloudflare-dns-es.yaml
-- https://github.com/cert-manager/cert-manager/releases/download/v1.18.0/cert-manager.crds.yaml
+- https://github.com/cert-manager/cert-manager/releases/download/v1.19.1/cert-manager.crds.yaml
 - prod-cert-issuer.yaml
 - staging-cert-issuer.yaml
