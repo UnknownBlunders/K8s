@@ -7,7 +7,7 @@ helmCharts:
   releaseName: vm-stack
   namespace: monitoring
   repo: https://victoriametrics.github.io/helm-charts/
-  version: "0.63.3"
+  version: "0.63.4"
   valuesFile: values.yaml
 
 - name: victoria-metrics-operator-crds
