@@ -9,4 +9,4 @@ resources:
 images:
   - name: vikunja-redis-container-image
     newName: docker.io/library/redis
-    newTag: "8.2.3"
+    newTag: "8.4.0"
