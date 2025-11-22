@@ -7,7 +7,8 @@ resources:
 - ./storage
 - deployment.yaml
 - service.yaml
-- ingress.yaml
+- route.yaml
+# - ingress.yaml
 # - ingress-pub.yaml
 
 images:

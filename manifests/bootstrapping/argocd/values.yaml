@@ -34,8 +34,18 @@ configs:
       accounts.ethan.password: $2a$10$jy6gx.UO6hl8yJqjK8iabukQR8Nyo7k.xfG.d.tkcCPgDg6ALJ/AO
 
 server:
-  ingress:
+  httproute:
     enabled: true
+    hostnames:
+      - argocd.blunders.me
+    parentRefs:
+      - group: gateway.networking.k8s.io
+        kind: Gateway
+        name: envoy-internal
+        namespace: envoy-gateway
+        sectionName: https
+  ingress:
+    enabled: false
     ingressClassName: nginx
     annotations: {cert-manager.io/cluster-issuer: "prod-cert-issuer"}
     hostname: argocd.blunders.me
