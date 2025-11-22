@@ -7,7 +7,7 @@ resources:
 - ./storage
 - deployment.yaml
 - service.yaml
-- ingress.yaml
+- route.yaml
 
 images:
   - name: ha-container-image
