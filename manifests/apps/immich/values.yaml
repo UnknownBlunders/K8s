@@ -85,17 +85,6 @@ server:
           securityContext:
               runAsUser: 1007
               runAsGroup: 1007
-  route:
-    main:
-      enabled: true
-      hostnames:
-        - "photos.blunders.me"
-      parentRefs:
-        - group: gateway.networking.k8s.io
-          kind: Gateway
-          name: envoy-internal
-          namespace: envoy-gateway
-          sectionName: https
 machine-learning:
   controllers:
     main:

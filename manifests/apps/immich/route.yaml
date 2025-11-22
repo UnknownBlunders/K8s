@@ -1,0 +1,18 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: immich
+spec:
+  hostnames:
+    -photos.blunders.me
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-internal
+      namespace: envoy-gateway
+      sectionName: https
+  rules:
+    - backendRefs:
+        - kind: Service
+          name: immich-server
+          port: 2283
