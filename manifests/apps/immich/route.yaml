@@ -4,7 +4,7 @@ metadata:
   name: immich
 spec:
   hostnames:
-    -photos.blunders.me
+    - photos.blunders.me
   parentRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
