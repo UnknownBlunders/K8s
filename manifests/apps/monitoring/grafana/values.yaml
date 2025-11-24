@@ -126,6 +126,7 @@ admin:
 grafana.ini:
   server:
     root_url: https://grafana.blunders.me
+    domain: grafana.blunders.me
   auth.anonymous:
     enabled: true
     org_id: 1
