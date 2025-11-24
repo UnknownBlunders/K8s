@@ -41,19 +41,17 @@ vmsingle:
         requests:
           storage: 20Gi
   ingress:
+    enabled: false
+  route:
     enabled: true
-    annotations:
-      cert-manager.io/cluster-issuer: "prod-cert-issuer"
-    labels: {}
-    path: ""
-    pathType: Prefix
-    ingressClassName: nginx
-    hosts:
-     - metrics.blunders.me
-    tls:
-     - secretName: vm-cert
-       hosts:
-         - metrics.blunders.me
+    hostnames:
+      - metrics.blunders.me
+    parentRefs:
+      - group: gateway.networking.k8s.io
+        kind: Gateway
+        name: envoy-internal
+        namespace: envoy-gateway
+        sectionName: https
 
 vmalert:
   enabled: true

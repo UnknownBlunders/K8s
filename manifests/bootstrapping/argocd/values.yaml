@@ -46,10 +46,3 @@ server:
         sectionName: https
   ingress:
     enabled: false
-    ingressClassName: nginx
-    annotations: {cert-manager.io/cluster-issuer: "prod-cert-issuer"}
-    hostname: argocd.blunders.me
-    extraTls:
-    - secretName: argocd-cert
-      hosts:
-      - argocd.blunders.me
