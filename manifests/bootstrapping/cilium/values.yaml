@@ -31,16 +31,7 @@
         enabled: true
         rollOutPods: true
         ingress:
-          enabled: true
-          className: nginx
-          annotations: {cert-manager.io/cluster-issuer: "prod-cert-issuer"}
-          hosts:
-            - &host hubble.blunders.me
-          tls:
-            - secretName: hubble-cert
-              hosts:
-                - *host
-
+          enabled: false
     operator:
       rollOutPods: true
     dashboards:

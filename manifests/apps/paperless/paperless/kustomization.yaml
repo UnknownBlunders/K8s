@@ -7,7 +7,7 @@ resources:
 - pvc.yaml
 - deployment.yaml
 - service.yaml
-- ingress.yaml
+- route.yaml
 
 images:
   - name: paperless-server-container-image
