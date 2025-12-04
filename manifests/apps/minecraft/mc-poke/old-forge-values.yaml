@@ -22,17 +22,14 @@ persistence:
     enabled: true
     existingClaim: mc-poke-pvc
 
-replicaCount: 1
-
-extraEnv:
-  USE_MEOWICE_FLAGS: true
+replicaCount: 0
 
 minecraftServer:
   eula: "TRUE"
   # may be SNAPSHOT or a specific version number
-  version: "1.21.1"
-  type: "FABRIC"
-  fabricLoaderVersion: "0.18.1"
+  version: "1.20.1"
+  type: "FORGE"
+  forgeVersion: "47.4.0"
   difficulty: normal
   # allowed players' names comma separated, leave blank to allow any players
   whitelist: Bjs575,RegardedHarmful,murderousMabel,riot218
