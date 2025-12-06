@@ -21,6 +21,13 @@ spec:
         securityContext:
           runAsUser: 1002
           runAsGroup: 1002
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          seccompProfile:
+            type: RuntimeDefault
         env:
         - name: PORT
           value: "13378"
@@ -28,7 +35,7 @@ spec:
         - containerPort: 13378
         resources:
           requests:
-            memory: "40Mi"
+            memory: "250Mi"
           limits:
             memory: "250Mi"
         volumeMounts:
