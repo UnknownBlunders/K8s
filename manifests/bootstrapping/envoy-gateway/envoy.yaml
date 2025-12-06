@@ -71,6 +71,35 @@ spec:
             name: wildcard-blunders-me-tls
             group: ''
 ---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: envoy-external
+  namespace: envoy-gateway
+spec:
+  gatewayClassName: envoy
+  infrastructure:
+    annotations:
+      metallb.universe.tf/loadBalancerIPs: 192.168.7.1
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      allowedRoutes:
+        namespaces:
+          from: Same
+    - name: https
+      protocol: HTTPS
+      port: 443
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: wildcard-blunders-dev-tls
+            group: ''
+---
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: BackendTrafficPolicy
 metadata:
@@ -135,6 +164,11 @@ spec:
     - group: gateway.networking.k8s.io
       kind: Gateway
       name: envoy-internal
+      namespace: envoy-gateway
+      sectionName: http
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-external
       namespace: envoy-gateway
       sectionName: http
   rules:
