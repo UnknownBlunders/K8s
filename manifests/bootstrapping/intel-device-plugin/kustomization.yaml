@@ -16,7 +16,7 @@ helmCharts:
   releaseName: intel-device-plugins-gpu
   namespace: kube-system
   repo: https://intel.github.io/helm-charts
-  version: 0.34.0
+  version: 0.34.1
   valuesInline:
     name: intel-gpu-plugin
     sharedDevNum: 3
