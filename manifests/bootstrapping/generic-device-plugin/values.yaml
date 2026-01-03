@@ -1,0 +1,55 @@
+controllers:
+  generic-device-plugin:
+    type: daemonset
+    strategy: RollingUpdate
+    containers:
+      generic-device-plugin:
+        image:
+          repository: ghcr.io/squat/generic-device-plugin
+          tag: latest@sha256:2b53d255017668d70d7f59ff0b874a66c3a50922d1f8cfff182e4c55b82251a1
+        args:
+          - --config=/config/config.yaml
+        ports:
+          - containerPort: 8080
+            name: http
+        resources:
+          requests:
+            cpu: 50m
+            memory: 20Mi
+          limits:
+            memory: 20Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities: { drop: ["ALL"] }
+persistence:
+  config:
+    type: configMap
+    name: generic-device-plugin
+    globalMounts:
+      - path: /config
+        readOnly: true
+  dev:
+    type: hostPath
+    hostPath: /dev
+    globalMounts:
+      - path: /dev
+  device-plugin:
+    type: hostPath
+    hostPath: /var/lib/kubelet/device-plugins
+    globalMounts:
+      - path: /var/lib/kubelet/device-plugins
+
+configMaps:
+  config:
+    enabled: true
+    data:
+      config.yaml: |-
+        log-level: info
+        domain: devices.blunders.me
+        devices:
+          - name: ups-usb
+            groups:
+              - usb:
+                - vendor: "051D"
+                  product: "0002"

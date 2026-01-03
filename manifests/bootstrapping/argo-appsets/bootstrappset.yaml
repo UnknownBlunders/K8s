@@ -20,6 +20,8 @@ spec:
         namespace: kube-system
       - appName: intel-device-plugin
         namespace: kube-system
+      - appName: generic-device-plugin
+        namespace: kube-system
   template:
     metadata:
       name: '{{appName}}'
