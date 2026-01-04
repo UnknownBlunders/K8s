@@ -24,6 +24,8 @@ spec:
         namespace: vikunja
       - appName: tuppr
         namespace: tuppr
+      - appName: ups-nut
+        namespace: ups-nut
   template:
     metadata:
       name: '{{appName}}'

@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: ups-nut
+
+helmCharts:
+- name: app-template
+  releaseName: nut-server
+  namespace: ups-nut
+  repo: https://bjw-s-labs.github.io/helm-charts
+  version: 4.5.0
+  valuesFile: nut-values.yaml
+
+- name: app-template
+  releaseName: nut-exporter
+  namespace: ups-nut
+  repo: https://bjw-s-labs.github.io/helm-charts
+  version: 4.5.0
+  valuesFile: exporter-values.yaml
+
+resources:
+- ns.yaml
+- nut-config-es.yaml
+- nut-exporter-es.yaml
+- servicescrape.yaml

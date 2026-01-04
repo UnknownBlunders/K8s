@@ -1,0 +1,42 @@
+defaultPodOptions:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 2100
+    runAsGroup: 2100
+    fsGroup: 2100
+    fsGroupChangePolicy: OnRootMismatch
+controllers:
+  nut-exporter:
+    containers:
+      nut-exporter:
+        image:
+          repository: ghcr.io/druggeri/nut_exporter
+          tag: 3.2.3
+        args:
+          # the first time I set this, the first and last entries were ignored, so I have doubled them.
+          - --nut.vars_enable="battery.charge,battery.charge,battery.runtime,battery.voltage,battery.voltage.nominal,input.voltage,input.voltage.nominal,output.voltage,output.voltage.nominal,ups.realpower,ups.load,ups.status,ups.status"
+        env:
+          TZ: America/Chicago
+        resources:
+          requests:
+            cpu: 10m
+            memory: 100Mi
+          limits:
+            memory: 100Mi
+        envFrom:
+          - secretRef:
+              name: nut-exporter-secret
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities: { drop: ["ALL"] }
+          seccompProfile:
+            type: RuntimeDefault
+service:
+  nut-exporter:
+    controller: nut-exporter
+    ports:
+      metrics:
+        protocol: TCP
+        port: 9199
+

@@ -1,0 +1,20 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: nut-exporter
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: op-prod
+  target:
+    name: nut-exporter-secret
+    template:
+      data:
+        NUT_EXPORTER_USERNAME: "nutexporter"
+        NUT_EXPORTER_PASSWORD: "{{ .password }}"
+        NUT_EXPORTER_SERVER: "nut-server"
+  data:
+  - secretKey: password
+    remoteRef:
+      key: ups-nut
+      property: nut-exporter-password

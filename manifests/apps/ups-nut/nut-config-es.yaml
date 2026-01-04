@@ -1,0 +1,54 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: nut-config
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: op-prod
+  target: 
+    name: nut-config
+    creationPolicy: Owner
+    template:
+      type: Opaque
+      engineVersion: v2
+      data:
+        nut.conf: |-
+          MODE=netserver
+        upsd.conf: |-
+          MAXAGE 20
+          LISTEN 0.0.0.0
+          LISTEN ::
+        upsd.users: |-
+          [ethan]
+            password  = "{{ .ethan }}"
+            actions = SET
+            instcmds = ALL
+          [homeassistant]
+            password = "{{ .ha }}"
+            actions = SET
+            instcmds = ALL
+          [nutexporter]
+            password = "{{ .nutexporter }}"
+            actions = SET
+            instcmds = ALL
+        ups.conf: |-
+          [kubernetes]
+            driver = usbhid-ups
+            port = auto
+            desc = "APC Back-UPS XS 1500M UPS Servers 1"
+            pollinterval = 10
+  data:
+  - secretKey: ha
+    remoteRef:
+      key: ups-nut
+      property: ha-password
+  - secretKey: nutexporter
+    remoteRef:
+      key: ups-nut
+      property: nut-exporter-password
+  - secretKey: ethan
+    remoteRef:
+      key: ups-nut
+      property: ethan-password
