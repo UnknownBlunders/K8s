@@ -78,6 +78,12 @@ dashboards:
       url: https://raw.githubusercontent.com/UnknownBlunders/K8s/refs/heads/main/manifests/apps/monitoring/grafana/dashboards/victorialogs-simple.json
       datasource: 
         - { name: DS_LOGS, value: victorialogs }
+    # https://grafana.com/grafana/dashboards/19308-prometheus-nut-exporter-for-druggeri/
+    nut-exporter:
+      gnetId: 19308
+      revision: 4
+      datasource:
+        - { name: DS_PROMETHEUS, value: victoriametrics }
     airquality:
       url: https://raw.githubusercontent.com/UnknownBlunders/K8s/refs/heads/main/manifests/apps/monitoring/grafana/dashboards/airquality.json
       datasource: victoriametrics
