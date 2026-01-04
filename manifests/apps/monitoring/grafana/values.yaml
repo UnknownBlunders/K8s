@@ -80,9 +80,9 @@ dashboards:
         - { name: DS_LOGS, value: victorialogs }
     # https://grafana.com/grafana/dashboards/19308-prometheus-nut-exporter-for-druggeri/
     nut-exporter:
-      gnetId: 19308
-      revision: 4
-      datasource: victoriametrics
+      url: https://raw.githubusercontent.com/DRuggeri/nut_exporter/1e886dd2e0c31edb27896e3b2d2f95853ca5e66b/dashboard/dashboard.json
+      datasource:
+        - { name: DS_PROMETHEUS, value: victoriametrics }
 
     # I made these
     airquality:
