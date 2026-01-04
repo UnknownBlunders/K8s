@@ -82,8 +82,9 @@ dashboards:
     nut-exporter:
       gnetId: 19308
       revision: 4
-      datasource:
-        - { name: DS_PROMETHEUS, value: victoriametrics }
+      datasource: victoriametrics
+
+    # I made these
     airquality:
       url: https://raw.githubusercontent.com/UnknownBlunders/K8s/refs/heads/main/manifests/apps/monitoring/grafana/dashboards/airquality.json
       datasource: victoriametrics
