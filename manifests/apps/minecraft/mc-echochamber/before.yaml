@@ -1,0 +1,234 @@
+apiVersion: v1
+data:
+  cf-api-key: Q0hBTkdFTUUh
+kind: Secret
+metadata:
+  labels:
+    app: mc-echochamber-minecraft
+    app.kubernetes.io/instance: mc-echochamber-minecraft
+    app.kubernetes.io/name: minecraft
+    app.kubernetes.io/version: 4.26.4
+    chart: minecraft-4.26.4
+    heritage: Helm
+    release: mc-echochamber
+  name: mc-echochamber-minecraft-curseforge
+  namespace: minecraft
+type: Opaque
+---
+apiVersion: v1
+data:
+  rcon-password: Q0hBTkdFTUUh
+kind: Secret
+metadata:
+  labels:
+    app: mc-echochamber-minecraft
+    app.kubernetes.io/instance: mc-echochamber-minecraft
+    app.kubernetes.io/name: minecraft
+    app.kubernetes.io/version: 4.26.4
+    chart: minecraft-4.26.4
+    heritage: Helm
+    release: mc-echochamber
+  name: mc-echochamber-minecraft-rcon
+  namespace: minecraft
+type: Opaque
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    mc-router.itzg.me/externalServerName: ec.kmc.blunders.me,ec.mc.blunders.me,echochamber.mc.thisdick.org,ec.mc.thisdick.org
+  labels:
+    app: mc-echochamber-minecraft
+    app.kubernetes.io/instance: mc-echochamber-minecraft
+    app.kubernetes.io/name: minecraft
+    app.kubernetes.io/version: 4.26.4
+    chart: minecraft-4.26.4
+    heritage: Helm
+    release: mc-echochamber
+    world: mc-echochamber
+  name: mc-echochamber-minecraft
+  namespace: minecraft
+spec:
+  ports:
+  - name: minecraft
+    port: 25565
+    protocol: TCP
+    targetPort: minecraft
+  selector:
+    app: mc-echochamber-minecraft
+  type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  labels:
+    pv-name: mc-echochamber
+  name: mc-echochamber-pv
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 25Gi
+  mountOptions:
+  - hard
+  - nfsvers=4.2
+  nfs:
+    path: /mc-ec
+    server: nfs.blunders.me
+  storageClassName: nfs
+  volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mc-echochamber-pvc
+  namespace: minecraft
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 25Gi
+  selector:
+    matchLabels:
+      pv-name: mc-echochamber
+  storageClassName: nfs
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mc-echochamber-minecraft
+    app.kubernetes.io/instance: mc-echochamber-minecraft
+    app.kubernetes.io/name: minecraft
+    app.kubernetes.io/version: 4.26.4
+    chart: minecraft-4.26.4
+    heritage: Helm
+    release: mc-echochamber
+    world: mc-echochamber
+  name: mc-echochamber-minecraft
+  namespace: minecraft
+spec:
+  replicas: 0
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: mc-echochamber-minecraft
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mc-echochamber-minecraft
+        app.kubernetes.io/instance: mc-echochamber-minecraft
+        app.kubernetes.io/name: minecraft
+        app.kubernetes.io/version: 4.26.4
+        world: mc-echochamber
+    spec:
+      containers:
+      - env:
+        - name: EULA
+          value: "TRUE"
+        - name: TYPE
+          value: PAPER
+        - name: VERSION
+          value: 1.21.8
+        - name: DIFFICULTY
+          value: normal
+        - name: WHITELIST
+          value: Bjs575,RegardedHarmful,murderousMabel,__muffin__8
+        - name: OPS
+          value: Bjs575,RegardedHarmful,murderousMabel,__muffin__8
+        - name: MAX_WORLD_SIZE
+          value: "2.9999984e+07"
+        - name: FORCE_GAMEMODE
+          value: "true"
+        - name: VIEW_DISTANCE
+          value: "20"
+        - name: MODE
+          value: survival
+        - name: MOTD
+          value: A Minecraft Server for shared opinions
+        - name: PVP
+          value: "true"
+        - name: LEVEL_TYPE
+          value: DEFAULT
+        - name: LEVEL
+          value: world
+        - name: MODRINTH_DOWNLOAD_DEPENDENCIES
+          value: none
+        - name: MEMORY
+          value: 6g
+        - name: OVERRIDE_SERVER_PROPERTIES
+          value: "true"
+        - name: ENABLE_RCON
+          value: "false"
+        - name: CF_API_KEY
+          valueFrom:
+            secretKeyRef:
+              key: cf-api-key
+              name: mc-echochamber-minecraft-curseforge
+        - name: CF_PARALLEL_DOWNLOADS
+          value: "4"
+        image: itzg/minecraft-server:2025.8.1
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          exec:
+            command:
+            - mc-health
+          failureThreshold: 20
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: mc-echochamber-minecraft
+        ports:
+        - containerPort: 25565
+          name: minecraft
+          protocol: TCP
+        readinessProbe:
+          exec:
+            command:
+            - mc-health
+          failureThreshold: 20
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            memory: 7500Mi
+          requests:
+            cpu: 500m
+            memory: 7500Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+        stdin: true
+        tty: true
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp
+        - mountPath: /data
+          name: datadir
+        - mountPath: /backups
+          name: backupdir
+          readOnly: true
+      securityContext:
+        fsGroup: 2000
+        runAsGroup: 1013
+        runAsNonRoot: true
+        runAsUser: 1013
+        seccompProfile:
+          type: RuntimeDefault
+      volumes:
+      - emptyDir: {}
+        name: tmp
+      - name: datadir
+        persistentVolumeClaim:
+          claimName: mc-echochamber-pvc
+      - emptyDir: {}
+        name: backupdir
