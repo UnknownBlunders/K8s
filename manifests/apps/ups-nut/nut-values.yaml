@@ -1,5 +1,6 @@
 controllers:
   network-ups-tools:
+    type: deployment
     strategy: Recreate
     containers:
       nut-server:

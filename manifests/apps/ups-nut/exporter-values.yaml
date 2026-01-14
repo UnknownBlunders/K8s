@@ -7,6 +7,8 @@ defaultPodOptions:
     fsGroupChangePolicy: OnRootMismatch
 controllers:
   nut-exporter:
+    type: deployment
+    strategy: RollingUpdate
     containers:
       nut-exporter:
         image:
