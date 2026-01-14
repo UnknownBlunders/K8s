@@ -271,7 +271,7 @@ spec:
           value: gzip
         - name: ZSTD_PARAMETERS
           value: -3 --long=25 --single-thread
-        image: itzg/mc-backup:2025.4.0
+        image: itzg/mc-backup:2025.12.1
         imagePullPolicy: IfNotPresent
         name: mc-echochamber-minecraft-mc-backup
         resources:
