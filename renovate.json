@@ -25,5 +25,13 @@
         "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
       ]
      }
-  ]
+  ],
+  "prCurrentLimit": 0,
+  "helm-values": {
+    "managerFilePatterns": ["/\\.yaml(?:\\.j2)?$/"]
+  },
+  "kubernetes": {
+    "managerFilePatterns": ["/\\.yaml(?:\\.j2)?$/"]
+  }
+
 }
