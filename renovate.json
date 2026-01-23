@@ -1,7 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:recommended",
+    "github>UnknownBlunders/K8s//.renovate/grafanaDashboards.json5"
   ],
   "customManagers": [
     {
