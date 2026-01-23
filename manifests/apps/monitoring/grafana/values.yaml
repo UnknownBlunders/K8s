@@ -106,7 +106,7 @@ dashboards:
     dotdc-k8s-coredns:
       # renovate: depName="Kubernetes / System / CoreDNS"
       gnetId: 15762
-      revision: 18
+      revision: 22
       datasource: victoriametrics
     # https://grafana.com/grafana/dashboards/15757-kubernetes-views-global/
     dotdc-k8s-global:
