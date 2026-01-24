@@ -118,7 +118,7 @@ dashboards:
     dotdc-k8s-namespaces:
       # renovate: depName="Kubernetes / Views / Namespaces"
       gnetId: 15758
-      revision: 39
+      revision: 44
       datasource: victoriametrics
     # https://grafana.com/grafana/dashboards/15759-kubernetes-views-nodes/
     dotdc-k8s-nodes:
