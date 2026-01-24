@@ -112,7 +112,7 @@ dashboards:
     dotdc-k8s-global:
       # renovate: depName="Kubernetes / Views / Global"
       gnetId: 15757
-      revision: 43
+      revision: 42
       datasource: victoriametrics
     # https://grafana.com/grafana/dashboards/15758-kubernetes-views-namespaces/
     dotdc-k8s-namespaces:
@@ -130,7 +130,7 @@ dashboards:
     dotdc-k8s-pods:
       # renovate: depName="Kubernetes / Views / Pods"
       gnetId: 15760
-      revision: 32
+      revision: 37
       datasource: victoriametrics
     
 
