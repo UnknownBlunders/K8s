@@ -100,7 +100,7 @@ dashboards:
     dotdc-k8s-api-server:
       # renovate: depName="Kubernetes / System / API Server"
       gnetId: 15761
-      revision: 20
+      revision: 18
       datasource: victoriametrics
     # https://grafana.com/grafana/dashboards/15762-kubernetes-system-coredns/
     dotdc-k8s-coredns:
@@ -112,7 +112,7 @@ dashboards:
     dotdc-k8s-global:
       # renovate: depName="Kubernetes / Views / Global"
       gnetId: 15757
-      revision: 42
+      revision: 43
       datasource: victoriametrics
     # https://grafana.com/grafana/dashboards/15758-kubernetes-views-namespaces/
     dotdc-k8s-namespaces:
