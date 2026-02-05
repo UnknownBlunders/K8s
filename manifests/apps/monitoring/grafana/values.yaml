@@ -94,7 +94,7 @@ dashboards:
     victoria-logs-metrics:
       # renovate: depName="VictoriaLogs - single-node"
       gnetId: 22084
-      revision: 10
+      revision: 11
       datasource: victoriametrics
     # https://grafana.com/grafana/dashboards/20842-cert-manager-kubernetes/
     cert-manager:
