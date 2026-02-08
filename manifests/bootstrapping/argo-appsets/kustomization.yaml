@@ -6,3 +6,4 @@ resources:
 - bootstrappset.yaml
 - external-secrets.yaml
 - envoy-gateway.yaml
+- argocd.yaml
