@@ -6,7 +6,7 @@ resources:
 - ns.yaml
 - vm-stack
 - grafana
-#- smartctl
+- smartctl
 - victoria-logs
 - alloy
 - misc
