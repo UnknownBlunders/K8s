@@ -12,8 +12,6 @@ spec:
         namespace: metallb-system
       - appName: cert-manager
         namespace: kube-system
-      - appName: argocd
-        namespace: argocd
       - appName: kubelet-csr-approver
         namespace: kube-system
       - appName: node-feature-discovery
