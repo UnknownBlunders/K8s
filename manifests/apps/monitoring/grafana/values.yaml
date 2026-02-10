@@ -75,7 +75,7 @@ dashboards:
     vmagent:
       # renovate: depName="VictoriaMetrics - vmagent"
       gnetId: 12683
-      revision: 30
+      revision: 31
       datasource: victoriametrics
     # https://grafana.com/grafana/dashboards/1860-node-exporter-full/
     node-exporter:
