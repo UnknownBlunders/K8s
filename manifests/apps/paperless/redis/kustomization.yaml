@@ -11,4 +11,4 @@ resources:
 images:
   - name: paperless-redis-container-image
     newName: docker.io/library/redis
-    newTag: "8.4.0"
+    newTag: "8.6.0"
