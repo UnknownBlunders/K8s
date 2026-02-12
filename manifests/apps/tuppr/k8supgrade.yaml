@@ -7,4 +7,4 @@ metadata:
 spec:
   kubernetes:
     # renovate: datasource=github-releases depName=siderolabs/kubelet
-    version: "v1.35.0"
+    version: "v1.35.1"
