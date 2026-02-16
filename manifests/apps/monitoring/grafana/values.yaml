@@ -1,5 +1,5 @@
 plugins:
-  - https://github.com/VictoriaMetrics/victorialogs-datasource/releases/download/v0.24.1/victoriametrics-logs-datasource-v0.24.1.zip;victoriametrics-logs-datasource
+  - victoriametrics-logs-datasource@v0.24.1@https://github.com/VictoriaMetrics/victorialogs-datasource/releases/download/v0.24.1/victoriametrics-logs-datasource-v0.24.1.zip
 
 datasources:
   datasources.yaml:
