@@ -55,7 +55,7 @@
               "type": "VictoriaLogs",
               "uid": "victorialogs"
             },
-            "expr": "(namespace: ${namespace.*} AND pod: ${workload.*}) OR \"${query.*}\"",
+            "expr": "(namespace: ${namespace} AND pod: ${workload}) OR \"${query}\"",
             "queryType": "range",
             "refId": "A"
           }
