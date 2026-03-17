@@ -36,7 +36,7 @@ valkey:
           image:
             repository: docker.io/valkey/valkey
             # renovate: datasource=docker depName=valkey/valkey
-            tag: "9.0-alpine"
+            tag: "9.1-alpine"
             pullPolicy: IfNotPresent
           resources:
             requests:
