@@ -147,7 +147,7 @@ dashboards:
     dotdc-k8s-pods:
       # renovate: depName="Kubernetes / Views / Pods"
       gnetId: 15760
-      revision: 37
+      revision: 39
       datasource: victoriametrics
     
 
