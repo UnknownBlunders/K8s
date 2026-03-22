@@ -97,10 +97,11 @@ nodes:
   controlPlane: false
   installDiskSelector:
     size: '> 200GB'
+    type: 'nvme'
   nameservers:
   - 192.168.6.1
   networkInterfaces:
-  - interface: eno1
+  - interface: enp2s0f0np0
     dhcp: false
     addresses:
     - 192.168.6.15/23
@@ -113,12 +114,12 @@ nodes:
   ipAddress: 192.168.6.16
   controlPlane: false
   installDiskSelector:
-    size: '< 500GB'
+    size: '< 300GB'
     type: 'nvme'
   nameservers:
   - 192.168.6.1
   networkInterfaces:
-  - interface: enp1s0
+  - interface: enp2s0f0np0
     dhcp: false
     addresses:
     - 192.168.6.16/23
