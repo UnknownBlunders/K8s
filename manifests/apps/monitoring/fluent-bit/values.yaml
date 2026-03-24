@@ -21,6 +21,16 @@ config:
       skip_empty_lines on
       skip_long_lines on
 
+    [INPUT]
+      name tail
+      alias talos
+      path /var/log/*.log
+      tag talos.*
+      skip_empty_lines on
+      skip_long_lines off
+      Path_Key filename
+
+
   filters: |-
     [FILTER]
       name kubernetes
@@ -53,6 +63,11 @@ config:
       rename k_labels_app app
       rename k_labels_k8s-app app
 
+    [FILTER]
+      Name    record_modifier
+      Match   talos.*
+      Record  t_node ${HOSTNAME}
+
   customParsers: |-
     [PARSER]
       name containerd
@@ -68,6 +83,17 @@ config:
       host victoria-logs-victoria-logs-single-server.monitoring.svc.cluster.local
       port 9428
       uri /insert/jsonline?_stream_fields=stream,k_namespace_name,k_pod_name,app&_msg_field=log&_time_field=date
+      format json_lines
+      json_date_format iso8601
+      compress gzip
+      log_response_payload false
+
+    [OUTPUT]
+      name http
+      match talos.*
+      host victoria-logs-victoria-logs-single-server.monitoring.svc.cluster.local
+      port 9428
+      uri /insert/jsonline?_stream_fields=stream,t_node,filename,app&_msg_field=log&_time_field=date
       format json_lines
       json_date_format iso8601
       compress gzip
