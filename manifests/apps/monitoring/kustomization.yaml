@@ -8,5 +8,5 @@ resources:
 - grafana
 - smartctl
 - victoria-logs
-- victoria-logs-collector
+- fluent-bit
 - misc
