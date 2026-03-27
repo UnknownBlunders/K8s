@@ -12,4 +12,3 @@ helmCharts:
 
 resources:
 - talosupgrade.yaml
-- k8supgrade.yaml
