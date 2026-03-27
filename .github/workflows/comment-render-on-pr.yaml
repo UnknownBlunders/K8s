@@ -25,20 +25,20 @@ jobs:
           ref: ${{ github.base_ref }}
           path: base
 
-      - name: setup output file
-        run: |
-          echo "Here are the rendered changes made in this PR:" >> diff-out.txt
-          echo "<details>" >> diff-out.txt
-          echo "<summary> Kustomization build Diff </summary>" >> diff-out.txt
-          echo " " >> diff-out.txt
-          echo "\`\`\`diff" >> diff-out.txt
-          cat diff-out.txt
-
-      - name: render kustomizations
-        working-directory: head
+      - name: render kustomizations, break into parts (if needed), and comment
         env: 
           GH_TOKEN: ${{ secrets.COMMIT_PAT }}
         run: |
+          echo "<details>" >> header.txt
+          echo "<summary> Kustomization build Diff </summary>" >> header.txt
+          echo " " >> header.txt
+          echo "\`\`\`diff" >> header.txt
+          echo "\`\`\`" >> footer.txt
+          echo "</details>" >> footer.txt
+          cat header.txt
+          cat footer.txt
+
+          cd head
           for KUSTOMIZATION_PATH in $( gh pr view ${{ github.event.number }} --json files -q '.files[].path' | cut -d/ -f 1-3 ) # get first three directories of changed files
           do
             HEAD_KUSTOMIZATION=${KUSTOMIZATION_PATH}
@@ -55,19 +55,26 @@ jobs:
             mkdir -p ${RENDERED_BASE}
             kustomize build --enable-exec --enable-alpha-plugins "${BASE_KUSTOMIZATION}" >> ${RENDERED_BASE}/manifest.yaml
 
-            git diff --no-index ${RENDERED_BASE}/manifest.yaml ${RENDERED_HEAD}/manifest.yaml >> ../diff-out.txt || true
+            git diff --no-index ${RENDERED_BASE}/manifest.yaml ${RENDERED_HEAD}/manifest.yaml >> ../body.txt || true
 
-            cat ../diff-out.txt
+            cat ../body.txt
           done
 
-      - name: close output file
-        run: |
-          echo "\`\`\`" >> diff-out.txt
-          echo "</details>" >> diff-out.txt
+          cd ..
 
-      - name: add comment to PR
-        uses: mshick/add-pr-comment@v3.9.0
-        with:
-          repo-token: ${{ secrets.COMMIT_PAT }}
-          message-failure: Diff was not successful
-          message-path: diff-out.txt
+          if (( $(cat body.txt | wc -m) > 65200 )); then
+            echo "This file is too big to comment on GitHub! Splitting...
+            split -b 65200 --filter='{cat header.txt; cat; echo " "; cat footer.txt} > $FILE' body.txt out_
+          else
+            echo "We only need one file. Assembling..."
+            cat header.txt >> out_aa
+            cat body.txt >> out_aa
+            cat footer.txt >> out_aa
+          fi
+
+          INDEX=1
+          for FILE in out_*;
+          do
+            echo "Here are the rendered changes made in this PR (Part: $INDEX):" | cat - $FILE | gh pr comment ${{ github.event.number }} -F -
+            ((INDEX=INDEX+1))
+          done
