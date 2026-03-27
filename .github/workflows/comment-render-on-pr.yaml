@@ -71,6 +71,7 @@ jobs:
           INDEX=1
           for FILE in out_*;
           do
-            echo "Here are the rendered changes made in this PR (Part: $INDEX):" | cat - $FILE | gh pr comment ${{ github.event.number }} -F -
+            cd head
+            echo "Here are the rendered changes made in this PR (Part: $INDEX):" | cat - ../$FILE | gh pr comment ${{ github.event.number }} -F -
             ((INDEX=INDEX+1))
           done
