@@ -59,7 +59,7 @@ jobs:
           cd ..
 
           if (( $(cat body.txt | wc -m) > 65200 )); then
-            echo "This file is too big to comment on GitHub! Splitting...
+            echo "This file is too big to comment on GitHub! Splitting..."
             split -b 65200 --filter='{cat header.txt; cat; echo " "; cat footer.txt} > $FILE' body.txt out_
           else
             echo "We only need one file. Assembling..."
