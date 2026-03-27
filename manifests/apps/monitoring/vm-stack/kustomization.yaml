@@ -2,24 +2,5 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: monitoring
 
-helmCharts:
-- name: victoria-metrics-k8s-stack 
-  releaseName: vm-stack
-  namespace: monitoring
-  repo: https://victoriametrics.github.io/helm-charts/
-  version: "0.72.5"
-  valuesFile: values.yaml
-
-- name: victoria-metrics-operator-crds
-  releaseName: vm-crds
-  namespace: monitoring
-  repo: https://victoriametrics.github.io/helm-charts/
-  version: "0.8.0"
-
-- name: prometheus-operator-crds
-  releaseName: prometheus-crds
-  repo: https://prometheus-community.github.io/helm-charts
-  version: "28.0.0"
-
 resources:
 - pv.yaml
