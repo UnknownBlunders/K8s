@@ -7,5 +7,5 @@ helmCharts:
   releaseName: fluent-bit
   namespace: monitoring
   repo: https://fluent.github.io/helm-charts/
-  version: "0.56.0"
+  version: "0.57.2"
   valuesFile: values.yaml
