@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rook-ceph-operator
+  namespace: argocd
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: rook-ceph
+  source:
+    repoURL: "https://github.com/unknownblunders/K8s.git"
+    path: manifests/bootstrapping/rook-ceph-operator
+    targetRevision: main
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - ServerSideApply=true
