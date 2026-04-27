@@ -8,3 +8,4 @@ resources:
 - envoy-gateway.yaml
 - argocd.yaml
 - rook-ceph-operator.yaml
+- rook-ceph-cluster.yaml
