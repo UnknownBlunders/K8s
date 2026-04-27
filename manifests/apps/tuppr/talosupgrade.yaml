@@ -12,6 +12,7 @@ spec:
   policy:
     rebootMode: powercycle
   healthChecks:
+  # make sure all the control plane pods are healthy before next upgrade
     - &CONTROLPLANE
       apiVersion: v1
       kind: pod
@@ -34,3 +35,9 @@ spec:
       name: kube-scheduler-kcp02
     - !!merge <<: *CONTROLPLANE
       name: kube-scheduler-kcp03
+
+  # make sure rook and volsync are healthy before next upgrade
+    - apiVersion: ceph.rook.io/v1
+      kind: CephCluster
+      expr: |-
+        status.ceph.health in ['HEALTH_OK']

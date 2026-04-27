@@ -8,3 +8,8 @@ spec:
   kubernetes:
     # renovate: datasource=github-releases depName=siderolabs/kubelet
     version: "v1.35.3"
+  healthChecks:
+    - apiVersion: ceph.rook.io/v1
+      kind: CephCluster
+      expr: |-
+        status.ceph.health in ['HEALTH_OK']
