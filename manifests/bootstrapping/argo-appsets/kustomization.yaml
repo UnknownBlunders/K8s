@@ -7,3 +7,4 @@ resources:
 - external-secrets.yaml
 - envoy-gateway.yaml
 - argocd.yaml
+- rook-ceph-operator.yaml
