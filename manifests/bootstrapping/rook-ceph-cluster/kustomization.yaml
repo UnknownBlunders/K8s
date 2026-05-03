@@ -12,3 +12,4 @@ helmCharts:
 
 resources:
 - dashboard-password-es.yaml
+- grafanadashboard.yaml

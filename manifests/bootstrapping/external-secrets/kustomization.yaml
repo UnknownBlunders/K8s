@@ -6,6 +6,7 @@ resources:
 - ns.yaml
 - ./1password-connect
 - secret-store.yaml
+- grafanadashboard.yaml
 
 helmCharts:
 - name: external-secrets
@@ -15,5 +16,8 @@ helmCharts:
   version: "2.4.1"
   valuesInline:
     controllerClass: clusterwide
-    extendedMetricLabels: false
-    serviceMonitor.enabled: false
+    serviceMonitor:
+      enabled: true
+      renderMode: alwaysRender
+    grafanaDashboard:
+      enabled: true
