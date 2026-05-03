@@ -37,7 +37,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
+        "uid": "${datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -109,7 +109,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
+        "uid": "${datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -166,7 +166,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PABDA7AB1AD2A1489"
+            "uid": "${datasource}"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
@@ -185,7 +185,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
+        "uid": "${datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -257,7 +257,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
+        "uid": "${datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -328,7 +328,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
+        "uid": "${datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -399,7 +399,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
+        "uid": "${datasource}"
       },
       "description": "Micrograms per cubic meter",
       "fieldConfig": {
@@ -479,7 +479,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
+        "uid": "${datasource}"
       },
       "description": "Micrograms per cubic meter",
       "fieldConfig": {
@@ -559,7 +559,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
+        "uid": "${datasource}"
       },
       "description": "Micrograms per cubic meter",
       "fieldConfig": {
@@ -639,7 +639,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
+        "uid": "${datasource}"
       },
       "description": "picograms per 100ml",
       "fieldConfig": {
@@ -732,7 +732,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
+        "uid": "${datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -824,7 +824,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
+        "uid": "${datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -920,7 +920,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
+        "uid": "${datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1016,7 +1016,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
+        "uid": "${datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1108,7 +1108,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
+        "uid": "${datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1200,7 +1200,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
+        "uid": "${datasource}"
       },
       "description": "micrograms per cubic meter",
       "fieldConfig": {
@@ -1289,7 +1289,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
+        "uid": "${datasource}"
       },
       "description": "micrograms per cubic meter",
       "fieldConfig": {
@@ -1378,7 +1378,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
+        "uid": "${datasource}"
       },
       "description": "micrograms per cubic meter",
       "fieldConfig": {
@@ -1467,7 +1467,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "PABDA7AB1AD2A1489"
+        "uid": "${datasource}"
       },
       "description": "picograms per 100ml",
       "fieldConfig": {
@@ -1570,7 +1570,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PABDA7AB1AD2A1489"
+            "uid": "${datasource}"
           },
           "fieldConfig": {
             "defaults": {
@@ -1698,7 +1698,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PABDA7AB1AD2A1489"
+                "uid": "${datasource}"
               },
               "disableTextWrap": false,
               "editorMode": "code",
@@ -1716,7 +1716,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PABDA7AB1AD2A1489"
+                "uid": "${datasource}"
               },
               "disableTextWrap": false,
               "editorMode": "builder",
@@ -1737,7 +1737,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PABDA7AB1AD2A1489"
+            "uid": "${datasource}"
           },
           "fieldConfig": {
             "defaults": {
@@ -1829,7 +1829,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PABDA7AB1AD2A1489"
+                "uid": "${datasource}"
               },
               "disableTextWrap": false,
               "editorMode": "builder",
@@ -1846,7 +1846,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PABDA7AB1AD2A1489"
+                "uid": "${datasource}"
               },
               "disableTextWrap": false,
               "editorMode": "builder",
