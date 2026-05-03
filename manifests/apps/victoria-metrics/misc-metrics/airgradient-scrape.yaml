@@ -2,7 +2,7 @@ apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMScrapeConfig
 metadata:
   name: ag-bedroom
-  namespace: monitoring
+  namespace: victoriametrics
 spec:
   staticConfigs:
     - targets:
@@ -16,7 +16,7 @@ apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMScrapeConfig
 metadata:
   name: ag-ethan-office
-  namespace: monitoring
+  namespace: victoriametrics
 spec:
   staticConfigs:
     - targets:
@@ -30,7 +30,7 @@ apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMScrapeConfig
 metadata:
   name: ag-taylor-office
-  namespace: monitoring
+  namespace: victoriametrics
 spec:
   staticConfigs:
     - targets:
