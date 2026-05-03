@@ -80,7 +80,7 @@ config:
     [OUTPUT]
       name http
       match kubernetes.*
-      host victoria-logs-victoria-logs-single-server.monitoring.svc.cluster.local
+      host victoria-logs-victoria-logs-single-server.victorialogs.svc.cluster.local
       port 9428
       uri /insert/jsonline?_stream_fields=stream,k_namespace_name,k_pod_name,app&_msg_field=log&_time_field=date
       format json_lines
@@ -91,7 +91,7 @@ config:
     [OUTPUT]
       name http
       match talos.*
-      host victoria-logs-victoria-logs-single-server.monitoring.svc.cluster.local
+      host victoria-logs-victoria-logs-single-server.victorialogs.svc.cluster.local
       port 9428
       uri /insert/jsonline?_stream_fields=stream,t_node,filename,app&_msg_field=log&_time_field=date
       format json_lines

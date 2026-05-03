@@ -5,7 +5,4 @@ namespace: monitoring
 resources:
 - ns.yaml
 - vm-stack
-- smartctl
-- victoria-logs
-- fluent-bit
 - misc-metrics

@@ -1,0 +1,23 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaManifest
+metadata:
+  name: git-sync-repository
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  template:
+    apiVersion: provisioning.grafana.app/v0alpha1
+    kind: Connection
+    metadata:
+      name: grafana-repo
+    spec:
+      title: 'Repository'
+      type: github
+      url: https://github.com
+      github:
+        appID: '<GITHUB_APP_ID>'
+        installationID: '<GITHUB_INSTALL_ID>'
+    secure:
+      privateKey:
+        create: '<GITHUB_PRIVATE_KEY>'

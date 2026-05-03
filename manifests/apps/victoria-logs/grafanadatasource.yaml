@@ -2,7 +2,7 @@ apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDatasource
 metadata:
   name: victorialogs
-  namespace: monitoring
+  namespace: victorialogs
 spec:
   plugins:
     - name: victoriametrics-logs-datasource
@@ -14,7 +14,7 @@ spec:
     name: victorialogs
     type: victoriametrics-logs-datasource
     url: >-
-      http://victoria-logs-victoria-logs-single-server.monitoring.svc.cluster.local:9428
+      http://victoria-logs-victoria-logs-single-server.victorialogs.svc.cluster.local:9428
   instanceSelector:
     matchLabels:
       dashboards: grafana
