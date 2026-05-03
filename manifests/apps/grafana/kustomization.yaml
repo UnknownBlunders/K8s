@@ -8,6 +8,7 @@ helmCharts:
   namespace: grafana
   repo: oci://ghcr.io/grafana/helm-charts
   version: "5.22.2"
+  includeCRDs: true
   valuesInline:
     dashboard:
       enabled: true
