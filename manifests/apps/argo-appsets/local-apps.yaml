@@ -30,7 +30,7 @@ spec:
         namespace: smartctl
       - appName: fluent-bit
         namespace: fluentbit
-      - appName: victorialogs
+      - appName: victoria-logs
         namespace: victorialogs
   template:
     metadata:
