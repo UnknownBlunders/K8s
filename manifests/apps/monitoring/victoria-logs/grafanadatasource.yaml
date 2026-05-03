@@ -12,7 +12,7 @@ spec:
     access: proxy
     isDefault: false
     name: victorialogs
-    type: VictoriaLogs
+    type: victoriametrics-logs-datasource
     url: >-
       http://victoria-logs-victoria-logs-single-server.monitoring.svc.cluster.local:9428
   instanceSelector:
