@@ -5,7 +5,7 @@ metadata:
   namespace: monitoring
 spec:
   plugins:
-    - name: VictoriaLogs
+    - name: victoriametrics-logs-datasource
       version: 0.26.3
   allowCrossNamespaceImport: true
   datasource:
