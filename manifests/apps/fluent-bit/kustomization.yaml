@@ -9,3 +9,6 @@ helmCharts:
   repo: https://fluent.github.io/helm-charts/
   version: "0.57.3"
   valuesFile: values.yaml
+
+resources:
+- ns.yaml
