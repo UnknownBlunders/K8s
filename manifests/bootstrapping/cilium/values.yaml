@@ -42,7 +42,7 @@ operator:
   prometheus:
     enabled: true
     serviceMonitor:
-      enabled: true
+      enabled: false
   rollOutPods: true
   replicas: 2
 dashboards:
