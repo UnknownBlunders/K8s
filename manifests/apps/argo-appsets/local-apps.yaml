@@ -26,6 +26,12 @@ spec:
         namespace: tuppr
       - appName: ups-nut
         namespace: ups-nut
+      - appName: smartctl
+        namespace: smartctl
+      - appName: fluent-bit
+        namespace: fluentbit
+      - appName: victorialogs
+        namespace: victorialogs
   template:
     metadata:
       name: '{{appName}}'
