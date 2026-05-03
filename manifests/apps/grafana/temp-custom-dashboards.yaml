@@ -1,0 +1,43 @@
+# These are just here until I setup Git Sync
+# currently blocked by: https://github.com/grafana/grafana-operator/issues/2453
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: pod-logs
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  datasources:
+    - datasourceName: VictoriaMetrics
+      inputName: DS_PROMETHEUS
+  url: https://raw.githubusercontent.com/UnknownBlunders/K8s/refs/heads/main/manifests/apps/grafana/dashboards/victorialogs-simple.json
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: air-quality
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  datasources:
+    - datasourceName: VictoriaMetrics
+      inputName: DS_PROMETHEUS
+  url: https://raw.githubusercontent.com/UnknownBlunders/K8s/refs/heads/main/manifests/apps/grafana/dashboards/airquality.json
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: resources-by-node
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  datasources:
+    - datasourceName: VictoriaMetrics
+      inputName: DS_PROMETHEUS
+  url: https://raw.githubusercontent.com/UnknownBlunders/K8s/refs/heads/main/manifests/apps/grafana/dashboards/resources-by-node.json
