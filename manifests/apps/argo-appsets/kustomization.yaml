@@ -6,3 +6,4 @@ resources:
 - remote-apps.yaml
 - local-apps.yaml
 - monitoring.yaml
+- grafana.yaml
