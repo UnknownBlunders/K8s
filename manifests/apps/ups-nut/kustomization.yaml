@@ -22,3 +22,4 @@ resources:
 - nut-config-es.yaml
 - nut-exporter-es.yaml
 - servicescrape.yaml
+- grafanadashboard.yaml

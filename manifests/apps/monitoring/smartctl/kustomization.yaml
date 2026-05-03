@@ -12,3 +12,4 @@ helmCharts:
 
 resources:
 - vmscrape.yaml
+- grafanadashboard.yaml

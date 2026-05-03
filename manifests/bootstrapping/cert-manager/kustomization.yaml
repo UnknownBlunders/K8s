@@ -28,3 +28,4 @@ resources:
 - cloudflare-dns-es.yaml
 - prod-cert-issuer.yaml
 - staging-cert-issuer.yaml
+- grafanadashboard.yaml

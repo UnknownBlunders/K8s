@@ -8,4 +8,4 @@ resources:
 - smartctl
 - victoria-logs
 - fluent-bit
-- misc
+- misc-metrics
