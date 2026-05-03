@@ -65,9 +65,20 @@ vmagent:
   ingress:
     enabled: false
 
-# I manually deploy grafana
+# I setup grafana operator
+defaultDashboards:
+  grafanaOperator:
+    enabled: true
+    spec:
+      allowCrossNamespaceImport: true
+defaultDatasources:
+  grafanaOperator:
+    enabled: true
+    spec:
+      allowCrossNamespaceImport: true
 grafana:
   enabled: false
+  forceDeployDatasource: true
 
 
 # -- prometheus-node-exporter dependency chart configuration. For possible values check [here](https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus-node-exporter/values.yaml)
