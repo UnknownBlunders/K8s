@@ -12,3 +12,4 @@ helmCharts:
 
 resources:
 - hubble-route.yaml
+- grafanadashboard.yaml

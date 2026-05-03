@@ -1,0 +1,17 @@
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: fluentbit
+  namespace: fluentbit
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  datasources:
+    - datasourceName: VictoriaMetrics
+      inputName: DS_PROMETHEUS
+  configMapRef:
+    name: fluent-bit-dashboard-fluent-bit
+    key: fluent-bit-fluent-bit.json
