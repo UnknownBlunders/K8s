@@ -10,8 +10,8 @@ spec:
     matchLabels:
       dashboards: grafana
   datasources:
-    - datasourceName: VictoriaMetrics
-      inputName: DS_PROMETHEUS
+    - datasourceName: victorialogs
+      inputName: DS_LOGS
   url: https://raw.githubusercontent.com/UnknownBlunders/K8s/refs/heads/main/manifests/apps/grafana/dashboards/victorialogs-simple.json
 ---
 apiVersion: grafana.integreatly.org/v1beta1
@@ -25,7 +25,6 @@ spec:
       dashboards: grafana
   datasources:
     - datasourceName: VictoriaMetrics
-      inputName: DS_PROMETHEUS
   url: https://raw.githubusercontent.com/UnknownBlunders/K8s/refs/heads/main/manifests/apps/grafana/dashboards/airquality.json
 ---
 apiVersion: grafana.integreatly.org/v1beta1
@@ -39,5 +38,4 @@ spec:
       dashboards: grafana
   datasources:
     - datasourceName: VictoriaMetrics
-      inputName: DS_PROMETHEUS
   url: https://raw.githubusercontent.com/UnknownBlunders/K8s/refs/heads/main/manifests/apps/grafana/dashboards/resources-by-node.json
