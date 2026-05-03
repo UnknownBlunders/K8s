@@ -25,7 +25,7 @@
       {
         "datasource": {
           "type": "VictoriaLogs",
-          "uid": "victorialogs"
+          "uid": "${DS_LOGS}"
         },
         "fieldConfig": {
           "defaults": {},
@@ -53,7 +53,7 @@
           {
             "datasource": {
               "type": "VictoriaLogs",
-              "uid": "victorialogs"
+              "uid": "${DS_LOGS}"
             },
             "expr": "(k_namespace_name: ${namespace} AND k_pod_name: ${workload}) OR \"${query}\"",
             "queryType": "range",
@@ -95,7 +95,7 @@
           },
           "datasource": {
             "type": "prometheus",
-            "uid": "victoriametrics"
+            "uid": "${DS_METRICS}"
           },
           "definition": "label_values(kube_namespace_created,namespace)",
           "includeAll": false,
@@ -117,7 +117,7 @@
           },
           "datasource": {
             "type": "prometheus",
-            "uid": "victoriametrics"
+            "uid": "${DS_METRICS}"
           },
           "definition": "label_values(namespace_workload_pod:kube_pod_owner:relabel{namespace=\"$namespace\"},workload)",
           "includeAll": false,
