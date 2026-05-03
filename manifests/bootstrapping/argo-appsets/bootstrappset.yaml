@@ -6,8 +6,6 @@ spec:
   generators:
   - list:
       elements:
-      - appName: cilium
-        namespace: kube-system
       - appName: metallb
         namespace: metallb-system
       - appName: cert-manager

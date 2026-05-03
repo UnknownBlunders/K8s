@@ -4,6 +4,7 @@ namespace: argocd
 
 resources:
 - bootstrappset.yaml
+- cilium.yaml
 - external-secrets.yaml
 - envoy-gateway.yaml
 - argocd.yaml
