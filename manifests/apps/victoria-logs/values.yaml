@@ -5,6 +5,8 @@ dashboards:
   enabled: true
   grafanaOperator:
     enabled: true
+    spec:
+      allowCrossNamespaceImport: true
 server:
   persistentVolume:
     enabled: true
