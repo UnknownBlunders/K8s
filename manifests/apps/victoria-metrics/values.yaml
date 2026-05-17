@@ -31,7 +31,7 @@ vmsingle:
         memory: 3000Mi
       requests:
         memory: 3000Mi
-        cpU: 1000m
+        cpu: 1000m
     securityContext:
       runAsUser: 1015
       runAsGroup: 1015
