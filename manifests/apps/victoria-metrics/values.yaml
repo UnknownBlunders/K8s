@@ -28,10 +28,10 @@ vmsingle:
       maxLabelsPerTimeseries: "120"
     resources:
       limits:
-        memory: 3000Mi
+        memory: 4000Mi
       requests:
-        memory: 3000Mi
-        cpu: 1000m
+        memory: 4000Mi
+        cpu: 2
     securityContext:
       runAsUser: 1015
       runAsGroup: 1015
