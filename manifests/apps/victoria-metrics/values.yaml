@@ -26,6 +26,12 @@ vmsingle:
     replicaCount: 1
     extraArgs: 
       maxLabelsPerTimeseries: "120"
+    resources:
+      limits:
+        memory: 3000Mi
+      requests:
+        memory: 3000Mi
+        cpU: 1000m
     securityContext:
       runAsUser: 1015
       runAsGroup: 1015
