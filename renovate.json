@@ -20,7 +20,8 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/values.ya??ml$/"
+        "/values.ya??ml$/",
+        "/grafana.ya??ml$/"
       ],
       "matchStrings": [
         "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
