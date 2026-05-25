@@ -64,7 +64,7 @@ spec:
     apiVersion: provisioning.grafana.app/v0alpha1
     kind: Connection
     metadata:
-      name: grafana-conn
+      name: grafana-dashboards-github
       namespace: default
     spec:
       title: 'grafana-dashboards'
