@@ -1,23 +1,106 @@
+---
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaManifest
 metadata:
   name: git-sync-repository
+  namespace: gafana
 spec:
   instanceSelector:
     matchLabels:
-      dashboards: grafana
+      grafana: dashboards
+  template:
+    apiVersion: provisioning.grafana.app/v0alpha1
+    kind: Repository
+    metadata:
+      name: grafana-dashboards-repo
+    spec:
+      type: github
+      connection:
+        name: grafana-dashboards-github
+      github:
+        url: 'https://github.com/UnknownBlunders/grafana-dashboards'
+        branch: 'main'
+        path: 'dashboards'
+      sync:
+        enabled: true
+        intervalSeconds: 60
+        target: folder
+      workflows:
+        - write
+        - branch
+      title: 'grafana-dashboards'
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaManifest
+metadata:
+  name: git-sync-connection
+  namespace: gafana
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana: dashboards
+  patch:
+    env:
+    - name: GITHUB_APP_ID
+      valueFrom:
+        secretKeyRef:
+          key: appId
+          name: github-app-git-sync
+    - name: GITHUB_APP_INSTALLATION_ID
+      valueFrom:
+        secretKeyRef:
+          key: installationId
+          name: github-app-git-sync
+    - name: GITHUB_PRIVATE_KEY
+      valueFrom:
+        secretKeyRef:
+          key: privateKey
+          name: github-app-git-sync
+    scripts:
+    - .spec.github.appID=env.GITHUB_APP_ID
+    - .spec.github.installationID=env.GITHUB_APP_INSTALLATION_ID
+    - .secure.privateKey.create=env.GITHUB_PRIVATE_KEY
   template:
     apiVersion: provisioning.grafana.app/v0alpha1
     kind: Connection
     metadata:
-      name: grafana-repo
+      name: grafana-conn
+      namespace: default
     spec:
-      title: 'Repository'
+      title: 'grafana-dashboards'
       type: github
-      url: https://github.com
-      github:
-        appID: '<GITHUB_APP_ID>'
-        installationID: '<GITHUB_INSTALL_ID>'
-    secure:
-      privateKey:
-        create: '<GITHUB_PRIVATE_KEY>'
+      url: https://github.com/UnknownBlunders/grafana-dashboards
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: grafana-github-app-git-sync
+  namespace: gafana
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: op-prod
+  target:
+    name: github-app-git-sync
+    creationPolicy: Owner
+    template:
+      type: Opaque
+      engineVersion: v2
+      data:
+        appId: '{{ .appId }}'
+        installationId: '{{ .installationId }}'
+        privateKey: '{{ .privateKey }}'
+  data:
+  - secretKey: appId
+    remoteRef:
+      key: grafana-github-app-git-sync
+      property: appId
+  - secretKey: installationId
+    remoteRef:
+      key: grafana-github-app-git-sync
+      property: installationId
+  - secretKey: privateKey
+    remoteRef:
+      key: grafana-github-app-git-sync
+      property: privateKey

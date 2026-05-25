@@ -20,4 +20,4 @@ resources:
 - admin-user-es.yaml
 - grafana.yaml
 - grafanadashboard.yaml
-- temp-custom-dashboards.yaml
+- git-sync-config.yaml
