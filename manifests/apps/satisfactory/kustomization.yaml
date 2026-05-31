@@ -10,5 +10,5 @@ resources:
 
 images:
   - name: satisfactory-container-image
-    newName: ghcr.io/unknownblunders/satisfactory
-    newTag: "e7b4acb84cb0ad1e018cd7b5662b6291606044c3"
+    newName: ghcr.io/wolveix/satisfactory-server:dev
+    newTag: "v1.9.10"

@@ -18,15 +18,20 @@ spec:
       - name: satisfactory
         image: satisfactory-container-image
         securityContext:
-          runAsUser: 1014
-          runAsGroup: 1014
+          runAsUser: 1000
+          runAsGroup: 1000
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          seccompProfile:
+            type: RuntimeDefault
         env:
         - name: PGID
-          value: "1014"
+          value: "1000"
         - name: PUID
-          value: "1014"
-        - name: ROOTLESS
-          value: "true"
+          value: "1000"
         - name: MAXPLAYERS
           value: "8"
         ports:
@@ -36,9 +41,12 @@ spec:
         - name: "game"
           containerPort: 7777
           protocol: UDP
+        - name: "messaging"
+          containerPort: 8888
+          protocol: TCP
         resources:
           requests:
-            memory: "4000Mi"
+            memory: "8000Mi"
             cpu: "100m"
           limits:
             memory: "8000Mi"
