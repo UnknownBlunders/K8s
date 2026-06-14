@@ -43,7 +43,7 @@ route:
         sectionName: https
     rules:
       - backendRefs:
-          - name: *app
+          - name: garage
             port: *port
 configMaps:
   config:
