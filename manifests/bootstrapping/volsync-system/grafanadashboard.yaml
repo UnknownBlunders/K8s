@@ -1,0 +1,18 @@
+# https://grafana.com/grafana/dashboards/21356-volsync-dashboard/
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: volsync
+  namespace: volsync-system
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  datasources:
+    - datasourceName: victoriametrics
+      inputName: DS_PROMETHEUS
+  envs:
+    - name: VAR_REPLICATIONDESTNAME
+      value: .*-dst
+  url: https://grafana.com/api/dashboards/21356/revisions/3/download
