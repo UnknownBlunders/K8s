@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: garage
+  namespace: argocd
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: garage
+  source:
+    repoURL: "https://github.com/unknownblunders/K8s.git"
+    path: manifests/bootstrapping/garage
+    targetRevision: main
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

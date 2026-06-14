@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: garage-pv
+spec:
+  capacity:
+    storage: 2000Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs
+  mountOptions:
+    - hard
+    - nfsvers=4.2
+  nfs:
+    path: /garage
+    server: nfs.blunders.me
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: garage-pvc
+spec:
+  storageClassName: nfs
+  volumeName: garage-pv
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2000Gi

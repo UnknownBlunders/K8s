@@ -12,3 +12,4 @@ resources:
 - rook-ceph-cluster.yaml
 - ceph-csi-drivers.yaml
 - volsync.yaml
+- garage.yaml
