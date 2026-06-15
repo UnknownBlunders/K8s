@@ -1,7 +1,8 @@
 controllers:
   garage:
     containers:
-      app:
+      replicas: 0
+      garage-container:
         image:
           repository: dxflrs/garage
           tag: v2.3.0
@@ -27,16 +28,16 @@ defaultPodOptions:
     runAsGroup: 1021
     seccompProfile: { type: RuntimeDefault }
 service:
-  app:
+  garage-container:
     ports:
       s3:
         port: &port 3900
       api:
         port: 3903
-# app template routes broken for now
+# garage-container template routes broken for now
 # helm capabilities .has strikes again!
 # route:
-#   app:
+#   garage-container:
 #     hostnames:
 #       - "s3.blunders.me"
 #     parentRefs:
@@ -81,7 +82,7 @@ persistence:
     existingClaim: garage-pvc
     advancedMounts:
       garage:
-        app:
+        garage-container:
           - path: /data
             subPath: data
           - path: /meta
