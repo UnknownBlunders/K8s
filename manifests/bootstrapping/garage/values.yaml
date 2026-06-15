@@ -1,7 +1,7 @@
 controllers:
   garage:
+    replicas: 0
     containers:
-      replicas: 0
       garage-container:
         image:
           repository: dxflrs/garage
@@ -54,7 +54,7 @@ configMaps:
       configuration.toml: |
         metadata_dir = "/meta"
         data_dir = "/data"
-        db_engine = "sqlite"
+        db_engine = "lmdb"
         metadata_auto_snapshot_interval = "6h"
 
         replication_factor = 1
