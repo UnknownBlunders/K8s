@@ -1,6 +1,5 @@
 controllers:
   garage:
-    replicas: 0
     containers:
       garage-container:
         image:
@@ -17,10 +16,10 @@ controllers:
           capabilities: { drop: [ALL] }
         resources:
           requests:
-            cpu: 100m
-            memory: 128Mi
+            cpu: 200m
+            memory: 1Gi
           limits:
-            memory: 256Mi
+            memory: 1Gi
 defaultPodOptions:
   securityContext:
     runAsNonRoot: true
