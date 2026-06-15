@@ -33,18 +33,20 @@ service:
         port: &port 3900
       api:
         port: 3903
-route:
-  app:
-    hostnames:
-      - "s3.blunders.me"
-    parentRefs:
-      - name: envoy-internal
-        namespace: envoy-gateway
-        sectionName: https
-    rules:
-      - backendRefs:
-          - name: garage
-            port: *port
+# app template routes broken for now
+# helm capabilities .has strikes again!
+# route:
+#   app:
+#     hostnames:
+#       - "s3.blunders.me"
+#     parentRefs:
+#       - name: envoy-internal
+#         namespace: envoy-gateway
+#         sectionName: https
+#     rules:
+#       - backendRefs:
+#           - name: garage
+#             port: *port
 configMaps:
   config:
     data:

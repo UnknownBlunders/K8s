@@ -10,7 +10,17 @@ helmCharts:
   version: 5.0.1
   valuesFile: values.yaml
 
+- name: app-template
+  releaseName: garage-webui
+  namespace: garage
+  repo: https://bjw-s-labs.github.io/helm-charts
+  version: 5.0.1
+  valuesFile: webui-values.yaml
+
 resources:
 - ns.yaml
 - externalsecret.yaml
 - volume.yaml
+- garage-httproute.yaml
+- webui-httproute.yaml
+- backendtrafficpolicy.yaml

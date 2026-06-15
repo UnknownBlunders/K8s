@@ -1,0 +1,25 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  labels:
+    app.kubernetes.io/instance: garage-webui
+    app.kubernetes.io/name: garage-webui
+  name: garage-webui
+  namespace: garage
+spec:
+  hostnames:
+  - garage.blunders.me
+  parentRefs:
+  - group: gateway.networking.k8s.io
+    kind: Gateway
+    name: envoy-internal
+    namespace: envoy-gateway
+    sectionName: https
+  rules:
+  - backendRefs:
+    - group: ""
+      kind: Service
+      name: garage-webui
+      namespace: garage
+      port: 3909
+      weight: 1
