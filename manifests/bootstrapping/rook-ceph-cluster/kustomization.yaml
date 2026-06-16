@@ -7,7 +7,7 @@ helmCharts:
   releaseName: cluster
   namespace: rook-ceph
   repo: oci://ghcr.io/rook
-  version: v1.20.0
+  version: v1.20.1
   valuesFile: values.yaml
 
 resources:
