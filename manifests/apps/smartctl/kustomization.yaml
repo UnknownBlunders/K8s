@@ -7,7 +7,7 @@ helmCharts:
   releaseName: smartctl
   namespace: smartctl
   repo: https://prometheus-community.github.io/helm-charts
-  version: "0.16.1"
+  version: "0.17.0"
   valuesFile: values.yaml
 
 resources:
