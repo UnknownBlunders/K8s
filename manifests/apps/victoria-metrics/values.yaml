@@ -10,6 +10,8 @@ victoria-metrics-operator:
     enabled: true
   crd:
     create: true
+  operator:
+    enable_converter_ownership: true
 # Configures vmsingle params
 vmsingle:
   enabled: true
