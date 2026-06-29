@@ -15,39 +15,39 @@ spec:
         app: paperless-pg
     spec:
       containers:
-      - name: paperless-pg
-        image: paperless-pg-container-image
-        securityContext:
-          runAsUser: 1011
-          runAsGroup: 1011
-        ports:
-        - containerPort: 5432
-        resources:
-          requests:
-            memory: "100Mi"
-            cpu: "10m"
-          limits:
-            memory: "500Mi"
-            cpu: "100m"
-        env:
-        - name: POSTGRES_DB
-          valueFrom:
-            secretKeyRef:
-              name: paperless-pg-secret
-              key: POSTGRES_DB
-        - name: POSTGRES_USER
-          valueFrom:
-            secretKeyRef:
-              name: paperless-pg-secret
-              key: POSTGRES_USER
-        - name: POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: paperless-pg-secret
-              key: POSTGRES_PASSWORD
-        volumeMounts:
-        - name: paperless-pg-pvc
-          mountPath: /var/lib/postgresql/data
+        - name: paperless-pg
+          image: paperless-pg-container-image
+          securityContext:
+            runAsUser: 1011
+            runAsGroup: 1011
+          ports:
+            - containerPort: 5432
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "10m"
+            limits:
+              memory: "500Mi"
+              cpu: "100m"
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: paperless-pg-secret
+                  key: POSTGRES_DB
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: paperless-pg-secret
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: paperless-pg-secret
+                  key: POSTGRES_PASSWORD
+          volumeMounts:
+            - name: paperless-pg-pvc
+              mountPath: /var/lib/postgresql/data
       volumes:
         - name: paperless-pg-pvc
           persistentVolumeClaim:

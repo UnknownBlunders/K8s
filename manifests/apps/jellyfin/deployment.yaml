@@ -15,33 +15,33 @@ spec:
         app: jellyfin
     spec:
       containers:
-      - name: jellyfin
-        image: jellyfin-container-image
-        securityContext:
-          runAsUser: 1003
-          runAsGroup: 1003
-        env:
-        - name: JELLYFIN_PublishedServerUrl
-          value: "https://jellyfin.blunders.me"
-        ports:
-        - containerPort: 8096
-        resources:
-          requests:
-            memory: "300Mi"
-            cpu: "100m"
-          limits:
-            memory: "2700Mi"
-            gpu.intel.com/i915: "1"
-            cpu: "3000m"
-        volumeMounts:
-        - name: jellyfin-media-pvc
-          mountPath: /media
-        - name: jellyfin-config-pvc
-          mountPath: /config
-          subPath: config
-        - name: jellyfin-config-pvc
-          mountPath: /cache
-          subPath: cache
+        - name: jellyfin
+          image: jellyfin-container-image
+          securityContext:
+            runAsUser: 1003
+            runAsGroup: 1003
+          env:
+            - name: JELLYFIN_PublishedServerUrl
+              value: "https://jellyfin.blunders.me"
+          ports:
+            - containerPort: 8096
+          resources:
+            requests:
+              memory: "300Mi"
+              cpu: "100m"
+            limits:
+              memory: "2700Mi"
+              gpu.intel.com/i915: "1"
+              cpu: "3000m"
+          volumeMounts:
+            - name: jellyfin-media-pvc
+              mountPath: /media
+            - name: jellyfin-config-pvc
+              mountPath: /config
+              subPath: config
+            - name: jellyfin-config-pvc
+              mountPath: /cache
+              subPath: cache
       volumes:
         - name: jellyfin-config-pvc
           persistentVolumeClaim:

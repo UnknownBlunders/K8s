@@ -4,8 +4,8 @@ metadata:
   name: paperless-redis-service
 spec:
   ports:
-  - port: 6379
-    targetPort: 6379
-    protocol: TCP
+    - port: 6379
+      targetPort: 6379
+      protocol: TCP
   selector:
     app: paperless-redis

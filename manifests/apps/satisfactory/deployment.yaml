@@ -15,45 +15,45 @@ spec:
         app: satisfactory
     spec:
       containers:
-      - name: satisfactory
-        image: satisfactory-container-image
-        securityContext:
-          runAsUser: 1000
-          runAsGroup: 1000
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-          readOnlyRootFilesystem: true
-          seccompProfile:
-            type: RuntimeDefault
-        env:
-        - name: PGID
-          value: "1000"
-        - name: PUID
-          value: "1000"
-        - name: MAXPLAYERS
-          value: "8"
-        ports:
-        - name: "api"
-          containerPort: 7777
-          protocol: TCP
-        - name: "game"
-          containerPort: 7777
-          protocol: UDP
-        - name: "messaging"
-          containerPort: 8888
-          protocol: TCP
-        resources:
-          requests:
-            memory: "8000Mi"
-            cpu: "100m"
-          limits:
-            memory: "8000Mi"
-            cpu: "2000m"
-        volumeMounts:
-        - name: satisfactory-pvc
-          mountPath: /config
+        - name: satisfactory
+          image: satisfactory-container-image
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            seccompProfile:
+              type: RuntimeDefault
+          env:
+            - name: PGID
+              value: "1000"
+            - name: PUID
+              value: "1000"
+            - name: MAXPLAYERS
+              value: "8"
+          ports:
+            - name: "api"
+              containerPort: 7777
+              protocol: TCP
+            - name: "game"
+              containerPort: 7777
+              protocol: UDP
+            - name: "messaging"
+              containerPort: 8888
+              protocol: TCP
+          resources:
+            requests:
+              memory: "8000Mi"
+              cpu: "100m"
+            limits:
+              memory: "8000Mi"
+              cpu: "2000m"
+          volumeMounts:
+            - name: satisfactory-pvc
+              mountPath: /config
       volumes:
         - name: satisfactory-pvc
           persistentVolumeClaim:

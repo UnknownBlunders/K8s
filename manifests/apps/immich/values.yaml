@@ -1,4 +1,3 @@
-
 controllers:
   main:
     containers:
@@ -10,23 +9,20 @@ controllers:
           allowPrivilegeEscalation: false
           capabilities:
             drop:
-            - ALL
+              - ALL
           readOnlyRootFilesystem: true
           seLinuxOptions: {}
           seccompProfile:
-            type: RuntimeDefault  
+            type: RuntimeDefault
         image:
           # renovate: datasource=github-releases depName=immich-app/immich
           tag: "v2.7.5"
-
 immich:
   metrics:
     enabled: true
   persistence:
     library:
       existingClaim: immich-photos-pvc
-
-
 valkey:
   enabled: true
   controllers:
@@ -45,14 +41,12 @@ valkey:
             limits:
               memory: 120Mi
           securityContext:
-              runAsUser: 1009
-              runAsGroup: 1009
+            runAsUser: 1009
+            runAsGroup: 1009
   persistence:
     data:
       type: persistentVolumeClaim
       existingClaim: immich-redis-pvc
-
-
 server:
   controllers:
     main:
@@ -81,10 +75,9 @@ server:
               memory: 2022M
             limits:
               memory: 2022M
-
           securityContext:
-              runAsUser: 1007
-              runAsGroup: 1007
+            runAsUser: 1007
+            runAsGroup: 1007
 machine-learning:
   controllers:
     main:
@@ -114,8 +107,8 @@ machine-learning:
             limits:
               memory: 2513M
           securityContext:
-              runAsUser: 1007
-              runAsGroup: 1007
+            runAsUser: 1007
+            runAsGroup: 1007
           probes:
             liveness:
               spec:

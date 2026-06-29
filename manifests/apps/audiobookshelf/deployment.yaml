@@ -15,42 +15,42 @@ spec:
         app: abs
     spec:
       containers:
-      - name: abs
-      # renovate: datasource=github-releases depName=advplyr/audiobookshelf
-        image: abs-container-image
-        securityContext:
-          runAsUser: 1002
-          runAsGroup: 1002
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-          readOnlyRootFilesystem: true
-          seccompProfile:
-            type: RuntimeDefault
-        env:
-        - name: PORT
-          value: "13378"
-        ports:
-        - containerPort: 13378
-        resources:
-          requests:
-            memory: "500Mi"
-          limits:
-            memory: "500Mi"
-        volumeMounts:
-        - name: abs-media-pvc
-          mountPath: /audiobooks
-          subPath: audiobooks
-        - name: abs-media-pvc
-          mountPath: /podcasts
-          subPath: podcasts
-        - name: abs-config-pvc
-          mountPath: /config
-          subPath: config
-        - name: abs-config-pvc
-          mountPath: /metadata
-          subPath: metadata
+        - name: abs
+          # renovate: datasource=github-releases depName=advplyr/audiobookshelf
+          image: abs-container-image
+          securityContext:
+            runAsUser: 1002
+            runAsGroup: 1002
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            seccompProfile:
+              type: RuntimeDefault
+          env:
+            - name: PORT
+              value: "13378"
+          ports:
+            - containerPort: 13378
+          resources:
+            requests:
+              memory: "500Mi"
+            limits:
+              memory: "500Mi"
+          volumeMounts:
+            - name: abs-media-pvc
+              mountPath: /audiobooks
+              subPath: audiobooks
+            - name: abs-media-pvc
+              mountPath: /podcasts
+              subPath: podcasts
+            - name: abs-config-pvc
+              mountPath: /config
+              subPath: config
+            - name: abs-config-pvc
+              mountPath: /metadata
+              subPath: metadata
       volumes:
         - name: abs-config-pvc
           persistentVolumeClaim:

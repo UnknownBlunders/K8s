@@ -4,8 +4,8 @@ metadata:
   name: ha-service
 spec:
   ports:
-  - port: 80
-    targetPort: 8123
-    protocol: TCP
+    - port: 80
+      targetPort: 8123
+      protocol: TCP
   selector:
     app: ha

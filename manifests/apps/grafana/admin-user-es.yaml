@@ -18,11 +18,11 @@ spec:
         admin-user: '{{ .user }}'
         admin-password: '{{ .password }}'
   data:
-  - secretKey: user
-    remoteRef:
-      key: grafana-admin-user
-      property: user
-  - secretKey: password
-    remoteRef:
-      key: grafana-admin-user
-      property: password
+    - secretKey: user
+      remoteRef:
+        key: grafana-admin-user
+        property: user
+    - secretKey: password
+      remoteRef:
+        key: grafana-admin-user
+        property: password

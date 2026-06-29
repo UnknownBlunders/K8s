@@ -2,7 +2,6 @@ image:
   repository: itzg/minecraft-server
   tag: "2026.6.1"
   pullPolicy: IfNotPresent
-
 resources:
   requests:
     memory: 10000Mi
@@ -10,20 +9,16 @@ resources:
   limits:
     memory: 10000Mi
     cpu: 4
-
 podSecurityContext:
   runAsUser: 1019
   runAsGroup: 1019
   runAsNonRoot: true
-
 persistence:
   storageClass: "-"
   dataDir:
     enabled: true
     existingClaim: mc-poke-pvc
-
 replicaCount: 0
-
 minecraftServer:
   eula: "TRUE"
   # may be SNAPSHOT or a specific version number
@@ -59,19 +54,14 @@ minecraftServer:
   # If you would like to override the server configuration each time the container starts up, you can set this to true
   # see https://github.com/itzg/docker-minecraft-server#server-configuration
   overrideServerProperties: true
-
-
-serviceAnnotations: 
+serviceAnnotations:
   mc-router.itzg.me/externalServerName: poke.kmc.blunders.me,poke.mc.blunders.me,poke.mc.thisdick.org,pokemon.mc.thisdick.org
-
-podLabels: 
+podLabels:
   world: mc-poke
-deploymentLabels: 
+deploymentLabels:
   world: mc-poke
-serviceLabels: 
+serviceLabels:
   world: mc-poke
-
-
 livenessProbe:
   initialDelaySeconds: 120
 readinessProbe:

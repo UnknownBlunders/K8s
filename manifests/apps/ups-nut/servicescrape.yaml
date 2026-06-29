@@ -6,14 +6,14 @@ metadata:
   name: nut-exporter-scrape
 spec:
   endpoints:
-  - port: metrics
-    path: /ups_metrics
-    metricRelabelConfigs:
-    - action: replace
-      replacement: kubernetes
-      targetLabel: ups
-    - action: labeldrop
-      regex: (pod)
+    - port: metrics
+      path: /ups_metrics
+      metricRelabelConfigs:
+        - action: replace
+          replacement: kubernetes
+          targetLabel: ups
+        - action: labeldrop
+          regex: (pod)
   selector:
     matchLabels:
       app.kubernetes.io/name: nut-exporter

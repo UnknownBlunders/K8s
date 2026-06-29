@@ -4,8 +4,8 @@ metadata:
   name: abs-service
 spec:
   ports:
-  - port: 80
-    targetPort: 13378
-    protocol: TCP
+    - port: 80
+      targetPort: 13378
+      protocol: TCP
   selector:
     app: abs

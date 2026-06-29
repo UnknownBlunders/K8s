@@ -15,24 +15,24 @@ spec:
         app: paperless-redis
     spec:
       containers:
-      - name: paperless-redis
-        image: paperless-redis-container-image
-        securityContext:
-          runAsUser: 1012
-          runAsGroup: 1012
-          privileged: false
-        ports:
-        - containerPort: 6379
-        resources:
-          requests:
-            memory: "30Mi"
-            cpu: "10m"
-          limits:
-            memory: "300Mi"
-            cpu: "100m"
-        volumeMounts:
-        - name: paperless-redis-pvc
-          mountPath: /data
+        - name: paperless-redis
+          image: paperless-redis-container-image
+          securityContext:
+            runAsUser: 1012
+            runAsGroup: 1012
+            privileged: false
+          ports:
+            - containerPort: 6379
+          resources:
+            requests:
+              memory: "30Mi"
+              cpu: "10m"
+            limits:
+              memory: "300Mi"
+              cpu: "100m"
+          volumeMounts:
+            - name: paperless-redis-pvc
+              mountPath: /data
       volumes:
         - name: paperless-redis-pvc
           persistentVolumeClaim:

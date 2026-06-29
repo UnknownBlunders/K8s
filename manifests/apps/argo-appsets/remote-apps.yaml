@@ -4,12 +4,12 @@ metadata:
   name: remote-apps
 spec:
   generators:
-  - list:
-      elements:
-      - appName: blunder-blog
-        namespace: blunders-blog
-        appPath: manifests
-        repoPath: https://github.com/unknownblunders/website.git
+    - list:
+        elements:
+          - appName: blunder-blog
+            namespace: blunders-blog
+            appPath: manifests
+            repoPath: https://github.com/unknownblunders/website.git
   template:
     metadata:
       name: '{{appName}}'
@@ -27,4 +27,4 @@ spec:
           prune: true
           selfHeal: true
         syncOptions:
-        - CreateNamespace=true
+          - CreateNamespace=true

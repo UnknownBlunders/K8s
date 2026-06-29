@@ -2,27 +2,22 @@ image:
   repository: itzg/minecraft-server
   tag: "2026.6.1"
   pullPolicy: IfNotPresent
-
 resources:
   requests:
     memory: 7500Mi
     cpu: 500m
   limits:
     memory: 7500Mi
-
 podSecurityContext:
   runAsUser: 1004
   runAsGroup: 1004
   runAsNonRoot: true
-
 persistence:
   storageClass: "-"
   dataDir:
     enabled: true
     existingClaim: mc-sinicropi-pvc
-
 replicaCount: 0
-
 minecraftServer:
   eula: "TRUE"
   # may be SNAPSHOT or a specific version number
@@ -57,14 +52,11 @@ minecraftServer:
   # If you would like to override the server configuration each time the container starts up, you can set this to true
   # see https://github.com/itzg/docker-minecraft-server#server-configuration
   overrideServerProperties: true
-
-
-serviceAnnotations: 
+serviceAnnotations:
   mc-router.itzg.me/externalServerName: sinicropi.kmc.blunders.me,sinicropi.mc.blunders.me,sinicropi.mc.thisdick.org,minecraft.taylorstech.dev
-
-podLabels: 
+podLabels:
   world: mc-sinicropi
-deploymentLabels: 
+deploymentLabels:
   world: mc-sinicropi
-serviceLabels: 
+serviceLabels:
   world: mc-sinicropi

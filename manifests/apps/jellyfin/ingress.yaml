@@ -4,21 +4,20 @@ metadata:
   name: jellyfin
   annotations:
     cert-manager.io/cluster-issuer: "prod-cert-issuer"
-
 spec:
   ingressClassName: nginx
   tls:
-  - hosts:
-    - jellyfin.blunders.me
-    secretName: jellyfin-secret-tls
+    - hosts:
+        - jellyfin.blunders.me
+      secretName: jellyfin-secret-tls
   rules:
-  - host: jellyfin.blunders.me
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: jellyfin-service
-            port:
-              number: 80
+    - host: jellyfin.blunders.me
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: jellyfin-service
+                port:
+                  number: 80

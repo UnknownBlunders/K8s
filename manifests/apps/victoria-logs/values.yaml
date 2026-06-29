@@ -11,13 +11,11 @@ server:
   persistentVolume:
     enabled: true
     existingClaim: "logs-pvc"
-
   podSecurityContext:
     enabled: true
     fsGroup: 2000
     runAsNonRoot: true
     runAsUser: 1018
-  
   ingress:
     enabled: false
   route:

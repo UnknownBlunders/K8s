@@ -1,16 +1,14 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: vikunja
-
 resources:
-- jwt-es.yaml
-- pv.yaml
-- pvc.yaml
-- deployment.yaml
-- service.yaml
-#- ingress.yaml
-- route.yaml
-
+  - jwt-es.yaml
+  - pv.yaml
+  - pvc.yaml
+  - deployment.yaml
+  - service.yaml
+  #- ingress.yaml
+  - route.yaml
 images:
   - name: vikunja-container-image
     newName: docker.io/vikunja/vikunja

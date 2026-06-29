@@ -4,8 +4,8 @@ metadata:
   name: paperless-server-service
 spec:
   ports:
-  - port: 80
-    targetPort: 8000
-    protocol: TCP
+    - port: 80
+      targetPort: 8000
+      protocol: TCP
   selector:
     app: paperless-server

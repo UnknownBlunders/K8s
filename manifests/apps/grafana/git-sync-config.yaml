@@ -1,4 +1,3 @@
----
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaManifest
 metadata:
@@ -41,25 +40,25 @@ spec:
       dashboards: grafana
   patch:
     env:
-    - name: GITHUB_APP_ID
-      valueFrom:
-        secretKeyRef:
-          key: appId
-          name: github-app-git-sync
-    - name: GITHUB_APP_INSTALLATION_ID
-      valueFrom:
-        secretKeyRef:
-          key: installationId
-          name: github-app-git-sync
-    - name: GITHUB_PRIVATE_KEY
-      valueFrom:
-        secretKeyRef:
-          key: privateKey
-          name: github-app-git-sync
+      - name: GITHUB_APP_ID
+        valueFrom:
+          secretKeyRef:
+            key: appId
+            name: github-app-git-sync
+      - name: GITHUB_APP_INSTALLATION_ID
+        valueFrom:
+          secretKeyRef:
+            key: installationId
+            name: github-app-git-sync
+      - name: GITHUB_PRIVATE_KEY
+        valueFrom:
+          secretKeyRef:
+            key: privateKey
+            name: github-app-git-sync
     scripts:
-    - .spec.github.appID=env.GITHUB_APP_ID
-    - .spec.github.installationID=env.GITHUB_APP_INSTALLATION_ID
-    - .secure.privateKey.create=env.GITHUB_PRIVATE_KEY
+      - .spec.github.appID=env.GITHUB_APP_ID
+      - .spec.github.installationID=env.GITHUB_APP_INSTALLATION_ID
+      - .secure.privateKey.create=env.GITHUB_PRIVATE_KEY
   template:
     apiVersion: provisioning.grafana.app/v0alpha1
     kind: Connection
@@ -92,15 +91,15 @@ spec:
         installationId: '{{ .installationId }}'
         privateKey: '{{ .privateKey }}'
   data:
-  - secretKey: appId
-    remoteRef:
-      key: grafana-github-app-git-sync
-      property: appId
-  - secretKey: installationId
-    remoteRef:
-      key: grafana-github-app-git-sync
-      property: installationId
-  - secretKey: privateKey
-    remoteRef:
-      key: grafana-github-app-git-sync
-      property: privateKey
+    - secretKey: appId
+      remoteRef:
+        key: grafana-github-app-git-sync
+        property: appId
+    - secretKey: installationId
+      remoteRef:
+        key: grafana-github-app-git-sync
+        property: installationId
+    - secretKey: privateKey
+      remoteRef:
+        key: grafana-github-app-git-sync
+        property: privateKey

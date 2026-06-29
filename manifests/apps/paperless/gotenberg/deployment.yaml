@@ -15,23 +15,23 @@ spec:
         app: paperless-gotenberg
     spec:
       containers:
-      - name: gotenberg
-        image: gotenberg-container-image
-        command: ["gotenberg"]
-        args: ["--chromium-disable-javascript=true", "--chromium-allow-list=file:///tmp/.*"]
-        securityContext:
-          privileged: false
-          runAsUser: 1001
-          runAsGroup: 1001
-        env:
-        - name: TZ
-          value: "America/Denver"
-        ports:
-        - containerPort: 3000
-        resources:
-          requests:
-            memory: "5Mi"
-            cpu: "0.1"
-          limits:
-            memory: "100Mi"
-            cpu: "0.5"
+        - name: gotenberg
+          image: gotenberg-container-image
+          command: ["gotenberg"]
+          args: ["--chromium-disable-javascript=true", "--chromium-allow-list=file:///tmp/.*"]
+          securityContext:
+            privileged: false
+            runAsUser: 1001
+            runAsGroup: 1001
+          env:
+            - name: TZ
+              value: "America/Denver"
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              memory: "5Mi"
+              cpu: "0.1"
+            limits:
+              memory: "100Mi"
+              cpu: "0.5"

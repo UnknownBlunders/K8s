@@ -4,21 +4,20 @@ metadata:
   name: vikunja
   annotations:
     cert-manager.io/cluster-issuer: "prod-cert-issuer"
-
 spec:
   ingressClassName: nginx
   tls:
-  - hosts:
-    - todo.blunders.me
-    secretName: vikunja-secret-tls
+    - hosts:
+        - todo.blunders.me
+      secretName: vikunja-secret-tls
   rules:
-  - host: todo.blunders.me
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: vikunja-service
-            port:
-              number: 80
+    - host: todo.blunders.me
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: vikunja-service
+                port:
+                  number: 80

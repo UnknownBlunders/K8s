@@ -4,8 +4,8 @@ metadata:
   name: paperless-tika-service
 spec:
   ports:
-  - port: 9998
-    targetPort: 9998
-    protocol: TCP
+    - port: 9998
+      targetPort: 9998
+      protocol: TCP
   selector:
     app: paperless-tika

@@ -8,12 +8,11 @@ spec:
   talos:
     # renovate: datasource=github-releases depName=siderolabs/talos
     version: "v1.13.5"
-
   policy:
     rebootMode: powercycle
   healthChecks:
-  # make sure all the control plane pods are healthy before next upgrade
     - &CONTROLPLANE
+      # make sure all the control plane pods are healthy before next upgrade
       apiVersion: v1
       kind: pod
       name: kube-apiserver-kcp01
@@ -35,8 +34,7 @@ spec:
       name: kube-scheduler-kcp02
     - !!merge <<: *CONTROLPLANE
       name: kube-scheduler-kcp03
-
-  # make sure rook and volsync are healthy before next upgrade
+      # make sure rook and volsync are healthy before next upgrade
     - apiVersion: ceph.rook.io/v1
       kind: CephCluster
       expr: |-

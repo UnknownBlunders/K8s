@@ -7,7 +7,7 @@ spec:
   secretStoreRef:
     kind: ClusterSecretStore
     name: op-prod
-  target: 
+  target:
     name: nut-config
     creationPolicy: Owner
     template:
@@ -40,15 +40,15 @@ spec:
             desc = "APC Back-UPS XS 1500M UPS Servers 1"
             pollinterval = 10
   data:
-  - secretKey: ha
-    remoteRef:
-      key: ups-nut
-      property: ha-password
-  - secretKey: nutexporter
-    remoteRef:
-      key: ups-nut
-      property: nut-exporter-password
-  - secretKey: ethan
-    remoteRef:
-      key: ups-nut
-      property: ethan-password
+    - secretKey: ha
+      remoteRef:
+        key: ups-nut
+        property: ha-password
+    - secretKey: nutexporter
+      remoteRef:
+        key: ups-nut
+        property: nut-exporter-password
+    - secretKey: ethan
+      remoteRef:
+        key: ups-nut
+        property: ethan-password

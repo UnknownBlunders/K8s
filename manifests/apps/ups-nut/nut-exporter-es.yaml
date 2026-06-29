@@ -14,7 +14,7 @@ spec:
         NUT_EXPORTER_PASSWORD: "{{ .password }}"
         NUT_EXPORTER_SERVER: "nut-server"
   data:
-  - secretKey: password
-    remoteRef:
-      key: ups-nut
-      property: nut-exporter-password
+    - secretKey: password
+      remoteRef:
+        key: ups-nut
+        property: nut-exporter-password

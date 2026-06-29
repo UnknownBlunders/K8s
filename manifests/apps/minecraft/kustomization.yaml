@@ -1,11 +1,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: minecraft
-
 resources:
-- ns.yaml
-- mc-router
-- mc-sinicropi
-- mc-td
-- mc-echochamber
-- mc-poke
+  - ns.yaml
+  - mc-router
+  - mc-sinicropi
+  - mc-td
+  - mc-echochamber
+  - mc-poke

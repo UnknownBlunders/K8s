@@ -1,13 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: satisfactory
-
 resources:
-- ns.yaml
-- ./storage
-- deployment.yaml
-- service.yaml
-
+  - ns.yaml
+  - ./storage
+  - deployment.yaml
+  - service.yaml
 images:
   - name: satisfactory-container-image
     newName: ghcr.io/wolveix/satisfactory-server:dev

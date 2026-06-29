@@ -31,7 +31,7 @@ controllers:
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
-          capabilities: { drop: ["ALL"] }
+          capabilities: {drop: ["ALL"]}
           seccompProfile:
             type: RuntimeDefault
 service:
@@ -41,4 +41,3 @@ service:
       metrics:
         protocol: TCP
         port: 9199
-

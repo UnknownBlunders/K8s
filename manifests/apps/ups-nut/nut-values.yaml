@@ -43,4 +43,3 @@ persistence:
     defaultMode: 0400
     globalMounts:
       - path: /etc/nut
-

@@ -6,7 +6,6 @@ services:
       metallb.universe.tf/loadBalancerIPs: 192.168.7.2
   extraServiceSpec:
     externalTrafficPolicy: Local
-
 image:
   # renovate: datasource=github-releases depName=itzg/mc-router
   tag: "1.43.1"

@@ -4,8 +4,8 @@ metadata:
   name: vikunja-service
 spec:
   ports:
-  - port: 80
-    targetPort: 3456
-    protocol: TCP
+    - port: 80
+      targetPort: 3456
+      protocol: TCP
   selector:
     app: vikunja

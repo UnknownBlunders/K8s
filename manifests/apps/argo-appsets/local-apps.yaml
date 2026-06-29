@@ -4,34 +4,34 @@ metadata:
   name: local-apps
 spec:
   generators:
-  - list:
-      elements:
-      - appName: jellyfin
-        namespace: jellyfin
-      - appName: audiobookshelf
-        namespace: abs
-      - appName: minecraft
-        namespace: minecraft
-      - appName: home-assistant
-        namespace: ha
-      - appName: immich
-        namespace: immich
-      - appName: paperless
-        namespace: paperless
-      - appName: satisfactory
-        namespace: satisfactory
-      - appName: vikunja
-        namespace: vikunja
-      - appName: tuppr
-        namespace: tuppr
-      - appName: ups-nut
-        namespace: ups-nut
-      - appName: smartctl
-        namespace: smartctl
-      - appName: fluent-bit
-        namespace: fluentbit
-      - appName: victoria-logs
-        namespace: victorialogs
+    - list:
+        elements:
+          - appName: jellyfin
+            namespace: jellyfin
+          - appName: audiobookshelf
+            namespace: abs
+          - appName: minecraft
+            namespace: minecraft
+          - appName: home-assistant
+            namespace: ha
+          - appName: immich
+            namespace: immich
+          - appName: paperless
+            namespace: paperless
+          - appName: satisfactory
+            namespace: satisfactory
+          - appName: vikunja
+            namespace: vikunja
+          - appName: tuppr
+            namespace: tuppr
+          - appName: ups-nut
+            namespace: ups-nut
+          - appName: smartctl
+            namespace: smartctl
+          - appName: fluent-bit
+            namespace: fluentbit
+          - appName: victoria-logs
+            namespace: victorialogs
   template:
     metadata:
       name: '{{appName}}'
@@ -49,4 +49,4 @@ spec:
           prune: true
           selfHeal: true
         syncOptions:
-        - CreateNamespace=true
+          - CreateNamespace=true
