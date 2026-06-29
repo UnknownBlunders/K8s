@@ -61,6 +61,18 @@ vmalert:
   ingress:
     enabled: false
 
+alertmanager:
+  enabled: true
+  route:
+    enabled: true
+    hostnames:
+      - alerts.blunders.me
+    parentRefs:
+      - group: gateway.networking.k8s.io
+        kind: Gateway
+        name: envoy-internal
+        namespace: envoy-gateway
+        sectionName: https
 
 vmagent:
   # -- Create VMAgent CR
