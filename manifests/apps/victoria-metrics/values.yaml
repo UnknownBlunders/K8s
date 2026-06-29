@@ -87,6 +87,8 @@ alertmanager:
         - receiver: blackhole
           matchers:
             - alertname = InfoInhibitor
+            - alertname = "Watchdog"
+            - severity = "info"
       group_by:
         - alertname
         - cluster
