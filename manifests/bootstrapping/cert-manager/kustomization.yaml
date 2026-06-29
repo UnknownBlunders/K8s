@@ -1,31 +1,30 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: kube-system
-
 helmCharts:
-- name: cert-manager
-  releaseName: cert-manager
-  namespace: kube-system
-  repo: https://charts.jetstack.io
-  version: "v1.20.3"
-  valuesInline:
-    crds:
-      enabled: true
-    prometheus:
-      enabled: true
-      servicemonitor:
+  - name: cert-manager
+    releaseName: cert-manager
+    namespace: kube-system
+    repo: https://charts.jetstack.io
+    version: "v1.20.3"
+    valuesInline:
+      crds:
         enabled: true
-    extraArgs:
-    - --dns01-recursive-nameservers=1.1.1.1:53,9.9.9.9:53
-    - --dns01-recursive-nameservers-only
-    podDnsPolicy: None
-    podDnsConfig:
-      nameservers:
-      - "1.1.1.1"
-      - "9.9.9.9"
-
+      prometheus:
+        enabled: true
+        servicemonitor:
+          enabled: true
+      extraArgs:
+        - --dns01-recursive-nameservers=1.1.1.1:53,9.9.9.9:53
+        - --dns01-recursive-nameservers-only
+      podDnsPolicy: None
+      podDnsConfig:
+        nameservers:
+          - "1.1.1.1"
+          - "9.9.9.9"
 resources:
-- cloudflare-dns-es.yaml
-- prod-cert-issuer.yaml
-- staging-cert-issuer.yaml
-- grafanadashboard.yaml
+  - cloudflare-dns-es.yaml
+  - prod-cert-issuer.yaml
+  - staging-cert-issuer.yaml
+  - grafanadashboard.yaml
+  - prometheusrule.yaml
