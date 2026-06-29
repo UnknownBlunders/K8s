@@ -1,20 +1,15 @@
-
 # -- If this chart is used in "Argocd" with "releaseName" field then
 # VMServiceScrapes couldn't select the proper services.
 # For correct working need set value 'argocdReleaseOverride=$ARGOCD_APP_NAME'
 argocdReleaseOverride: ""
-
-
 serviceAccount:
   create: true
-
 victoria-metrics-operator:
   enabled: true
   serviceMonitor:
     enabled: true
   crd:
     create: true
-
 # Configures vmsingle params
 vmsingle:
   enabled: true
@@ -24,7 +19,7 @@ vmsingle:
     # -- Data retention period. Possible units character: h(ours), d(ays), w(eeks), y(ears), if no unit character specified - month. The minimum retention period is 24h. See these [docs](https://docs.victoriametrics.com/single-server-victoriametrics/#retention)
     retentionPeriod: "6"
     replicaCount: 1
-    extraArgs: 
+    extraArgs:
       maxLabelsPerTimeseries: "120"
     resources:
       limits:
@@ -55,7 +50,6 @@ vmsingle:
         name: envoy-internal
         namespace: envoy-gateway
         sectionName: https
-
 vmalert:
   enabled: true
   spec:
@@ -63,7 +57,6 @@ vmalert:
       external.url: https://metrics.blunders.me
   ingress:
     enabled: false
-
 alertmanager:
   enabled: true
   route:
@@ -76,13 +69,80 @@ alertmanager:
         name: envoy-internal
         namespace: envoy-gateway
         sectionName: https
-
+  spec:
+    externalURL: https://alerts.blunders.me
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: ceph-block
+          resources:
+            requests:
+              storage: 1Gi
+  useManagedConfig: true
+  config:
+    route:
+      receiver: pushover
+      repeat_interval: 12h
+      routes:
+        - receiver: blackhole
+          matchers:
+            - alertname = InfoInhibitor
+      group_by:
+        - alertname
+        - cluster
+        - job
+      group_interval: 5m
+      group_wait: 1m
+    inhibit_rules:
+      - equal:
+          - alertname
+          - namespace
+        source_matchers:
+          - severity = "critical"
+        target_matchers:
+          - severity = "warning"
+    receivers:
+      - name: blackhole
+      - name: pushover
+        pushover_configs:
+          - html: true
+            message: |-
+              {{- range .Alerts }}
+                {{- if ne .Annotations.description "" }}
+                  {{ .Annotations.description }}
+                {{- else if ne .Annotations.summary "" }}
+                  {{ .Annotations.summary }}
+                {{- else if ne .Annotations.message "" }}
+                  {{ .Annotations.message }}
+                {{- else }}
+                  Alert description not available
+                {{- end }}
+                {{- if gt (len .Labels.SortedPairs) 0 }}
+                  <small>
+                    {{- range .Labels.SortedPairs }}
+                      <b>{{ .Name }}:</b> {{ .Value }}
+                    {{- end }}
+                  </small>
+                {{- end }}
+              {{- end }}
+            priority: |-
+              {{ if eq .Status "firing" }}1{{ else }}0{{ end }}
+            send_resolved: true
+            sound: gamelan
+            title: >-
+              [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
+            token:
+              name: alertmanager-secret
+              key: ALERTMANAGER_PUSHOVER_TOKEN
+            url_title: View in Alertmanager
+            user_key:
+              name: alertmanager-secret
+              key: PUSHOVER_USER_KEY
 vmagent:
   # -- Create VMAgent CR
   enabled: true
   ingress:
     enabled: false
-
 # I setup grafana operator
 defaultDashboards:
   grafanaOperator:
@@ -97,15 +157,12 @@ defaultDatasources:
 grafana:
   enabled: false
   forceDeployDatasource: true
-
-
 # -- prometheus-node-exporter dependency chart configuration. For possible values check [here](https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus-node-exporter/values.yaml)
 prometheus-node-exporter:
   enabled: true
 # -- kube-state-metrics dependency chart configuration. For possible values check [here](https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-state-metrics/values.yaml)
 kube-state-metrics:
   enabled: true
-
 # -- Component scraping the kubelets
 kubelet:
   enabled: true
@@ -120,7 +177,6 @@ kubelet:
 kubeApiServer:
   # -- Enable Kube Api Server metrics scraping
   enabled: true
-
 # Component scraping the kube controller manager
 kubeControllerManager:
   enabled: true
@@ -135,12 +191,11 @@ kubeControllerManager:
           scheme: https
           tlsConfig:
             insecureSkipVerify: true
-
 # Component scraping coreDns. Use either this or kubeDns
 coreDns:
   # -- Enabled CoreDNS metrics scraping
   enabled: true
-  service: 
+  service:
     enabled: false
   vmScrape:
     spec:
@@ -155,14 +210,11 @@ coreDns:
         matchLabels:
           k8s-app: kube-dns
           kubernetes.io/name: CoreDNS
-
-
 # Component scraping etcd
 kubeEtcd:
   # -- Enabled KubeETCD metrics scraping
   # I manually created a service scrape for this in ../misc
   enabled: false
-
 # Component scraping kube scheduler
 kubeScheduler:
   # -- Enable KubeScheduler metrics scraping
@@ -175,7 +227,6 @@ kubeScheduler:
           scheme: https
           tlsConfig:
             insecureSkipVerify: true
-
 additionalVictoriaMetricsMap:
   dockerhub-rules:
     create: true
@@ -199,15 +250,12 @@ additionalVictoriaMetricsMap:
             expr: (kube_pod_container_status_restarts_total - kube_pod_container_status_restarts_total offset 10m >= 1) and ignoring (reason) min_over_time(kube_pod_container_status_last_terminated_reason{reason="OOMKilled"}[10m]) == 1
             labels:
               severity: critical
-
 # Component scraping kube proxy
 kubeProxy:
   enabled: false
-
 # --  Install VM operator CRDs
 crds:
   enabled: true
-
 # -- Install prometheus operator CRDs
 prometheus-operator-crds:
   enabled: true
