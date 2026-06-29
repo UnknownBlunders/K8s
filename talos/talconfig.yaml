@@ -152,9 +152,15 @@ controlPlane:
             - os:admin
           enabled: true
     cluster:
+      controllerManager:
+        extraArgs:
+          bind-address: 0.0.0.0
       etcd:
         extraArgs:
           listen-metrics-urls: "http://0.0.0.0:2381"
+      scheduler:
+        extraArgs:
+          bind-address: 0.0.0.0
   - &allPatches |-
     machine:
       features:

@@ -1,3 +1,0 @@
-
-genconfig:
-    op run --env-file=.env -- talhelper genconfig
