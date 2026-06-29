@@ -86,8 +86,12 @@ alertmanager:
       routes:
         - receiver: blackhole
           matchers:
-            - alertname = InfoInhibitor
+            - alertname = "InfoInhibitor"
+        - receiver: blackhole
+          matchers:
             - alertname = "Watchdog"
+        - receiver: blackhole
+          matchers:
             - severity = "info"
       group_by:
         - alertname
