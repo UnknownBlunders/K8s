@@ -22,3 +22,4 @@ resources:
   - pv.yaml
   - grafanadashboard.yaml
   - misc-metrics
+  - alertmanager-es.yaml
