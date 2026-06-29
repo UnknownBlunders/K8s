@@ -10,7 +10,7 @@ kubectl api-resources --verbs=list --namespaced -o name | xargs -n 1 kubectl get
 3. Wipe the /var/lib/rook directory on the node's boot disk:
 
 ``` bash
-kubectl debug -n kube-system -it --image alpine node/<node-name>
+just node-shell <node-name>
 rm -r /host/var/lib/rook
 ```
 
