@@ -8,18 +8,18 @@ metadata:
   namespace: garage
 spec:
   hostnames:
-  - garage.blunders.me
+    - garage.blunders.me
   parentRefs:
-  - group: gateway.networking.k8s.io
-    kind: Gateway
-    name: envoy-internal
-    namespace: envoy-gateway
-    sectionName: https
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-internal
+      namespace: envoy-gateway
+      sectionName: https
   rules:
-  - backendRefs:
-    - group: ""
-      kind: Service
-      name: garage-webui
-      namespace: garage
-      port: 3909
-      weight: 1
+    - backendRefs:
+        - group: ""
+          kind: Service
+          name: garage-webui
+          namespace: garage
+          port: 3909
+          weight: 1

@@ -8,15 +8,11 @@ cgroup:
   autoMount:
     enabled: false
   hostRoot: /sys/fs/cgroup
-
 k8sServiceHost: 127.0.0.1
 k8sServicePort: 7445
 kubeProxyReplacement: true
-
 envoy:
   enabled: false
-
-
 hubble:
   enabled: true
   metrics:

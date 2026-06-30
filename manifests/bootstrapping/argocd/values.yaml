@@ -7,7 +7,6 @@ configs:
     url: https://argocd.blunders.me
   rbac:
     policy.default: role:default-deny # I'd just prefer you can't do anything unless I allow it
-
     # The safe-user role is based on the bulitin readonly role.
     # Just add in the ability to sync (and, more usefully, terminate stuck syncs)
     # and delete stuff. It's ok to delete stuff because Argo will recreate it.
@@ -32,7 +31,6 @@ configs:
   secret:
     extra:
       accounts.ethan.password: $2a$10$jy6gx.UO6hl8yJqjK8iabukQR8Nyo7k.xfG.d.tkcCPgDg6ALJ/AO
-
 server:
   httproute:
     enabled: true

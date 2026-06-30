@@ -13,6 +13,6 @@ spec:
       sectionName: https
   rules:
     - backendRefs:
-      - kind: Service
-        name: hubble-ui
-        port: 80
+        - kind: Service
+          name: hubble-ui
+          port: 80

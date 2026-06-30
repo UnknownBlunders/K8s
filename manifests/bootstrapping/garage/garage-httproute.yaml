@@ -8,18 +8,18 @@ metadata:
   namespace: garage
 spec:
   hostnames:
-  - s3.blunders.me
+    - s3.blunders.me
   parentRefs:
-  - group: gateway.networking.k8s.io
-    kind: Gateway
-    name: envoy-internal
-    namespace: envoy-gateway
-    sectionName: https
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-internal
+      namespace: envoy-gateway
+      sectionName: https
   rules:
-  - backendRefs:
-    - group: ""
-      kind: Service
-      name: garage
-      namespace: garage
-      port: 3900
-      weight: 1
+    - backendRefs:
+        - group: ""
+          kind: Service
+          name: garage
+          namespace: garage
+          port: 3900
+          weight: 1

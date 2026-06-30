@@ -1,23 +1,21 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: external-secrets
-
 resources:
-- ns.yaml
-- ./1password-connect
-- secret-store.yaml
-- grafanadashboard.yaml
-
+  - ns.yaml
+  - ./1password-connect
+  - secret-store.yaml
+  - grafanadashboard.yaml
 helmCharts:
-- name: external-secrets
-  releaseName: external-secrets
-  namespace: external-secrets
-  repo: https://charts.external-secrets.io
-  version: "2.7.0"
-  valuesInline:
-    controllerClass: clusterwide
-    serviceMonitor:
-      enabled: true
-      renderMode: alwaysRender
-    grafanaDashboard:
-      enabled: true
+  - name: external-secrets
+    releaseName: external-secrets
+    namespace: external-secrets
+    repo: https://charts.external-secrets.io
+    version: "2.7.0"
+    valuesInline:
+      controllerClass: clusterwide
+      serviceMonitor:
+        enabled: true
+        renderMode: alwaysRender
+      grafanaDashboard:
+        enabled: true

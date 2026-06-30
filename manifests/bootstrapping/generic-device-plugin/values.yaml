@@ -21,7 +21,7 @@ controllers:
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
-          capabilities: { drop: ["ALL"] }
+          capabilities: {drop: ["ALL"]}
 persistence:
   config:
     type: configMap
@@ -39,7 +39,6 @@ persistence:
     hostPath: /var/lib/kubelet/device-plugins
     globalMounts:
       - path: /var/lib/kubelet/device-plugins
-
 configMaps:
   config:
     enabled: true

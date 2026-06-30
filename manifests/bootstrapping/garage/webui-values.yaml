@@ -20,7 +20,7 @@ controllers:
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
-          capabilities: { drop: [ALL] }
+          capabilities: {drop: [ALL]}
         resources:
           requests:
             cpu: 10m
@@ -37,7 +37,6 @@ service:
     ports:
       http:
         port: &port 3909
-
 # route:
 #   webui-container:
 #     hostnames: ["garage.blunders.me"]
@@ -49,7 +48,6 @@ service:
 #       - backendRefs:
 #           - identifier: webui-container
 #             port: *port
-
 persistence:
   config:
     enabled: true

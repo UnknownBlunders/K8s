@@ -7,7 +7,7 @@ spec:
   secretStoreRef:
     kind: ClusterSecretStore
     name: op-prod
-  target: 
+  target:
     name: cloudflare-api-token-secret
     creationPolicy: Owner
     template:
@@ -16,7 +16,7 @@ spec:
       data:
         api-token: '{{ .token }}'
   data:
-  - secretKey: token
-    remoteRef:
-      key: cert-manager-cloudflare-token
-      property: credential
+    - secretKey: token
+      remoteRef:
+        key: cert-manager-cloudflare-token
+        property: credential

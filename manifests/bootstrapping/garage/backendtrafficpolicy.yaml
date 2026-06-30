@@ -1,4 +1,3 @@
----
 # Disable Envoy compression for the Garage S3 endpoint.
 # The cluster-wide BackendTrafficPolicy enables Brotli/Gzip compression on every
 # Gateway, which causes Envoy to mutate the Accept-Encoding header and breaks

@@ -4,20 +4,20 @@ metadata:
   name: bootstrapping
 spec:
   generators:
-  - list:
-      elements:
-      - appName: metallb
-        namespace: metallb-system
-      - appName: cert-manager
-        namespace: kube-system
-      - appName: kubelet-csr-approver
-        namespace: kube-system
-      - appName: node-feature-discovery
-        namespace: kube-system
-      - appName: intel-device-plugin
-        namespace: kube-system
-      - appName: generic-device-plugin
-        namespace: kube-system
+    - list:
+        elements:
+          - appName: metallb
+            namespace: metallb-system
+          - appName: cert-manager
+            namespace: kube-system
+          - appName: kubelet-csr-approver
+            namespace: kube-system
+          - appName: node-feature-discovery
+            namespace: kube-system
+          - appName: intel-device-plugin
+            namespace: kube-system
+          - appName: generic-device-plugin
+            namespace: kube-system
   template:
     metadata:
       name: '{{appName}}'
@@ -35,4 +35,4 @@ spec:
           prune: true
           selfHeal: true
         syncOptions:
-        - CreateNamespace=true
+          - CreateNamespace=true
