@@ -20,3 +20,4 @@ resources:
   - nut-exporter-es.yaml
   - servicescrape.yaml
   - grafanadashboard.yaml
+  - prometheusrule.yaml

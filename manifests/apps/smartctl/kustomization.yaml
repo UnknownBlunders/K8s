@@ -12,3 +12,4 @@ resources:
   - ns.yaml
   - vmscrape.yaml
   - grafanadashboard.yaml
+  - prometheusrule.yaml

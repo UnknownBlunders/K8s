@@ -1,0 +1,89 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: nut-exporter-rules
+  namespace: ups-nut
+spec:
+  groups:
+    - name: nut-exporter.rules
+      rules:
+        - alert: UpsOnBattery
+          expr: |-
+            network_ups_tools_ups_status{flag="OB"} == 1
+          for: 60s
+          annotations:
+            summary: >-
+              UPS {{ $labels.ups }} lost utility power and is running on battery
+          labels:
+            severity: critical
+        - alert: UpsLowBattery
+          expr: |-
+            network_ups_tools_ups_status{flag="LB"} == 1
+          for: 0s
+          annotations:
+            summary: >-
+              UPS {{ $labels.ups }} reports LOW BATTERY - shutdown imminent
+          labels:
+            severity: critical
+        - alert: UpsLowRuntime
+          expr: |-
+            (
+              network_ups_tools_ups_status{flag="OB"} == 1
+            and on (ups)
+              network_ups_tools_battery_runtime < 600
+            )
+          for: 1m
+          annotations:
+            summary: >-
+              UPS {{ $labels.ups }} on battery with less than 10 minutes runtime remaining ({{ $value | humanizeDuration }})
+          labels:
+            severity: critical
+        - alert: UpsBatteryChargeLow
+          expr: |-
+            network_ups_tools_battery_charge < 50
+          for: 10m
+          annotations:
+            summary: >-
+              UPS {{ $labels.ups }} battery charge is {{ $value }}% (below 50%)
+          labels:
+            severity: warning
+        - alert: UpsReplaceBattery
+          expr: |-
+            network_ups_tools_ups_status{flag="RB"} == 1
+          for: 5m
+          annotations:
+            summary: >-
+              UPS {{ $labels.ups }} is reporting that its battery needs to be replaced
+          labels:
+            severity: warning
+        - alert: UpsOverloaded
+          expr: |-
+            network_ups_tools_ups_status{flag="OVER"} == 1
+          for: 1m
+          annotations:
+            summary: >-
+              UPS {{ $labels.ups }} is overloaded - reduce attached load
+          labels:
+            severity: warning
+        - alert: UpsHighLoad
+          expr: |-
+            network_ups_tools_ups_load > 80
+          for: 15m
+          annotations:
+            summary: >-
+              UPS {{ $labels.ups }} load is {{ $value }}% (sustained above 80%)
+          labels:
+            severity: warning
+        - alert: UpsStatusUnknown
+          expr: |-
+            (
+              max by (ups) (network_ups_tools_ups_status{flag="OL"}) != 1
+            and
+              max by (ups) (network_ups_tools_ups_status{flag="OB"}) != 1
+            )
+          for: 5m
+          annotations:
+            summary: >-
+              UPS {{ $labels.ups }} is in an unknown state (neither OL nor OB)
+          labels:
+            severity: warning
