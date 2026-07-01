@@ -6,3 +6,4 @@ resources:
   - local-apps.yaml
   - victoriametrics.yaml
   - grafana.yaml
+  - gatus.yaml

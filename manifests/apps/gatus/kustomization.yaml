@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: gatus
+helmCharts:
+  - name: gatus-sidecar
+    releaseName: gatus
+    namespace: gatus
+    repo: oci://ghcr.io/home-operations/charts
+    version: "0.3.6"
+    valuesFile: values.yaml
+resources:
+  - ns.yaml
+  - configmap.yaml
