@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: gatus
 helmCharts:
   - name: gatus-sidecar
-    releaseName: gatus
+    releaseName: gatus-sidecar
     namespace: gatus
     repo: oci://ghcr.io/home-operations/charts
     version: "0.3.6"
