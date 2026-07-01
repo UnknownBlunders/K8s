@@ -17,7 +17,7 @@ httpRoute:
     - "status.blunders.me"
   parentRefs:
     - name: envoy-internal
-      namespace: network
+      namespace: envoy-gateway
 monitoring:
   serviceMonitor:
     enabled: true
