@@ -6,7 +6,7 @@ helmCharts:
     releaseName: envoy-gateway
     namespace: envoy-gateway
     repo: oci://docker.io/envoyproxy
-    version: "1.8.1"
+    version: "1.8.2"
     includeCRDs: true
 resources:
   - ns.yaml
