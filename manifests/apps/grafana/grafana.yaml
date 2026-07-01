@@ -7,7 +7,7 @@ metadata:
     dashboards: grafana
 spec:
   # renovate: datasource=github-releases depName=grafana/grafana
-  version: "13.0.3"
+  version: "13.1.0"
   config:
     analytics:
       check_for_updates: "false"
