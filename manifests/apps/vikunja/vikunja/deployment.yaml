@@ -69,9 +69,9 @@ spec:
             - name: VIKUNJA_SERVICE_TIMEZONE
               value: America/Denver
           volumeMounts:
-            - name: vikunja-pg-pvc
-              mountPath: /var/lib/postgresql/data
+            - name: vikunja-pvc
+              mountPath: /app/vikunja/files
       volumes:
-        - name: vikunja-pg-pvc
+        - name: vikunja-pvc
           persistentVolumeClaim:
-            claimName: vikunja-pg-pvc
+            claimName: vikunja-pvc
