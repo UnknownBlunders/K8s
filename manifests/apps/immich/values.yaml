@@ -16,7 +16,7 @@ controllers:
             type: RuntimeDefault
         image:
           # renovate: datasource=github-releases depName=immich-app/immich
-          tag: "v2.7.5"
+          tag: "v3.0.1"
 immich:
   metrics:
     enabled: true
@@ -32,7 +32,7 @@ valkey:
           image:
             repository: docker.io/valkey/valkey
             # renovate: datasource=docker depName=valkey/valkey
-            tag: "9.1-alpine"
+            tag: "9.1.0-alpine"
             pullPolicy: IfNotPresent
           resources:
             requests:
@@ -123,4 +123,3 @@ machine-learning:
     tmp:
       type: emptyDir
       sizeLimit: 5Gi
-      accessMode: ReadWriteMany
