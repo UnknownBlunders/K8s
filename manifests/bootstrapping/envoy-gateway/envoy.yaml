@@ -47,6 +47,13 @@ kind: Gateway
 metadata:
   name: envoy-internal
   namespace: envoy-gateway
+  annotations:
+    gatus.home-operations.com/endpoint: |-
+      group: internal
+      # # If I make gatus public:
+      # ui:
+      #   hide-hostname: true
+      #   hide-url: true
 spec:
   gatewayClassName: envoy
   infrastructure:
@@ -76,6 +83,9 @@ kind: Gateway
 metadata:
   name: envoy-external
   namespace: envoy-gateway
+  annotations:
+    gatus.home-operations.com/endpoint: |-
+      group: external
 spec:
   gatewayClassName: envoy
   infrastructure:
