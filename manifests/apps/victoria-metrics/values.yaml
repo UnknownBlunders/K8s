@@ -151,6 +151,9 @@ vmagent:
   enabled: true
   ingress:
     enabled: false
+  spec:
+    extraArgs:
+      promscrape.maxScrapeSize: 24MiB
 # I setup grafana operator
 defaultDashboards:
   grafanaOperator:
