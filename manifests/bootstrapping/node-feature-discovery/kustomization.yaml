@@ -6,7 +6,7 @@ helmCharts:
     releaseName: node-feature-discovery
     namespace: kube-system
     repo: oci://registry.k8s.io/nfd/charts
-    version: 0.18.3
+    version: 0.19.0
     includeCRDs: true
     valuesInline:
       worker:
