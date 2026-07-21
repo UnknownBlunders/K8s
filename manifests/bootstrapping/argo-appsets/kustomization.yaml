@@ -10,6 +10,5 @@ resources:
   - rook-ceph-operator.yaml
   - rook-ceph-cluster.yaml
   - ceph-csi-drivers.yaml
-  - volsync.yaml
   - garage.yaml
   - snapshot-controller.yaml

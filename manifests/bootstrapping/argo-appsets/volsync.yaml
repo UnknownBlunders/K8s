@@ -1,15 +1,15 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: volsync
+  name: Kopiur
   namespace: argocd
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: volsync-system
+    namespace: kopiur-system
   source:
     repoURL: "https://github.com/unknownblunders/K8s.git"
-    path: manifests/bootstrapping/volsync-system
+    path: manifests/bootstrapping/kopiur-system
     targetRevision: main
   project: default
   syncPolicy:
