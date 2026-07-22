@@ -8,5 +8,5 @@ services:
     externalTrafficPolicy: Local
 image:
   # renovate: datasource=github-releases depName=itzg/mc-router
-  tag: "1.44.0"
+  tag: "1.45.0"
   pullPolicy: IfNotPresent
