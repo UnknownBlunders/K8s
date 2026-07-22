@@ -22,7 +22,7 @@ spec:
             - /bin/bash
             - -c
             - --
-          image: ubuntu:24.04
+          image: ubuntu:26.04
           name: nginx
           ports:
             - containerPort: 80
