@@ -1,0 +1,140 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - args:
+            - while true; do sleep 30; done;
+          command:
+            - /bin/bash
+            - -c
+            - --
+          image: ubuntu:24.04
+          name: nginx
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /media
+              name: test3-pvc
+      securityContext:
+        fsGroup: 1050
+        runAsGroup: 1050
+        runAsUser: 1050
+      volumes:
+        - name: test3-pvc
+          persistentVolumeClaim:
+            claimName: test3-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: test3-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  dataSourceRef:
+    apiGroup: kopiur.home-operations.com
+    kind: Restore
+    name: test3-pvc
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: ceph-block
+---
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: Restore
+metadata:
+  name: test3-pvc
+  namespace: default
+spec:
+  mover:
+    securityContext:
+      runAsGroup: 1050
+      runAsUser: 1050
+  policy:
+    onMissingSnapshot: Continue
+  source:
+    fromPolicy:
+      name: test3-pvc
+      offset: 0
+  target:
+    populator: {}
+---
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotPolicy
+metadata:
+  name: test3-pvc
+  namespace: default
+spec:
+  compression:
+    compressor: zstd
+  mover:
+    cache:
+      capacity: 5Gi
+      mode: Persistent
+      storageClassName: ceph-block
+    securityContext:
+      runAsGroup: 1050
+      runAsUser: 1050
+  repository:
+    kind: ClusterRepository
+    name: garage
+  retention:
+    keepDaily: 7
+    keepHourly: 5
+    keepLatest: 3
+    keepWeekly: 4
+  # defaultDeletionPolicy: Retain
+  sources:
+    - pvc:
+        name: test3-pvc
+  volumeSnapshotClassName: csi-ceph-blockpool
+---
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotSchedule
+metadata:
+  name: test3-pvc
+  namespace: default
+spec:
+  policyRef:
+    name: test3-pvc
+  schedule:
+    runOnCreate: true
+    cron: H * * * *
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: kopiur-repository
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: op-prod
+  target:
+    name: kopiur-repository
+    creationPolicy: Owner
+    template:
+      type: Opaque
+      engineVersion: v2
+      data:
+        KOPIA_PASSWORD: "{{ .KOPIA_PASSWORD }}"
+        AWS_ACCESS_KEY_ID: "{{ .AWS_ACCESS_KEY_ID }}"
+        AWS_SECRET_ACCESS_KEY: "{{ .AWS_SECRET_ACCESS_KEY }}"
+  dataFrom:
+    - extract:
+        key: kopiur-repo

@@ -2,5 +2,5 @@ apiVersion: v1
 kind: Namespace
 metadata:
   labels:
-    name: volsync-system
-  name: volsync-system
+    name: kopiur-system
+  name: kopiur-system

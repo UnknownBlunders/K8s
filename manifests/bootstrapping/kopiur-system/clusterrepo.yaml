@@ -1,0 +1,25 @@
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: ClusterRepository
+metadata:
+  name: garage
+spec:
+  allowedNamespaces:
+    all: true
+  backend:
+    s3:
+      auth:
+        secretRef:
+          name: kopiur-repository
+          namespace: kopiur-system
+      bucket: kopiur
+      endpoint: garage.garage.svc.cluster.local.:3900
+      region: us-east-1
+      tls:
+        disableTls: true
+  encryption:
+    passwordSecretRef:
+      name: kopiur-repository
+      namespace: kopiur-system
+      key: KOPIA_PASSWORD
+  scheduleDefaults:
+    timezone: America/Chicago

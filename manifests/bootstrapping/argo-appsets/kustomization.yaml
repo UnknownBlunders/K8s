@@ -12,3 +12,4 @@ resources:
   - ceph-csi-drivers.yaml
   - garage.yaml
   - snapshot-controller.yaml
+  - kopiur

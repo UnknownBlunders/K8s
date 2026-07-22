@@ -1,0 +1,41 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: kopiur-system
+helmCharts:
+  - name: kopiur
+    releaseName: kopiur
+    namespace: kopiur-system
+    repo: oci://ghcr.io/home-operations/charts
+    version: 0.8.0
+    includeCRDs: true
+    valuesInline:
+      features:
+        credentialProjection:
+          enabled: true
+      monitoring:
+        dashboards:
+          enabled: true
+          grafanaOperator:
+            enabled: true
+            matchLabels:
+              dashboards: grafana
+        prometheusRule:
+          enabled: true
+        serviceMonitor:
+          enabled: true
+      podSecurityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+      resources:
+        requests:
+          cpu: 100m
+          memory: 2Gi
+        limits:
+          memory: 2Gi
+resources:
+  - ns.yaml
+  - clusterrepo.yaml
+  - kopiur-repo-es.yaml
