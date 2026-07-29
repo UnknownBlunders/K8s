@@ -14,3 +14,8 @@ stage_fixed = true
 run = "yamlfmt {staged_files}"
 glob = ["*.yaml"]
 stage_fixed = true
+
+[pre-commit.commands.format-terraforml]
+run = "tofu fmt {staged_files}"
+glob = ["*.tf"]
+stage_fixed = true
