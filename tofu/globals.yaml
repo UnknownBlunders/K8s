@@ -1,0 +1,59 @@
+# ===============================================================================================
+# VLAN Definitions
+# ===============================================================================================
+vlans:
+  Trusted:
+    name: "Trusted"
+    vlan_id: 2
+  DMZ:
+    name: "DMZ"
+    vlan_id: 3
+  IOT:
+    name: "IOT"
+    vlan_id: 4
+  INT:
+    name: "INT"
+    vlan_id: 5
+  K8S:
+    name: "K8S"
+    vlan_id: 6
+  Management:
+    name: "Management"
+    vlan_id: 8
+  IOTDE:
+    name: "IOT-Dead-End"
+    vlan_id: 9
+all_vlans: [Trusted, DMZ, IOT, INT, K8S, Management, IOTDE]
+all_but_management_vlans: [Trusted, DMZ, IOT, INT, K8S, IOTDE]
+# ===============================================================================================
+# Certificate Defaults
+# ===============================================================================================
+certificate_country: "US"
+certificate_locality: "Illinois"
+certificate_organization: "UnknownBlunders"
+certificate_unit: "HOME"
+# ===============================================================================================
+# Device Defaults
+# ===============================================================================================
+ntp_servers: ["time.cloudflare.com"]
+timezone: "America/Chicago"
+disable_ipv6: true
+mac_server_interfaces: "none"
+# ===============================================================================================
+# Default Groups and Users
+# ===============================================================================================
+groups:
+  metrics:
+    policies: ["api", "read"]
+    comment: "Metrics collection group"
+users:
+  metrics:
+    group: "metrics"
+    comment: "Prometheus metrics user"
+    inactivity_policy: "logout"
+    inactivity_timeout: "00:05:00"
+  ethan:
+    group: "full"
+    comment: "me, lol"
+    inactivity_policy: "logout"
+    inactivity_timeout: "00:05:00"
