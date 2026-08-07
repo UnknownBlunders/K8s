@@ -47,7 +47,7 @@ module "router-base" {
     "ether4"       = {}
     "ether5"       = {}
     "ether6"       = {}
-    "ether7"       = {}
+    "ether7"       = { comment = "Backup Trusted", untagged = "Trusted" }
     "ether8"       = { comment = "Temp Rack Uplink", tagged = local.global.all_vlans }
     "sfp-sfpplus1" = {}
   }

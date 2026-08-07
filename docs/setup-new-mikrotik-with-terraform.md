@@ -46,10 +46,14 @@ Apply the initial config. You'll have to plan and apply twice. The second time j
 
 6. Rename or move the init config, re-enable the real config.
 
-Be sure to plug in to the "real" management interface. If configuring just a switch, at this point you can connect it to the rest of the network via its ususal trunk port. You can remove the static IP you set for your local machine. If your not configuring a switch (say, you're configuring the core route) you may need to adjust the static IP to be on the real management network.
+Be sure to plug in to the "real" management interface. If configuring just a switch, at this point you can connect it to the rest of the network via its ususal trunk port. You can remove the static IP you set for your local machine. If your not configuring a switch (say, you're configuring the core router) you may need to adjust the static IP to be on the real management network.
 
 Change the terraform provider to use the tls service.
 
 Rename or move the actual terraform files so they do run. Rename or move the init config so it doesn't run.
 
 Plan and apply!
+
+7. Firewalls
+
+When appling config to a new router, I apply everything except the firewall first. Then, I comment out all the drop rules and apply. After that, I uncomment the drop rules, and apply. That seems to work well in testing so far.
