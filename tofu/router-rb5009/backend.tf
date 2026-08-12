@@ -3,6 +3,10 @@ terraform {
     routeros = {
       source = "terraform-routeros/routeros"
     }
+    onepassword = {
+      source  = "1password/onepassword"
+      version = ">=3.3.1"
+    }
   }
 
   backend "s3" {
@@ -22,4 +26,9 @@ provider "routeros" {
   # hosturl = "https://router.blunders.me"
   hosturl  = "https://192.168.8.1" # env ROS_HOSTURL or MIKROTIK_HOST
   insecure = true                  # env ROS_INSECURE or MIKROTIK_INSECURE
+}
+
+locals {
+  # Load and convert the YAML string into a Terraform object
+  global = yamldecode(file("${path.module}/../globals.yaml"))
 }

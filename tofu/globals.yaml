@@ -52,8 +52,12 @@ users:
     comment: "Prometheus metrics user"
     inactivity_policy: "logout"
     inactivity_timeout: "00:05:00"
+    op_vault: "c4oydkp2szlidgqpxnelubys6i" # K8s ES Vault
+    op_item_title_suffix: "metrics-user"
   ethan:
     group: "full"
     comment: "me, lol"
     inactivity_policy: "logout"
     inactivity_timeout: "00:05:00"
+    op_vault: "stm3vzhydlwqw4vt44dayf5bsu" # My personal Vault
+    op_item_title_suffix: "ethan-user"

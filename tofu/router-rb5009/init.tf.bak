@@ -1,9 +1,10 @@
 module "router-base" {
   # source = "git::https://github.com/unknownblunders/terraform-modules-routeros.git//modules/base?ref=v0.4.0"
-  # source = "git::https://github.com/unknownblunders/terraform-modules-routeros.git//modules/base"
-  source = "../../../terraform-modules-routeros/modules/base"
+  source = "git::https://github.com/unknownblunders/terraform-modules-routeros.git//modules/base"
+  # source = "../../../terraform-modules-routeros/modules/base"
 
   hostname = "router"
+  model = "rb5009"
 
   # ===============================================================================================
   # Certificate Defaults

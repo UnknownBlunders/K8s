@@ -4,6 +4,7 @@ module "router-base" {
   # source = "../../../terraform-modules-routeros/modules/base"
 
   hostname = "router"
+  model    = "rb5009"
 
   # ===============================================================================================
   # Certificate Defaults
