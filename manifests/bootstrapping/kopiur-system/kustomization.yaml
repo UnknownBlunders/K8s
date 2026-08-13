@@ -6,7 +6,7 @@ helmCharts:
     releaseName: kopiur
     namespace: kopiur-system
     repo: oci://ghcr.io/home-operations/charts
-    version: 0.9.3
+    version: 0.10.2
     includeCRDs: true
     valuesInline:
       features:
