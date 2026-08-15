@@ -1,4 +1,4 @@
-module "router-base" {
+module "crs309-10g-base" {
   source = "git::https://github.com/unknownblunders/terraform-modules-routeros.git//modules/base"
 
   hostname = "10g"
