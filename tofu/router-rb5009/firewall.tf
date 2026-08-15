@@ -58,9 +58,6 @@ module "firewall" {
     zigbee = {
       addresses = ["192.168.5.4"]
     }
-    hdhomerun = {
-      addresses = ["192.168.2.219"]
-    }
   }
 
   # ===============================================================================================
@@ -94,20 +91,20 @@ module "firewall" {
       order            = 110
       comment          = "Drop invalid"
     }
-    "input-accept-icmp" = {
-      chain    = "input"
-      action   = "accept"
-      protocol = "icmp"
-      order    = 120
-      comment  = "Accept ICMP (ping / PMTUD)"
-    }
     "input-drop-bogons-from-wan" = {
       chain             = "input"
       action            = "drop"
       in_interface_list = "WAN"
       src_address_list  = "bogons"
-      order             = 130
+      order             = 120
       comment           = "Drop bogon/martian sources from WAN"
+    }
+    "input-accept-icmp" = {
+      chain    = "input"
+      action   = "accept"
+      protocol = "icmp"
+      order    = 130
+      comment  = "Accept ICMP (ping / PMTUD)"
     }
     "input-accept-dhcp-from-lan" = {
       chain             = "input"
@@ -195,6 +192,51 @@ module "firewall" {
       comment           = "Drop bogon/martian sources from WAN"
     }
 
+    # Explicit allows for Port Forwarded Traffic:
+    "forward-accept-wan-minecraft-tcp" = {
+      chain             = "forward"
+      action            = "accept"
+      in_interface_list = "WAN"
+      protocol          = "tcp"
+      dst_address_list  = "minecraft"
+      dst_port          = "25565"
+      order             = 1040
+      comment           = "Allow WAN->Minecraft (matches dstnat-minecraft-tcp)"
+    }
+
+    "forward-accept-wan-minecraft-udp" = {
+      chain             = "forward"
+      action            = "accept"
+      in_interface_list = "WAN"
+      protocol          = "udp"
+      dst_address_list  = "minecraft"
+      dst_port          = "25565"
+      order             = 1041
+      comment           = "Allow WAN->Minecraft (matches dstnat-minecraft-udp)"
+    }
+
+    "forward-accept-wan-http" = {
+      chain             = "forward"
+      action            = "accept"
+      in_interface_list = "WAN"
+      protocol          = "tcp"
+      dst_address_list  = "k8s-service-lb"
+      dst_port          = "80"
+      order             = 1042
+      comment           = "Allow WAN->K8s ingress HTTP (matches dstnat-http)"
+    }
+
+    "forward-accept-wan-https" = {
+      chain             = "forward"
+      action            = "accept"
+      in_interface_list = "WAN"
+      protocol          = "tcp"
+      dst_address_list  = "k8s-service-lb"
+      dst_port          = "443"
+      order             = 1043
+      comment           = "Allow WAN->K8s ingress HTTPS (matches dstnat-https)"
+    }
+
     # --- WAN inbound: only allow traffic that was explicitly DSTNATed ---------
     "forward-drop-wan-not-dstnat" = {
       chain             = "forward"
@@ -274,14 +316,6 @@ module "firewall" {
       dst_address_list = "zigbee"
       order            = 1440
       comment          = "K8s -> Zigbee coordinator"
-    }
-    "forward-k8s-to-hdhomerun" = {
-      chain            = "forward"
-      action           = "accept"
-      in_interface     = "K8S"
-      dst_address_list = "hdhomerun"
-      order            = 1450
-      comment          = "K8s -> HDHomeRun tuner"
     }
     "forward-k8s-to-iot" = {
       chain        = "forward"
