@@ -38,10 +38,8 @@ module "dns-server" {
 
     # ===== Kubernetes Services =====
 
-    "mc.blunders.me"          = { address = "192.168.7.2", type = "A" }
-    "minecraft.blunders.me"   = { cname = "mc.blunders.me", type = "CNAME" }
-    "*.mc.blunders.me"        = { cname = "mc.blunders.me", type = "CNAME" }
-    "*.minecraft.blunders.me" = { cname = "mc.blunders.me", type = "CNAME" }
+    "mc.blunders.me"        = { address = "192.168.7.2", type = "A", match_subdomain = true }
+    "minecraft.blunders.me" = { cname = "mc.blunders.me", type = "CNAME", match_subdomain = true }
 
     "satisfactory.blunders.me" = { address = "192.168.7.4", type = "A" }
 

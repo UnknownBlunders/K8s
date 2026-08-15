@@ -101,16 +101,14 @@ module "firewall" {
       order    = 120
       comment  = "Accept ICMP (ping / PMTUD)"
     }
-    # "input-drop-bogons-from-wan" = {
-    #   chain             = "input"
-    #   action            = "drop"
-    #   in_interface_list = "WAN"
-    #   src_address_list  = "bogons"
-    #   order             = 130
-    #   comment           = "Drop bogon/martian sources from WAN"
-    #   log               = true
-    #   log_prefix        = "BOGON-IN"
-    # }
+    "input-drop-bogons-from-wan" = {
+      chain             = "input"
+      action            = "drop"
+      in_interface_list = "WAN"
+      src_address_list  = "bogons"
+      order             = 130
+      comment           = "Drop bogon/martian sources from WAN"
+    }
     "input-accept-dhcp-from-lan" = {
       chain             = "input"
       action            = "accept"
@@ -157,12 +155,10 @@ module "firewall" {
       comment      = "SSH / WebFig / Winbox API/ from Management"
     }
     "input-drop-all" = {
-      chain      = "input"
-      action     = "drop"
-      order      = 900
-      comment    = "Drop everything else destined for the router"
-      log        = true
-      log_prefix = "INPUT-DROP"
+      chain   = "input"
+      action  = "drop"
+      order   = 900
+      comment = "Drop everything else destined for the router"
     }
 
     # ------------------------------------------------------------
@@ -190,16 +186,14 @@ module "firewall" {
       order            = 1020
       comment          = "Drop invalid"
     }
-    # "forward-drop-bogons-from-wan" = {
-    #   chain             = "forward"
-    #   action            = "drop"
-    #   in_interface_list = "WAN"
-    #   src_address_list  = "bogons"
-    #   order             = 1030
-    #   comment           = "Drop bogon/martian sources from WAN"
-    #   log               = true
-    #   log_prefix        = "BOGON-FWD"
-    # }
+    "forward-drop-bogons-from-wan" = {
+      chain             = "forward"
+      action            = "drop"
+      in_interface_list = "WAN"
+      src_address_list  = "bogons"
+      order             = 1030
+      comment           = "Drop bogon/martian sources from WAN"
+    }
 
     # --- WAN inbound: only allow traffic that was explicitly DSTNATed ---------
     "forward-drop-wan-not-dstnat" = {
@@ -208,8 +202,6 @@ module "firewall" {
       in_interface_list = "WAN"
       order             = 1100
       comment           = "Drop WAN->LAN unless DSTNATed by a port-forward"
-      log               = true
-      log_prefix        = "WAN-FWD-DROP"
     }
 
     # --- Isolate IOT-Dead-End (no new outbound anywhere) ----------------------
@@ -316,8 +308,6 @@ module "firewall" {
       dst_address_list = "rfc1918"
       order            = 1800
       comment          = "Drop all remaining inter-VLAN / RFC1918<->RFC1918 traffic"
-      log              = true
-      log_prefix       = "INTER-VLAN-DROP"
     }
 
     # --- Internet egress ------------------------------------------------------
@@ -331,12 +321,10 @@ module "firewall" {
 
     # --- Default deny ---------------------------------------------------------
     "forward-drop-all" = {
-      chain      = "forward"
-      action     = "drop"
-      order      = 2000
-      comment    = "Default deny"
-      log        = true
-      log_prefix = "FWD-DROP"
+      chain   = "forward"
+      action  = "drop"
+      order   = 2000
+      comment = "Default deny"
     }
   }
 
@@ -344,21 +332,6 @@ module "firewall" {
   # NAT Rules
   # ===============================================================================================
   nat_rules = {
-
-    # --- SRCNAT: reach the AT&T gateway management IP ------------------------
-    # LAN clients live in subnets the gateway can't route back to, so masquerade
-    # toward 192.168.1.0/24. RouterOS uses ether1's connected 192.168.1.2 address
-    # as the source, which the gateway (192.168.1.254) can reply to directly.
-    #
-    # May not actually be needed, other srcnat may work just fine for both. Will test later
-    # "masquerade-att-gateway" = {
-    #   chain         = "srcnat"
-    #   action        = "masquerade"
-    #   out_interface = "ether1"
-    #   dst_address   = "192.168.1.0/24"
-    #   order         = 90
-    #   comment       = "Masquerade toward AT&T gateway mgmt subnet"
-    # }
 
     # --- SRCNAT: masquerade internal traffic going to the internet -----------
     "masquerade-wan" = {

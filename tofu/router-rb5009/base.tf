@@ -43,7 +43,7 @@ module "router-base" {
 
   ethernet_interfaces = {
     "ether1"       = { comment = "Internet Uplink", bridge_port = false }
-    "ether2"       = { comment = "Taylors Office", tagged = local.global.all_vlans }
+    "ether2"       = { comment = "Taylors Office", tagged = local.global.all_but_management_vlans, untagged = "Management" }
     "ether3"       = { comment = "Backup Management", untagged = "Management" }
     "ether4"       = {}
     "ether5"       = {}
