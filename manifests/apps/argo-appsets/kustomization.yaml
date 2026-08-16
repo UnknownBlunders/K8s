@@ -7,3 +7,4 @@ resources:
   - victoriametrics.yaml
   - grafana.yaml
   - gatus.yaml
+  - mikrotik-exporter.yaml
