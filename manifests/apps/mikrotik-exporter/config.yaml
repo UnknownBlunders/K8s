@@ -136,9 +136,9 @@ data:
     [10G]
         enabled = True
         hostname = 10g.blunders.me
-        credentials_file = /mktxp_credentials/10g-crs309.yaml
+        credentials_file = /mktxp_credentials/crs309-10g.yaml
 
     [1GRACK]
         enabled = True
         hostname = 1g-rack.blunders.me
-        credentials_file = /mktxp_credentials/1g-rack-crs326.yaml
+        credentials_file = /mktxp_credentials/crs326-1g-rack.yaml
