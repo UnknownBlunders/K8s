@@ -6,13 +6,13 @@ helmCharts:
     releaseName: nut-server
     namespace: ups-nut
     repo: https://bjw-s-labs.github.io/helm-charts
-    version: 5.0.1
+    version: 5.1.0
     valuesFile: nut-values.yaml
   - name: app-template
     releaseName: nut-exporter
     namespace: ups-nut
     repo: https://bjw-s-labs.github.io/helm-charts
-    version: 5.0.1
+    version: 5.1.0
     valuesFile: exporter-values.yaml
 resources:
   - ns.yaml

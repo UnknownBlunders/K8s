@@ -6,13 +6,13 @@ helmCharts:
     releaseName: garage
     namespace: garage
     repo: https://bjw-s-labs.github.io/helm-charts
-    version: 5.0.1
+    version: 5.1.0
     valuesFile: values.yaml
   - name: app-template
     releaseName: garage-webui
     namespace: garage
     repo: https://bjw-s-labs.github.io/helm-charts
-    version: 5.0.1
+    version: 5.1.0
     valuesFile: webui-values.yaml
 resources:
   - ns.yaml
