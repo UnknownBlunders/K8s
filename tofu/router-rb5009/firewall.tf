@@ -133,6 +133,15 @@ module "firewall" {
       order             = 220
       comment           = "Accept DNS (TCP) from internal VLANs"
     }
+    "input-accept-api-from-k8s" = {
+      chain        = "input"
+      action       = "accept"
+      protocol     = "tcp"
+      dst_port     = "8729"
+      in_interface = "K8S"
+      order        = 290
+      comment      = "API-ssl from K8s for Mikrotik-exporter mktxp"
+    }
     "input-accept-mgmt-from-trusted" = {
       chain        = "input"
       action       = "accept"
@@ -308,6 +317,16 @@ module "firewall" {
       dst_port         = "111,2049"
       order            = 1431
       comment          = "K8s -> NFS server (UDP)"
+    }
+    "forward-k8s-to-mgmt-tcp-mikrotik" = {
+      chain        = "forward"
+      action       = "accept"
+      in_interface = "K8S"
+      dst_address  = "192.168.8.0/24"
+      protocol     = "tcp"
+      dst_port     = "8729"
+      order        = 1435
+      comment      = "K8s -> MGMT for Mikrotik-Exporter"
     }
     "forward-k8s-to-zigbee" = {
       chain            = "forward"
