@@ -19,7 +19,7 @@ module "router-base" {
   # ===============================================================================================
   timezone              = local.global.timezone
   ntp_servers           = local.global.ntp_servers
-  disable_ipv6          = local.global.disable_ipv6
+  disable_ipv6          = false
   mac_server_interfaces = local.global.mac_server_interfaces
 
   # ===============================================================================================
@@ -39,6 +39,7 @@ module "router-base" {
     K8S        = merge(local.global.vlans.K8S, { address = "192.168.6.1/23" })
     Management = merge(local.global.vlans.Management, { address = "192.168.8.1/24" })
     IOTDE      = merge(local.global.vlans.IOTDE, { address = "192.168.9.1/24" })
+    TEST       = merge(local.global.vlans.TEST, { address = "192.168.10.1/24" })
   })
 
   ethernet_interfaces = {

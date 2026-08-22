@@ -1,5 +1,6 @@
 module "firewall" {
   source = "git::https://github.com/unknownblunders/terraform-modules-routeros.git//modules/firewall"
+  # source = "../../../terraform-modules-routeros/modules/firewall"
 
   # ===============================================================================================
   # Interface Lists
@@ -11,7 +12,7 @@ module "firewall" {
     }
     LAN = {
       comment    = "All internal VLANs"
-      interfaces = ["Trusted", "DMZ", "IOT", "INT", "K8S", "Management", "IOT-Dead-End"]
+      interfaces = ["Trusted", "DMZ", "IOT", "INT", "K8S", "Management", "IOT-Dead-End", "TEST"]
     }
     Isolated = {
       comment    = "VLANs with no internet or cross-VLAN access"
@@ -20,7 +21,7 @@ module "firewall" {
   }
 
   # ===============================================================================================
-  # Address Lists
+  # IPv4 Address Lists
   # ===============================================================================================
   address_lists = {
     rfc1918 = {
@@ -61,7 +62,27 @@ module "firewall" {
   }
 
   # ===============================================================================================
-  # Filter Rules
+  # IPv6 Address Lists
+  # ===============================================================================================
+  ipv6_address_lists = {
+    ipv6-bogons = {
+      comment = "IPv6 martians / bogons that must never appear as a source on WAN"
+      addresses = [
+        "::/128",            # unspecified
+        "::1/128",           # loopback
+        "::ffff:0.0.0.0/96", # IPv4-mapped
+        "::/96",             # IPv4-compatible (deprecated)
+        "100::/64",          # discard-only
+        "2001:10::/28",      # ORCHID (deprecated)
+        "2001:db8::/32",     # documentation
+        "fc00::/7",          # ULA
+        "ff00::/8",          # multicast (never a valid source)
+      ]
+    }
+  }
+
+  # ===============================================================================================
+  # IPv4 Filter Rules
   #
   # Design:
   #   - Default deny on both input and forward chains.
@@ -460,6 +481,251 @@ module "firewall" {
       to_ports          = "443"
       order             = 530
       comment           = "HTTPS -> K8s ingress"
+    }
+  }
+
+  # ===============================================================================================
+  # IPv6 Filter Rules
+  #
+  # Design (mirrors the IPv4 intent, adapted for IPv6):
+  #   - Default deny on both input and forward chains.
+  #   - IPv6 has NO NAT: with a routed prefix (DHCPv6-PD) every host is globally
+  #     addressable, so inbound access is controlled purely by forward rules.
+  #   - ICMPv6 is accepted early -- it is mandatory (NDP, RA, PMTUD). Blanket
+  #     dropping it breaks IPv6 entirely.
+  #   - DHCPv6 client (udp 546) from link-local is accepted so the router can
+  #     obtain a prefix via DHCPv6-PD from the ISP.
+  #   - Interface lists (WAN/LAN/Isolated) are shared with IPv4, so the same
+  #     lists are reused here.
+  #   - Cross-VLAN allowances are expressed by in/out_interface (protocol
+  #     agnostic) since per-VLAN IPv6 prefixes are not assigned yet. Once
+  #     addressing/PD is configured, tighten host-specific services (NFS, zigbee,
+  #     mikrotik-exporter, inbound web) with ipv6_address_lists like the IPv4 side.
+  # ===============================================================================================
+  ipv6_filter_rules = {
+
+    # ------------------------------------------------------------
+    # INPUT chain -- traffic destined for the router itself
+    # ------------------------------------------------------------
+    "input-accept-established" = {
+      chain            = "input"
+      action           = "accept"
+      connection_state = "established,related,untracked"
+      order            = 100
+      comment          = "Accept established/related/untracked"
+    }
+    "input-drop-invalid" = {
+      chain            = "input"
+      action           = "drop"
+      connection_state = "invalid"
+      order            = 110
+      comment          = "Drop invalid"
+    }
+    "input-accept-icmpv6" = {
+      chain    = "input"
+      action   = "accept"
+      protocol = "icmpv6"
+      order    = 115
+      comment  = "Accept ICMPv6 (NDP / RA / ping / PMTUD) -- mandatory"
+    }
+    "input-accept-dhcpv6-client" = {
+      chain             = "input"
+      action            = "accept"
+      protocol          = "udp"
+      dst_port          = "546"
+      src_address       = "fe80::/10"
+      in_interface_list = "WAN"
+      order             = 118
+      comment           = "Accept DHCPv6-PD client replies from ISP (link-local)"
+    }
+    "input-drop-bogons-from-wan" = {
+      chain             = "input"
+      action            = "drop"
+      in_interface_list = "WAN"
+      src_address_list  = "ipv6-bogons"
+      order             = 125
+      comment           = "Drop bogon/martian sources from WAN"
+    }
+    "input-accept-dhcpv6-server-from-lan" = {
+      chain             = "input"
+      action            = "accept"
+      protocol          = "udp"
+      dst_port          = "547"
+      in_interface_list = "LAN"
+      order             = 200
+      comment           = "Accept DHCPv6 server requests from internal VLANs"
+    }
+    "input-accept-dns-udp-from-lan" = {
+      chain             = "input"
+      action            = "accept"
+      protocol          = "udp"
+      dst_port          = "53"
+      in_interface_list = "LAN"
+      order             = 210
+      comment           = "Accept DNS (UDP) from internal VLANs"
+    }
+    "input-accept-dns-tcp-from-lan" = {
+      chain             = "input"
+      action            = "accept"
+      protocol          = "tcp"
+      dst_port          = "53"
+      in_interface_list = "LAN"
+      order             = 220
+      comment           = "Accept DNS (TCP) from internal VLANs"
+    }
+    "input-accept-api-from-k8s" = {
+      chain        = "input"
+      action       = "accept"
+      protocol     = "tcp"
+      dst_port     = "8729"
+      in_interface = "K8S"
+      order        = 290
+      comment      = "API-ssl from K8s for Mikrotik-exporter mktxp"
+    }
+    "input-accept-mgmt-from-trusted" = {
+      chain        = "input"
+      action       = "accept"
+      protocol     = "tcp"
+      dst_port     = "22,80,443,8291,8728,8729"
+      in_interface = "Trusted"
+      order        = 300
+      comment      = "SSH / WebFig / Winbox / API from Trusted"
+    }
+    "input-accept-mgmt-from-management" = {
+      chain        = "input"
+      action       = "accept"
+      protocol     = "tcp"
+      dst_port     = "22,80,443,8291,8728,8729"
+      in_interface = "Management"
+      order        = 310
+      comment      = "SSH / WebFig / Winbox / API from Management"
+    }
+    "input-drop-all" = {
+      chain   = "input"
+      action  = "drop"
+      order   = 900
+      comment = "Drop everything else destined for the router"
+    }
+
+    # ------------------------------------------------------------
+    # FORWARD chain -- traffic transiting the router
+    # ------------------------------------------------------------
+    "forward-accept-established" = {
+      chain            = "forward"
+      action           = "accept"
+      connection_state = "established,related,untracked"
+      order            = 1010
+      comment          = "Accept established/related/untracked"
+    }
+    "forward-drop-invalid" = {
+      chain            = "forward"
+      action           = "drop"
+      connection_state = "invalid"
+      order            = 1020
+      comment          = "Drop invalid"
+    }
+    "forward-accept-icmpv6" = {
+      chain    = "forward"
+      action   = "accept"
+      protocol = "icmpv6"
+      order    = 1025
+      comment  = "Accept transit ICMPv6 (PMTUD) -- mandatory"
+    }
+    "forward-drop-bogons-from-wan" = {
+      chain             = "forward"
+      action            = "drop"
+      in_interface_list = "WAN"
+      src_address_list  = "ipv6-bogons"
+      order             = 1030
+      comment           = "Drop bogon/martian sources from WAN"
+    }
+
+    # --- WAN inbound: deny by default (no port-forwards on IPv6) --------------
+    # Add explicit accepts BELOW order 1100 (above this rule) for any inbound
+    # IPv6 service, e.g. dst_address_list = "<host-list>" + dst_port.
+    "forward-drop-wan-inbound" = {
+      chain             = "forward"
+      action            = "drop"
+      in_interface_list = "WAN"
+      order             = 1100
+      comment           = "Drop WAN-initiated inbound unless explicitly allowed above"
+    }
+
+    # --- Isolate IOT-Dead-End (no new outbound anywhere) ----------------------
+    "forward-drop-isolated" = {
+      chain             = "forward"
+      action            = "drop"
+      in_interface_list = "Isolated"
+      order             = 1200
+      comment           = "IOT-Dead-End: no new outbound (return traffic only)"
+    }
+
+    # --- Trusted VLAN: unrestricted ------------------------------------------
+    "forward-accept-trusted" = {
+      chain        = "forward"
+      action       = "accept"
+      in_interface = "Trusted"
+      order        = 1300
+      comment      = "Trusted can reach anything"
+    }
+
+    # --- Explicit cross-VLAN allowances (interface-based) --------------------
+    "forward-mgmt-to-trusted" = {
+      chain         = "forward"
+      action        = "accept"
+      in_interface  = "Management"
+      out_interface = "Trusted"
+      order         = 1400
+      comment       = "Management -> Trusted (PVE migration, backups)"
+    }
+    "forward-int-to-iot" = {
+      chain         = "forward"
+      action        = "accept"
+      in_interface  = "INT"
+      out_interface = "IOT"
+      order         = 1410
+      comment       = "INT -> IOT (services controlling IoT devices)"
+    }
+    "forward-dmz-to-k8s" = {
+      chain         = "forward"
+      action        = "accept"
+      in_interface  = "DMZ"
+      out_interface = "K8S"
+      order         = 1420
+      comment       = "DMZ (VPN) -> K8s services"
+    }
+    "forward-k8s-to-iot" = {
+      chain         = "forward"
+      action        = "accept"
+      in_interface  = "K8S"
+      out_interface = "IOT"
+      order         = 1460
+      comment       = "K8s -> IOT (Home Assistant)"
+    }
+    "forward-k8s-to-iotde" = {
+      chain         = "forward"
+      action        = "accept"
+      in_interface  = "K8S"
+      out_interface = "IOT-Dead-End"
+      order         = 1470
+      comment       = "K8s HA/VM -> IOT-Dead-End"
+    }
+
+    # --- Internet egress ------------------------------------------------------
+    "forward-accept-to-wan" = {
+      chain              = "forward"
+      action             = "accept"
+      out_interface_list = "WAN"
+      order              = 1900
+      comment            = "Accept internal -> WAN"
+    }
+
+    # --- Default deny ---------------------------------------------------------
+    "forward-drop-all" = {
+      chain   = "forward"
+      action  = "drop"
+      order   = 2000
+      comment = "Default deny"
     }
   }
 }

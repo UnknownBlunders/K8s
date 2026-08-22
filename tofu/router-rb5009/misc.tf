@@ -7,9 +7,8 @@
 # we give ether1 a second, directly-connected IP in that subnet so the router has
 # a route and a valid source address for 192.168.1.0/24.
 #
-# The matching srcnat masquerade rule lives in firewall.tf ("masquerade-att-gateway")
-# so LAN clients get a valid return path. Management is only permitted from the
-# Trusted VLAN by the firewall's forward chain.
+# The router masqarades via the correct address automatically in the snat masqarade rule 
+# in ./firewall.tf
 # ===============================================================================================
 
 resource "routeros_ip_address" "att_gateway_mgmt" {
@@ -30,6 +29,10 @@ resource "routeros_ip_dhcp_client" "wan" {
   disabled          = false
   comment           = "WAN uplink (AT&T passthrough public IP)"
 }
+
+# ===============================================================================================
+# Dyn DNS
+# ===============================================================================================
 
 module "mikrotik-cloud" {
   source               = "git::https://github.com/unknownblunders/terraform-modules-routeros.git//modules/cloud"

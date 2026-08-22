@@ -102,3 +102,13 @@ module "IOT-Dead-End" {
     "192.168.9.103" = { name = "AG-Taylor-Office", mac = "d8:3b:da:1a:4d:8c" }
   }
 }
+
+module "TEST" {
+  source = "git::https://github.com/unknownblunders/terraform-modules-routeros.git//modules/dhcp-server"
+
+  interface   = "TEST"
+  network     = "192.168.10.0/24"
+  gateway     = "192.168.10.1"
+  dhcp_pool   = ["192.168.10.100-192.168.10.240"]
+  dns_servers = ["192.168.10.1"]
+}

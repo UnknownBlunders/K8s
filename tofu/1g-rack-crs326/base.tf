@@ -55,7 +55,7 @@ module "crs326-1g-rack-base" {
     "ether16"      = { comment = "Unused", untagged = "K8S" }
     "ether17"      = { comment = "Unused", untagged = "IOT" }
     "ether18"      = { comment = "Unused", untagged = "IOT-Dead-End" }
-    "ether19"      = { comment = "Unused", untagged = "Management" }
+    "ether19"      = { comment = "Unused", untagged = "TEST" }
     "ether20"      = { comment = "kcp01", untagged = "K8S" }
     "ether21"      = { comment = "Unused", untagged = "Management" }
     "ether22"      = { comment = "kcp02", untagged = "K8S" }

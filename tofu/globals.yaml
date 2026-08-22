@@ -23,8 +23,11 @@ vlans:
   IOTDE:
     name: "IOT-Dead-End"
     vlan_id: 9
-all_vlans: [Trusted, DMZ, IOT, INT, K8S, Management, IOT-Dead-End]
-all_but_management_vlans: [Trusted, DMZ, IOT, INT, K8S, IOT-Dead-End]
+  TEST:
+    name: "TEST"
+    vlan_id: 10
+all_vlans: [Trusted, DMZ, IOT, INT, K8S, Management, IOT-Dead-End, TEST]
+all_but_management_vlans: [Trusted, DMZ, IOT, INT, K8S, IOT-Dead-End, TEST]
 # ===============================================================================================
 # Certificate Defaults
 # ===============================================================================================
