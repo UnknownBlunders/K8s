@@ -149,24 +149,24 @@ spec:
             summary: "SFP TX fault on {{ $labels.routerboard_name }}/{{ $labels.name }}"
             description: >-
               Interface {{ $labels.name }} on {{ $labels.routerboard_name }} ({{ $labels.routerboard_address }}) reports an SFP transmitter fault. The transceiver may need replacement.
-    # ── Certificates ─────────────────────────────────────────────────────────
-    - name: mikrotik.certificates
-      rules:
-        - alert: MikrotikCertificateExpiringSoon
-          expr: (mktxp_certificate_expiration_timestamp_seconds - time()) / 86400 < 30
-          for: 1h
-          labels:
-            severity: warning
-          annotations:
-            summary: "Certificate expiring soon on {{ $labels.routerboard_name }}"
-            description: >-
-              Certificate '{{ $labels.name }}' (CN: {{ $labels.common_name }}) on {{ $labels.routerboard_name }} expires in less than 30 days ({{ $labels.invalid_after }}).
-        - alert: MikrotikCertificateExpiringCritical
-          expr: (mktxp_certificate_expiration_timestamp_seconds - time()) / 86400 < 7
-          for: 1h
-          labels:
-            severity: critical
-          annotations:
-            summary: "Certificate expiring critically soon on {{ $labels.routerboard_name }}"
-            description: >-
-              Certificate '{{ $labels.name }}' (CN: {{ $labels.common_name }}) on {{ $labels.routerboard_name }} expires in less than 7 days ({{ $labels.invalid_after }}). Renew immediately.
+  # ── Certificates ─────────────────────────────────────────────────────────
+  # - name: mikrotik.certificates
+  #   rules:
+  #     - alert: MikrotikCertificateExpiringSoon
+  #       expr: (mktxp_certificate_expiration_timestamp_seconds - time()) / 86400 < 30
+  #       for: 1h
+  #       labels:
+  #         severity: warning
+  #       annotations:
+  #         summary: "Certificate expiring soon on {{ $labels.routerboard_name }}"
+  #         description: >-
+  #           Certificate '{{ $labels.name }}' (CN: {{ $labels.common_name }}) on {{ $labels.routerboard_name }} expires in less than 30 days ({{ $labels.invalid_after }}).
+  #     - alert: MikrotikCertificateExpiringCritical
+  #       expr: (mktxp_certificate_expiration_timestamp_seconds - time()) / 86400 < 7
+  #       for: 1h
+  #       labels:
+  #         severity: critical
+  #       annotations:
+  #         summary: "Certificate expiring critically soon on {{ $labels.routerboard_name }}"
+  #         description: >-
+  #           Certificate '{{ $labels.name }}' (CN: {{ $labels.common_name }}) on {{ $labels.routerboard_name }} expires in less than 7 days ({{ $labels.invalid_after }}). Renew immediately.
