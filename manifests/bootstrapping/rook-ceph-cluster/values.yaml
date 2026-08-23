@@ -10,7 +10,7 @@ cephClusterSpec:
     enabled: true
     urlPrefix: /
     ssl: no
-    prometheusEndpoint: http://vmsingle-vm-stack-victoria-metrics-k8s-stack.monitoring.svc.cluster.local:8428
+    prometheusEndpoint: http://vmsingle-vm-stack-victoria-metrics-k8s-stack.victoriametrics.svc.cluster.local.:8428
   mgr:
     modules:
       - name: pg_autoscaler
