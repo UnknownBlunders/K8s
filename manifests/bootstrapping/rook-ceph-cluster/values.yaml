@@ -22,6 +22,13 @@ cephClusterSpec:
     osd:
       limits:
         memory: 8Gi # Required for bootstrap
+  security:
+    cephx:
+      daemon:
+        keyRotationPolicy: KeyGeneration
+        keyGeneration: 2
+      csi:
+        keyType: aes
   storage:
     devicePathFilter: /dev/disk/by-id/nvme-KINGSTON_OM8PGP41024N-A0_*
     useAllDevices: false
