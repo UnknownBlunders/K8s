@@ -11,6 +11,16 @@ cephClusterSpec:
     urlPrefix: /
     ssl: no
     prometheusEndpoint: http://vmsingle-vm-stack-victoria-metrics-k8s-stack.victoriametrics.svc.cluster.local.:8428
+  healthCheck:
+    muteHealthWarning:
+      AUTH_INSECURE_ROTATING_SERVICE_KEY_TYPE:
+        policy: mute
+      AUTH_INSECURE_CLIENT_KEY_TYPE:
+        policy: mute
+      AUTH_INSECURE_KEYS_ALLOWED:
+        policy: mute
+      AUTH_INSECURE_KEYS_CREATABLE:
+        policy: mute
   mgr:
     modules:
       - name: pg_autoscaler
