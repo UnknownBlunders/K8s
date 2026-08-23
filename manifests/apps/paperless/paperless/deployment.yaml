@@ -56,10 +56,10 @@ spec:
             - containerPort: 8000
           resources:
             requests:
-              memory: "3000Mi"
+              memory: "4000Mi"
               cpu: "270m"
             limits:
-              memory: "3000Mi"
+              memory: "4000Mi"
           volumeMounts:
             - name: paperless-server-pvc
               mountPath: /usr/src/paperless/consume
