@@ -7,6 +7,7 @@ resources:
   - deployment.yaml
   - service.yaml
   - route.yaml
+  - paperless-secrets-es.yaml
 images:
   - name: paperless-server-container-image
     newName: ghcr.io/paperless-ngx/paperless-ngx
