@@ -72,10 +72,10 @@ data:
         address_list = None
         dns = True
 
-        ipv6_route = False
-        ipv6_pool = False
+        ipv6_route = True
+        ipv6_pool = True
         ipv6_firewall = False
-        ipv6_neighbor = False
+        ipv6_neighbor = True
         ipv6_address_list = None
 
         poe = False
@@ -124,6 +124,11 @@ data:
         firewall = True
         neighbor = True
         address_list = None
+        ipv6_route = True
+        ipv6_pool = True
+        ipv6_firewall = True
+        ipv6_neighbor = True
+        ipv6_address_list = None
         dns = True
         monitor = True
         netwatch = True
