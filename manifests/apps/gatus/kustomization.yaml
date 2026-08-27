@@ -6,7 +6,7 @@ helmCharts:
     releaseName: gatus-sidecar
     namespace: gatus
     repo: oci://ghcr.io/home-operations/charts
-    version: "0.5.1"
+    version: "0.5.2"
     valuesFile: values.yaml
 resources:
   - ns.yaml
