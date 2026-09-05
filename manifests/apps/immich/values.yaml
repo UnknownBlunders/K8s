@@ -72,9 +72,9 @@ server:
           resources:
             requests:
               cpu: 100m
-              memory: 2022M
+              memory: 3032M
             limits:
-              memory: 2022M
+              memory: 2032M
           securityContext:
             runAsUser: 1007
             runAsGroup: 1007
