@@ -14,6 +14,7 @@ spec:
       labels:
         app: jellyfin
     spec:
+      terminationGracePeriodSeconds: 120
       containers:
         - name: jellyfin
           image: jellyfin-container-image
