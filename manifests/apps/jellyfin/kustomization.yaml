@@ -12,4 +12,4 @@ resources:
 images:
   - name: jellyfin-container-image
     newName: ghcr.io/jellyfin/jellyfin
-    newTag: "12.0"
+    newTag: "12.1"
