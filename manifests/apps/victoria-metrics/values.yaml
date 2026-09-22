@@ -165,6 +165,22 @@ defaultDatasources:
     enabled: true
     spec:
       allowCrossNamespaceImport: true
+  victoriametrics:
+    # -- List of prometheus compatible datasource configurations.
+    # VM `url` will be added to each of them in templates.
+    datasources:
+      - name: VictoriaMetrics
+        type: prometheus
+        access: proxy
+        uid: VictoriaMetrics
+        isDefault: true
+        plugin: true
+      - name: VictoriaMetrics (DS)
+        isDefault: false
+        access: proxy
+        uid: VictoriaMetricsDS
+        type: victoriametrics-metrics-datasource
+        plugin: true
 grafana:
   enabled: false
   forceDeployDatasource: true
