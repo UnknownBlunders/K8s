@@ -26,7 +26,7 @@ spec:
       news_feed_enabled: "false"
     plugins:
       plugin_admin_enabled: "false"
-      undled_plugins: "/var/lib/grafana/plugins-bundled"
+      bundled_plugins: "/var/lib/grafana/plugins-bundled"
     security:
       angular_support_enabled: "true"
     server:
