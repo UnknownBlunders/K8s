@@ -8,7 +8,7 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/talconfig.ya??ml$/",
+        "/topf.ya??ml$/",
         "/talosupgrade.ya??ml$/",
         "/k8supgrade.ya??ml$/"
       ],
