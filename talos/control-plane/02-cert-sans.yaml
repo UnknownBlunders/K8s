@@ -1,0 +1,4 @@
+machine:
+  certSANs:
+    - 192.168.6.10
+    - cluster.blunders.me

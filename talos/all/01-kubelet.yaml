@@ -1,0 +1,13 @@
+apiVersion: v1alpha1
+kind: KubeletConfig
+config:
+  maxPods: 200
+extraArgs:
+  rotate-server-certificates: "true"
+defaultRuntimeSeccompProfileEnabled: true
+---
+apiVersion: v1alpha1
+kind: KubeNodeConfig
+nodeIP:
+  validSubnets:
+    - 192.168.6.0/24

@@ -1,0 +1,39 @@
+clusterName: prod-cluster
+clusterEndpoint: https://cluster.blunders.me:6443
+# renovate: datasource=github-releases depName=siderolabs/kubelet
+kubernetesVersion: 1.36.3
+# renovate: datasource=github-releases depName=siderolabs/talos
+talosVersion: 1.14.4
+schematicId: "@schematic.yaml"
+secureboot: true
+nodes:
+  - host: kcp01
+    ip: 192.168.6.11
+    role: control-plane
+    data:
+      linkName: enp1s0
+  - host: kcp02
+    ip: 192.168.6.12
+    role: control-plane
+    data:
+      linkName: enp1s0
+  - host: kcp03
+    ip: 192.168.6.13
+    role: control-plane
+    data:
+      linkName: enp1s0
+  - host: kw01
+    ip: 192.168.6.14
+    role: worker
+    data:
+      linkName: enp2s0f0np0
+  - host: kw02
+    ip: 192.168.6.15
+    role: worker
+    data:
+      linkName: enp2s0f0np0
+  - host: kw03
+    ip: 192.168.6.16
+    role: worker
+    data:
+      linkName: enp2s0f0np0
