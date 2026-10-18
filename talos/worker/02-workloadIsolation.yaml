@@ -1,0 +1,6 @@
+apiVersion: v1alpha1
+kind: SecurityProfileConfig
+# need to use nfs csi provider first
+# This would put kublet in sandbox, so it wouldn't just be able to mount nfs shares
+# see: https://github.com/siderolabs/talos/releases/tag/v1.14.0
+workloadIsolation: false
