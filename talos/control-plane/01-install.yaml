@@ -2,4 +2,4 @@ apiVersion: v1alpha1
 kind: UnattendedInstallConfig
 provisioning:
   diskSelector:
-    match: disk.size < 200u * GB
+    match: disk.size > 200u * GB
