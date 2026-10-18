@@ -1,6 +1,10 @@
 **/charts/**
 out**.yaml
 
+# Generated talos configs
+**/out/**
+**/out*/**
+
 # saved Terraform plans to apply
 out.plan
 

@@ -1,0 +1,14 @@
+apiVersion: v1alpha1
+kind: StaticHostConfig
+name: 192.168.6.10
+hostnames:
+  - cluster.blunders.me
+---
+apiVersion: v1alpha1
+kind: ResolverConfig
+nameservers:
+  - address: 192.168.6.1
+hostDNS:
+  enabled: true
+  forwardKubeDNSToHost: false
+  resolveMemberNames: true
