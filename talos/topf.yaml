@@ -1,9 +1,9 @@
 clusterName: prod-cluster
 clusterEndpoint: https://cluster.blunders.me:6443
 # renovate: datasource=github-releases depName=siderolabs/kubelet
-kubernetesVersion: 1.37.1
+kubernetesVersion: "v1.37.1"
 # renovate: datasource=github-releases depName=siderolabs/talos
-talosVersion: 1.14.4
+talosVersion: "v1.14.4"
 schematicId: "@schematic.yaml"
 secureboot: true
 nodes:
