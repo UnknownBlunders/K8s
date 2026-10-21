@@ -16,7 +16,7 @@ controllers:
             type: RuntimeDefault
         image:
           # renovate: datasource=github-releases depName=immich-app/immich
-          tag: "v3.3.3"
+          tag: "v3.3.5"
 immich:
   metrics:
     enabled: true
