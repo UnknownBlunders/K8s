@@ -18,7 +18,7 @@ persistence:
   dataDir:
     enabled: true
     existingClaim: mc-td-pvc
-replicaCount: 1
+replicaCount: 0
 minecraftServer:
   eula: "TRUE"
   # may be SNAPSHOT or a specific version number
