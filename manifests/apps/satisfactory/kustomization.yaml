@@ -9,4 +9,4 @@ resources:
 images:
   - name: satisfactory-container-image
     newName: ghcr.io/robtme/satisfactory-server:dev
-    newTag: "v1.9.10"
+    newTag: "v1.9.11"
