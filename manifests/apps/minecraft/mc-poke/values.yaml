@@ -18,7 +18,7 @@ persistence:
   dataDir:
     enabled: true
     existingClaim: mc-poke-pvc
-replicaCount: 0
+replicaCount: 1
 extraEnv:
   USE_MEOWICE_FLAGS: true
 minecraftServer:
