@@ -11,3 +11,5 @@
 - vals - [link](https://github.com/helmfile/vals)
 - topf - [link](https://github.com/postfinance/topf)
 - opentofu - [link](https://github.com/opentofu/opentofu)
+- lefthook - [link](https://github.com/evilmartians/lefthook)
+- yamlfmt - [link](https://github.com/google/yamlfmt)
