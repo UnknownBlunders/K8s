@@ -1,3 +1,4 @@
+---
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: EnvoyProxy
 metadata:
@@ -13,7 +14,7 @@ spec:
       envoyDeployment:
         replicas: 1
         container:
-          imageRepository: mirror.gcr.io/envoyproxy/envoy
+          image: mirror.gcr.io/envoyproxy/envoy:distroless-v1.39.5
           resources:
             requests:
               cpu: 100m

@@ -26,7 +26,66 @@
       "matchStrings": [
         "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
       ]
-     }
+    },
+    {
+      "customType": "regex",
+      "description": "Envoy proxy image pinned in the EnvoyProxy resource",
+      "managerFilePatterns": [
+        "/manifests/bootstrapping/envoy-gateway/envoy\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "image:\\s*mirror\\.gcr\\.io/(?<depName>envoyproxy/envoy):(?<currentValue>distroless-v\\d+\\.\\d+\\.\\d+)"
+      ],
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "semver",
+      "autoReplaceStringTemplate": "image: mirror.gcr.io/{{{depName}}}:{{{newValue}}}"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "Envoy proxy tags are distroless-vX.Y.Z; compare them as semver and only allow the current or next minor, while always allowing major updates",
+      "matchDepNames": ["envoyproxy/envoy"],
+      "versioning": "semver",
+      "versionCompatibility": "^(?<compatibility>distroless-v)(?<version>\\d+\\.\\d+\\.\\d+)$",
+      "allowedVersions": "<{{major}}.{{add minor 2}}.0 || >={{add major 1}}.0.0",
+      "separateMinorPatch": true,
+      "separateMajorMinor": true,
+      "separateMultipleMajor": true
+    },
+    {
+      "description": "Always raise Envoy proxy patch updates, even while a minor update is pending",
+      "matchDepNames": ["envoyproxy/envoy"],
+      "matchUpdateTypes": ["patch", "digest"],
+      "groupName": "Envoy proxy patch",
+      "semanticCommitScope": "envoy-proxy",
+      "commitMessageTopic": "Envoy proxy"
+    },
+    {
+      "description": "Envoy Gateway should also only advance one minor at a time so the control plane and proxy stay in sync",
+      "matchDepNames": ["gateway-helm"],
+      "allowedVersions": "<{{major}}.{{add minor 2}}.0",
+      "separateMinorPatch": true
+    },
+    {
+      "description": "Only raise Envoy proxy minor updates together with the matching Envoy Gateway minor update",
+      "matchDepNames": ["envoyproxy/envoy", "gateway-helm"],
+      "matchUpdateTypes": ["minor"],
+      "groupName": "Envoy Gateway + Envoy proxy minor",
+      "minimumGroupSize": 2,
+      "semanticCommitScope": "envoy-gateway",
+      "commitMessageTopic": "Envoy Gateway"
+    },
+    {
+      "description": "Raise Envoy proxy major updates as their own PR for awareness; Envoy Gateway does not support them",
+      "matchDepNames": ["envoyproxy/envoy"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "Envoy proxy major (unsupported by Envoy Gateway)",
+      "semanticCommitScope": "envoy-proxy",
+      "commitMessageTopic": "Envoy proxy",
+      "prBodyNotes": [
+        "**Do not merge:** Envoy Gateway may not support this major version of Envoy proxy. This PR exists to notify about the new release."
+      ]
+    }
   ],
   "prConcurrentLimit": 0,
   "helm-values": {
