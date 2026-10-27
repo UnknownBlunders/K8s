@@ -1,3 +1,4 @@
+---
 services:
   minecraft:
     type: LoadBalancer
@@ -10,3 +11,23 @@ image:
   # renovate: datasource=github-releases depName=itzg/mc-router
   tag: "1.50.0"
   pullPolicy: IfNotPresent
+podSecurityContext:
+  runAsUser: 3000
+  runAsGroup: 3000
+  runAsNonRoot: true
+  fsGroup: 2001
+  seccompProfile:
+    type: RuntimeDefault
+securityContext:
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
+  allowPrivilegeEscalation: false
+resources:
+  limits:
+    cpu: 100m
+    memory: 50Mi
+  requests:
+    cpu: 100m
+    memory: 50Mi
