@@ -1,0 +1,121 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: default-deny
+  namespace: minecraft
+spec:
+  endpointSelector: {}
+  ingress:
+    - {}
+  egress:
+    - {}
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: mc-router
+  namespace: minecraft
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: mc-router
+  ingress:
+    - fromEntities:
+        - world
+      toPorts:
+        - ports:
+            - port: "25565"
+              protocol: TCP
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: ha
+            app: ha
+      toPorts:
+        - ports:
+            - port: "25565"
+              protocol: TCP
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: minecraft
+      toPorts:
+        - ports:
+            - port: "25565"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+    - toEntities:
+        - kube-apiserver
+      toPorts:
+        - ports:
+            - port: "6443"
+              protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: mc-servers
+  namespace: minecraft
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: minecraft
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: mc-router
+      toPorts:
+        - ports:
+            - port: "25565"
+              protocol: TCP
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+          # force dns through cilium proxy, so we can use FQDNs below
+          rules:
+            dns:
+              - matchPattern: "*"
+    - toFQDNs:
+        # Mojang / player auth / version manifests
+        - matchName: sessionserver.mojang.com
+        - matchName: api.mojang.com
+        - matchName: api.minecraftservices.com
+        - matchName: launchermeta.mojang.com
+        - matchName: launcher.mojang.com
+        - matchName: piston-meta.mojang.com
+        - matchName: piston-data.mojang.com
+        - matchName: libraries.minecraft.net
+        - matchName: resources.download.minecraft.net
+        # Fabric (mc-poke)
+        - matchName: meta.fabricmc.net
+        - matchName: maven.fabricmc.net
+        # Paper (mc-sinicropi, mc-td, mc-echochamber)
+        - matchName: api.papermc.io
+        - matchName: fill.papermc.io
+        - matchName: fill-data.papermc.io
+        # Mod/plugin sources
+        - matchName: api.modrinth.com
+        - matchName: cdn.modrinth.com
+        - matchName: api.curseforge.com
+        - matchPattern: "*.forgecdn.net"
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
