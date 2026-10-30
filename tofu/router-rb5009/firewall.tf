@@ -449,39 +449,28 @@ module "firewall" {
       order             = 500
       comment           = "Minecraft (TCP)"
     }
-    "dstnat-minecraft-udp" = {
-      chain             = "dstnat"
-      action            = "dst-nat"
-      in_interface_list = "WAN"
-      protocol          = "udp"
-      dst_port          = "25565"
-      to_addresses      = "192.168.7.2"
-      to_ports          = "25565"
-      order             = 510
-      comment           = "Minecraft (UDP)"
-    }
-    "dstnat-http" = {
-      chain             = "dstnat"
-      action            = "dst-nat"
-      in_interface_list = "WAN"
-      protocol          = "tcp"
-      dst_port          = "80"
-      to_addresses      = "192.168.7.1"
-      to_ports          = "80"
-      order             = 520
-      comment           = "HTTP -> K8s ingress"
-    }
-    "dstnat-https" = {
-      chain             = "dstnat"
-      action            = "dst-nat"
-      in_interface_list = "WAN"
-      protocol          = "tcp"
-      dst_port          = "443"
-      to_addresses      = "192.168.7.1"
-      to_ports          = "443"
-      order             = 530
-      comment           = "HTTPS -> K8s ingress"
-    }
+    # "dstnat-http" = {
+    #   chain             = "dstnat"
+    #   action            = "dst-nat"
+    #   in_interface_list = "WAN"
+    #   protocol          = "tcp"
+    #   dst_port          = "80"
+    #   to_addresses      = "192.168.7.1"
+    #   to_ports          = "80"
+    #   order             = 520
+    #   comment           = "HTTP -> K8s ingress"
+    # }
+    # "dstnat-https" = {
+    #   chain             = "dstnat"
+    #   action            = "dst-nat"
+    #   in_interface_list = "WAN"
+    #   protocol          = "tcp"
+    #   dst_port          = "443"
+    #   to_addresses      = "192.168.7.1"
+    #   to_ports          = "443"
+    #   order             = 530
+    #   comment           = "HTTPS -> K8s ingress"
+    # }
   }
 
   # ===============================================================================================
