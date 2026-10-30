@@ -1,3 +1,4 @@
+---
 apiVersion: v1alpha1
 kind: StaticHostConfig
 name: 192.168.6.10
@@ -8,6 +9,8 @@ apiVersion: v1alpha1
 kind: ResolverConfig
 nameservers:
   - address: 192.168.6.1
+searchDomains:
+  disableDefault: true
 hostDNS:
   enabled: true
   forwardKubeDNSToHost: false
