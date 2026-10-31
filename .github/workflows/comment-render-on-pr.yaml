@@ -1,8 +1,11 @@
+---
 name: render kustomization and comment diff on PR
 on:
   pull_request:
     branches:
       - main
+    paths:
+      - 'manifests/**'
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
