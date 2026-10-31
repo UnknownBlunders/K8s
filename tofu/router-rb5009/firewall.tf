@@ -45,6 +45,10 @@ module "firewall" {
       comment   = "Kubernetes node/pod ranges"
       addresses = ["192.168.6.0/23"]
     }
+    k8s-lb-pool = {
+      comment   = "Kubernetes LoadBalancer IP pool (excludes nodes / control plane)"
+      addresses = ["192.168.7.0/24"]
+    }
     k8s-service-lb = {
       comment   = "Kubernetes LoadBalancer / port-forward targets"
       addresses = ["192.168.7.1"]
@@ -58,6 +62,28 @@ module "firewall" {
     }
     zigbee = {
       addresses = ["192.168.5.4"]
+    }
+    cloudflare = {
+      # Sources: https://www.cloudflare.com/ips/
+      # https://www.cloudflare.com/ips-v4/#
+      comment = "Cloudflare's ipv4 ranges"
+      addresses = [
+        "173.245.48.0/20",
+        "103.21.244.0/22",
+        "103.22.200.0/22",
+        "103.31.4.0/22",
+        "141.101.64.0/18",
+        "108.162.192.0/18",
+        "190.93.240.0/20",
+        "188.114.96.0/20",
+        "197.234.240.0/22",
+        "198.41.128.0/17",
+        "162.158.0.0/15",
+        "104.16.0.0/13",
+        "104.24.0.0/14",
+        "172.64.0.0/13",
+        "131.0.72.0/22",
+      ]
     }
   }
 
@@ -77,6 +103,20 @@ module "firewall" {
         "2001:db8::/32",     # documentation
         "fc00::/7",          # ULA
         "ff00::/8",          # multicast (never a valid source)
+      ]
+    }
+    cloudflare = {
+      # Sources: https://www.cloudflare.com/ips/
+      # https://www.cloudflare.com/ips-v6/#
+      comment = "Cloudflare's ipv6 ranges"
+      addresses = [
+        "2400:cb00::/32",
+        "2606:4700::/32",
+        "2803:f800::/32",
+        "2405:b500::/32",
+        "2405:8100::/32",
+        "2a06:98c0::/29",
+        "2c0f:f248::/32",
       ]
     }
   }
@@ -234,22 +274,12 @@ module "firewall" {
       comment           = "Allow WAN->Minecraft (matches dstnat-minecraft-tcp)"
     }
 
-    "forward-accept-wan-minecraft-udp" = {
-      chain             = "forward"
-      action            = "accept"
-      in_interface_list = "WAN"
-      protocol          = "udp"
-      dst_address_list  = "minecraft"
-      dst_port          = "25565"
-      order             = 1041
-      comment           = "Allow WAN->Minecraft (matches dstnat-minecraft-udp)"
-    }
-
     "forward-accept-wan-http" = {
       chain             = "forward"
       action            = "accept"
       in_interface_list = "WAN"
       protocol          = "tcp"
+      src_address_list  = "cloudflare"
       dst_address_list  = "k8s-service-lb"
       dst_port          = "80"
       order             = 1042
@@ -261,19 +291,20 @@ module "firewall" {
       action            = "accept"
       in_interface_list = "WAN"
       protocol          = "tcp"
+      src_address_list  = "cloudflare"
       dst_address_list  = "k8s-service-lb"
       dst_port          = "443"
       order             = 1043
       comment           = "Allow WAN->K8s ingress HTTPS (matches dstnat-https)"
     }
 
-    # --- WAN inbound: only allow traffic that was explicitly DSTNATed ---------
+    # --- WAN inbound: drop all new connections not explicitly allowed above ---
     "forward-drop-wan-not-dstnat" = {
       chain             = "forward"
       action            = "drop"
       in_interface_list = "WAN"
       order             = 1100
-      comment           = "Drop WAN->LAN unless DSTNATed by a port-forward"
+      comment           = "Drop new WAN->LAN unless explicitly allowed above"
     }
 
     # --- Isolate IOT-Dead-End (no new outbound anywhere) ----------------------
@@ -315,9 +346,9 @@ module "firewall" {
       chain            = "forward"
       action           = "accept"
       in_interface     = "DMZ"
-      dst_address_list = "k8s"
+      dst_address_list = "k8s-lb-pool"
       order            = 1420
-      comment          = "DMZ (VPN) -> K8s services"
+      comment          = "DMZ (VPN) -> K8s LoadBalancer services only"
     }
     "forward-k8s-to-nfs" = {
       chain            = "forward"
@@ -416,27 +447,6 @@ module "firewall" {
       comment            = "Masquerade all outbound WAN traffic"
     }
 
-    # --- SRCNAT: hairpin NAT for port-forward targets ------------------------
-    # Rewrites the source of internal->port-forward-target traffic so replies
-    # come back through the router (required when accessing services by their
-    # public name from inside the LAN).
-    "hairpin-k8s-lb" = {
-      chain            = "srcnat"
-      action           = "masquerade"
-      src_address_list = "rfc1918"
-      dst_address_list = "k8s-service-lb"
-      order            = 200
-      comment          = "Hairpin NAT for K8s LB port-forwards"
-    }
-    "hairpin-minecraft" = {
-      chain            = "srcnat"
-      action           = "masquerade"
-      src_address_list = "rfc1918"
-      dst_address_list = "minecraft"
-      order            = 210
-      comment          = "Hairpin NAT for Minecraft"
-    }
-
     # --- DSTNAT: port forwards from WAN --------------------------------------
     "dstnat-minecraft-tcp" = {
       chain             = "dstnat"
@@ -449,28 +459,30 @@ module "firewall" {
       order             = 500
       comment           = "Minecraft (TCP)"
     }
-    # "dstnat-http" = {
-    #   chain             = "dstnat"
-    #   action            = "dst-nat"
-    #   in_interface_list = "WAN"
-    #   protocol          = "tcp"
-    #   dst_port          = "80"
-    #   to_addresses      = "192.168.7.1"
-    #   to_ports          = "80"
-    #   order             = 520
-    #   comment           = "HTTP -> K8s ingress"
-    # }
-    # "dstnat-https" = {
-    #   chain             = "dstnat"
-    #   action            = "dst-nat"
-    #   in_interface_list = "WAN"
-    #   protocol          = "tcp"
-    #   dst_port          = "443"
-    #   to_addresses      = "192.168.7.1"
-    #   to_ports          = "443"
-    #   order             = 530
-    #   comment           = "HTTPS -> K8s ingress"
-    # }
+    "dstnat-http" = {
+      chain             = "dstnat"
+      action            = "dst-nat"
+      in_interface_list = "WAN"
+      protocol          = "tcp"
+      src_address_list  = "cloudflare"
+      dst_port          = "80"
+      to_addresses      = "192.168.7.1"
+      to_ports          = "80"
+      order             = 520
+      comment           = "HTTP -> K8s ingress"
+    }
+    "dstnat-https" = {
+      chain             = "dstnat"
+      action            = "dst-nat"
+      in_interface_list = "WAN"
+      protocol          = "tcp"
+      src_address_list  = "cloudflare"
+      dst_port          = "443"
+      to_addresses      = "192.168.7.1"
+      to_ports          = "443"
+      order             = 530
+      comment           = "HTTPS -> K8s ingress"
+    }
   }
 
   # ===============================================================================================
