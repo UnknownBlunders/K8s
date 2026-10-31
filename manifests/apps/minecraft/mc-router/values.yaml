@@ -9,7 +9,7 @@ services:
     externalTrafficPolicy: Local
 image:
   # renovate: datasource=github-releases depName=itzg/mc-router
-  tag: "1.51.0"
+  tag: "1.52.0"
   pullPolicy: IfNotPresent
 podSecurityContext:
   runAsUser: 3000
