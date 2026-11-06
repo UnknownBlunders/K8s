@@ -19,7 +19,7 @@ hubble:
   metrics:
     enabled:
       - dns:query
-      - drop:labelsContext=source_namespace,source_workload,destination_namespace,destination_workload,traffic_direction
+      - drop:sourceContext=workload|reserved-identity;destinationContext=workload|dns|ip;labelsContext=traffic_direction
       - tcp
       - flow
       - port-distribution
