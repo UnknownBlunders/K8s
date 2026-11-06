@@ -11,7 +11,7 @@ spec:
         - alert: CiliumPolicyDrop
           expr: |-
             sum by (source, destination, traffic_direction) (
-              increase(hubble_drop_total{reason=~"POLICY_DENIED|POLICY_DENY"}[5m])
+              increase_pure(hubble_drop_total{reason=~"POLICY_DENIED|POLICY_DENY"}[5m])
             ) > 0
           for: 0s
           annotations:
