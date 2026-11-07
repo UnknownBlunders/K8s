@@ -121,9 +121,8 @@ spec:
         - ports:
             - port: "9999"
               protocol: UDP
-    # TODO: replace with toFQDNs once the 1Password hostnames are confirmed from hubble dns logs
-    - toEntities:
-        - world
+    - toFQDNs:
+        - matchPattern: "*.1password.com"
       toPorts:
         - ports:
             - port: "443"
