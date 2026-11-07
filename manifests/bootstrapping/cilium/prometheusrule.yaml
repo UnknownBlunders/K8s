@@ -9,6 +9,9 @@ spec:
     - name: cilium-policy.rules
       rules:
         - alert: CiliumPolicyDrop
+          # To ignore expected drops, add label matchers to the hubble_drop_total selector, e.g.:
+          #   hubble_drop_total{reason=~"POLICY_DENIED|POLICY_DENY", source!="minecraft/mc-poke-minecraft", destination!~".*\\.example\\.com"}
+          # The alert's source/destination labels show the exact values to match on.
           expr: |-
             sum by (source, destination, traffic_direction) (
               increase_pure(hubble_drop_total{reason=~"POLICY_DENIED|POLICY_DENY"}[5m])
