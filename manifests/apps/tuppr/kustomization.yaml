@@ -6,7 +6,7 @@ helmCharts:
     releaseName: tuppr
     namespace: tuppr
     repo: oci://ghcr.io/home-operations/charts
-    version: "0.5.12"
+    version: "0.5.13"
     includeCRDs: true
     valuesInline:
       monitoring:
