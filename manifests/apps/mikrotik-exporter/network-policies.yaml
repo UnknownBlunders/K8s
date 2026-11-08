@@ -1,0 +1,60 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: default-deny
+spec:
+  endpointSelector: {}
+  ingress:
+    - {}
+  egress:
+    - {}
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: mikrotik-exporter
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: mikrotik-exporter
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: victoriametrics
+            app.kubernetes.io/name: vmagent
+      toPorts:
+        - ports:
+            - port: "49090"
+              protocol: TCP
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+          # force dns through cilium proxy, so we can use FQDNs below
+          rules:
+            dns:
+              - matchPattern: "*"
+    # router.blunders.me, 10g.blunders.me, 1g-rack.blunders.me (RouterOS API-SSL)
+    - toCIDR:
+        - 192.168.8.1/32
+        - 192.168.8.11/32
+        - 192.168.8.15/32
+      toPorts:
+        - ports:
+            - port: "8729"
+              protocol: TCP
+    # check_for_updates = True in mktxp.conf
+    - toFQDNs:
+        - matchPattern: "*.mikrotik.com"
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP

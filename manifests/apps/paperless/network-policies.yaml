@@ -1,0 +1,136 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: default-deny
+spec:
+  endpointSelector: {}
+  ingress:
+    - {}
+  egress:
+    - {}
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: paperless-server
+spec:
+  endpointSelector:
+    matchLabels:
+      app: paperless-server
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: envoy-gateway
+            gateway.envoyproxy.io/owning-gateway-name: envoy-internal
+      toPorts:
+        - ports:
+            - port: "8000"
+              protocol: TCP
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            app: paperless-pg
+      toPorts:
+        - ports:
+            - port: "5432"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            app: paperless-redis
+      toPorts:
+        - ports:
+            - port: "6379"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            app: paperless-tika
+      toPorts:
+        - ports:
+            - port: "9998"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            app: paperless-gotenberg
+      toPorts:
+        - ports:
+            - port: "3000"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: paperless-pg
+spec:
+  endpointSelector:
+    matchLabels:
+      app: paperless-pg
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app: paperless-server
+      toPorts:
+        - ports:
+            - port: "5432"
+              protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: paperless-redis
+spec:
+  endpointSelector:
+    matchLabels:
+      app: paperless-redis
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app: paperless-server
+      toPorts:
+        - ports:
+            - port: "6379"
+              protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: paperless-tika
+spec:
+  endpointSelector:
+    matchLabels:
+      app: paperless-tika
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app: paperless-server
+      toPorts:
+        - ports:
+            - port: "9998"
+              protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: paperless-gotenberg
+spec:
+  endpointSelector:
+    matchLabels:
+      app: paperless-gotenberg
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app: paperless-server
+      toPorts:
+        - ports:
+            - port: "3000"
+              protocol: TCP

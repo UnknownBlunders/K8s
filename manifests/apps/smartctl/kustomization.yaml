@@ -1,3 +1,4 @@
+---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: smartctl
@@ -13,3 +14,4 @@ resources:
   - vmscrape.yaml
   - grafanadashboard.yaml
   - prometheusrule.yaml
+  - network-policies.yaml

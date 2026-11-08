@@ -1,0 +1,67 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: default-deny
+spec:
+  endpointSelector: {}
+  ingress:
+    - {}
+  egress:
+    - {}
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: nut-server
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: nut-server
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: nut-exporter
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: ha
+            app: ha
+      toPorts:
+        - ports:
+            - port: "3493"
+              protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: nut-exporter
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: nut-exporter
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: victoriametrics
+            app.kubernetes.io/name: vmagent
+      toPorts:
+        - ports:
+            - port: "9199"
+              protocol: TCP
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: nut-server
+      toPorts:
+        - ports:
+            - port: "3493"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP

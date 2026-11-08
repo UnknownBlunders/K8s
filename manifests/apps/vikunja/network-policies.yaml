@@ -1,0 +1,88 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: default-deny
+spec:
+  endpointSelector: {}
+  ingress:
+    - {}
+  egress:
+    - {}
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: vikunja
+spec:
+  endpointSelector:
+    matchLabels:
+      app: vikunja
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: envoy-gateway
+            gateway.envoyproxy.io/owning-gateway-name: envoy-internal
+      toPorts:
+        - ports:
+            - port: "3456"
+              protocol: TCP
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            app: vikunja-pg
+      toPorts:
+        - ports:
+            - port: "5432"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            app: vikunja-redis
+      toPorts:
+        - ports:
+            - port: "6379"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: vikunja-pg
+spec:
+  endpointSelector:
+    matchLabels:
+      app: vikunja-pg
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app: vikunja
+      toPorts:
+        - ports:
+            - port: "5432"
+              protocol: TCP
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: vikunja-redis
+spec:
+  endpointSelector:
+    matchLabels:
+      app: vikunja-redis
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app: vikunja
+      toPorts:
+        - ports:
+            - port: "6379"
+              protocol: TCP

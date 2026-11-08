@@ -1,0 +1,29 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: default-deny
+spec:
+  endpointSelector: {}
+  ingress:
+    - {}
+  egress:
+    - {}
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: smartctl-exporter
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-smartctl-exporter
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: victoriametrics
+            app.kubernetes.io/name: vmagent
+      toPorts:
+        - ports:
+            - port: "9633"
+              protocol: TCP
