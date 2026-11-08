@@ -62,7 +62,7 @@ provider "registry.opentofu.org/hashicorp/random" {
 
 provider "registry.opentofu.org/terraform-routeros/routeros" {
   version     = "1.99.1"
-  constraints = ">= 1.80.0, >= 1.99.1"
+  constraints = ">= 1.0.0, >= 1.80.0, >= 1.99.1"
   hashes = [
     "h1:1KWPcLddi3UAXMa7ZFi/IcniAOnMaRgxSreQgY5UpvU=",
     "h1:5QGT+Dt9Gdy6BfGguoX+Zx3zBt+84ZMDgS5Ma0IBB+c=",

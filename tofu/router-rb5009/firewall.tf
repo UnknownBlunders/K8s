@@ -167,6 +167,15 @@ module "firewall" {
       order    = 130
       comment  = "Accept ICMP (ping / PMTUD)"
     }
+    "input-accept-wireguard-in" = {
+      chain             = "input"
+      action            = "accept"
+      protocol          = "udp"
+      dst_port          = tostring(module.wireguard-server.listen_port)
+      in_interface_list = "WAN"
+      order             = 150
+      comment           = "Accept WireGuard from WAN"
+    }
     "input-accept-dhcp-from-lan" = {
       chain             = "input"
       action            = "accept"
@@ -193,6 +202,24 @@ module "firewall" {
       in_interface_list = "LAN"
       order             = 220
       comment           = "Accept DNS (TCP) from internal VLANs"
+    }
+    "input-accept-dns-udp-from-vpn-clients" = {
+      chain        = "input"
+      action       = "accept"
+      protocol     = "udp"
+      dst_port     = "53"
+      in_interface = module.wireguard-server.name
+      order        = 230
+      comment      = "Accept DNS (UDP) from VPN clients"
+    }
+    "input-accept-dns-tcp-from-vpn-clients" = {
+      chain        = "input"
+      action       = "accept"
+      protocol     = "tcp"
+      dst_port     = "53"
+      in_interface = module.wireguard-server.name
+      order        = 240
+      comment      = "Accept DNS (TCP) from VPN clients"
     }
     "input-accept-api-from-k8s" = {
       chain        = "input"
@@ -403,6 +430,15 @@ module "firewall" {
       dst_address  = "192.168.9.0/24"
       order        = 1470
       comment      = "K8s HA/VM -> IOT-Dead-End"
+    }
+
+    "forward-vpn-clients-to-envoy-internal" = {
+      chain        = "forward"
+      action       = "accept"
+      in_interface = module.wireguard-server.name
+      dst_address  = "192.168.7.5"
+      order        = 1480
+      comment      = "VPN clients -> envoy-internal (HTTP/HTTPS)"
     }
 
     # --- Block remaining cross-VLAN traffic ----------------------------------
