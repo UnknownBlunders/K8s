@@ -1,7 +1,7 @@
 ---
 image:
   repository: itzg/minecraft-server
-  tag: "2026.11.0-java21"
+  tag: "2026.11.1-java21"
   pullPolicy: IfNotPresent
 resources:
   requests:
@@ -19,7 +19,7 @@ persistence:
   dataDir:
     enabled: true
     existingClaim: mc-poke-pvc
-replicaCount: 0
+replicaCount: 1
 extraEnv:
   USE_MEOWICE_FLAGS: true
 minecraftServer:
