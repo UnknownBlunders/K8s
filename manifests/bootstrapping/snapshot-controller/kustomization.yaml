@@ -6,7 +6,7 @@ helmCharts:
     releaseName: snapshot-controller
     namespace: kube-system
     repo: oci://ghcr.io/piraeusdatastore/helm-charts
-    version: 5.4.0
+    version: 5.4.1
     valuesInline:
       controller:
         serviceMonitor:
