@@ -181,6 +181,25 @@ defaultDatasources:
         uid: VictoriaMetricsDS
         type: victoriametrics-metrics-datasource
         plugin: true
+  sources:
+    kubernetes-views-global:
+      enabled: false
+    kubernetes-views-namespaces:
+      enabled: false
+    kubernetes-views-pods:
+      enabled: false
+    kubernetes-views-nodes:
+      enabled: false
+    kubernetes-system-api-server:
+      enabled: false
+    kubernetes-system-coredns:
+      enabled: false
+    node-exporter-full:
+      enabled: false
+    etcd:
+      enabled: false
+    kube-prometheus:
+      enabled: false
 grafana:
   enabled: false
   forceDeployDatasource: true
